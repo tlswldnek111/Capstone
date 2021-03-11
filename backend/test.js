@@ -1,1 +1,1 @@
-console.log('절망적인걸?');
+console.log('미칠꺼같은걸?');
