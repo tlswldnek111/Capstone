@@ -1,1 +1,1 @@
-console.log('129');
+console.log('절망적인걸?');
