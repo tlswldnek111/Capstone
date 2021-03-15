@@ -3,7 +3,7 @@ var oracledb = require('oracledb');
 var mybatisMapper = require('mybatis-mapper');
 var dbConfig = require('../config/dbConfig');
 
-mybatisMapper.createMapper([ '../backend/SQL/mapper/oracle-mapper.xml' ]);
+mybatisMapper.createMapper([ '../backend/SQL/user.xml' ]);
 oracledb.autoCommit = true;
 var router = express.Router();
 
