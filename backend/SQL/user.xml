@@ -6,8 +6,11 @@
         SELECT *
         FROM USERS
         WHERE 1=1
-        <if test="USERNAME != null and USERNAME != ''" >
-        AND NAME = #{USERNAME}
+        <if test="ID != null and ID != ''" >
+        AND ID = #{ID}
+        </if>
+        <if test="PASSWORD != null and PASSWORD != ''" >
+        AND PASSWORD = #{PASSWORD}
         </if>
     </select>
 

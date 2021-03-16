@@ -9,11 +9,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.json({username:'Ohdong'});
-});
-
-router.get('/test', function(req, res, next) {
-  res.json({username:'test'});
+  res.json({id:'Ohdong'});
 });
 
 router.post('/select', function(req, res, next) {
@@ -29,7 +25,8 @@ router.post('/select', function(req, res, next) {
     }
     
     var param = {
-      USERNAME : req.body.USERNAME
+      ID: req.body.ID,
+      PASSWORD: req.body.PASSWORD
     };
 
     let format = {language: 'sql', indent: ' '};
@@ -40,7 +37,19 @@ router.post('/select', function(req, res, next) {
       if (err) {
         console.error(err.message);
       } else {
-        res.json(result);
+        var column = []
+        var row = {}
+        var data = []
+        for (var i of result.metaData) {
+          column.push(i['name']);
+        }
+        for (var i = 0; i < result.rows.length; i++) {
+          for (var j = 0; j < column.length; j++) {
+            row[column[j]] = result.rows[i][j];
+          }
+          data.push(row);
+        }
+        res.json(data);
       }
       connection.close();
     });
