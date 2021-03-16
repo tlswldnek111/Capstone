@@ -41,7 +41,7 @@ class App extends React.Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
-          {this.state.username ? `Hello ${this.state.username}` : 'Hello World'}
+          {this.state.username ? `Hello ${this.state.username}` : 'SIGN IN'}
           </p>
           <form onSubmit={this.handleSubmit}>
             <p><input type="text" name="ID"></input></p>
