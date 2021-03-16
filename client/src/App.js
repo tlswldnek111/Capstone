@@ -8,15 +8,9 @@ class App extends React.Component {
       super(props);
       this.state = {
           id:null,
-          username:''
+          username:null
       };
       this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentDidMount() {
-    fetch('http://localhost:3001/api')
-        .then(res=>res.json())
-        .then(data=>this.setState({id:data.id}));
   }
 
   handleSubmit(event) {
@@ -32,7 +26,12 @@ class App extends React.Component {
       })
     })
     .then(res=>res.json())
-    .then(res=>this.setState({username: res[0].NAME}))
+    .then(res=>{if (res.length === 0) {
+                  this.setState({username: null})
+                } else{
+                  this.setState({username: res[0].NAME})
+                }
+               })
   }
 
   render() {
