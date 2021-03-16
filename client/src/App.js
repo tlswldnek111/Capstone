@@ -31,7 +31,7 @@ class App extends React.Component {
                 } else{
                   this.setState({username: res[0].NAME})
                 }
-               })
+              })
   }
 
   render() {
