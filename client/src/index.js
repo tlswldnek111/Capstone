@@ -6,6 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import TestTabs from './component/TestTabs';
 import TestRoute from './component/TestRoute';
+import Test from './component/Test';
+import Testgrid from './component/Testgrid';
 
 ReactDOM.render(
   <BrowserRouter>

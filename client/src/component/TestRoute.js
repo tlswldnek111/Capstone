@@ -8,19 +8,20 @@ import Testgrid from './Testgrid';
 import TestLogin from './TestLogin';
 import App from '../App';
 
+class Page404 extends React.Component {
+    render() {
+        return(
+            <div>404</div>
+        );
+    }
+}
+
 class TestRoute extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             value: 0
         }
-    }
-
-    allyProps = (index) => {
-        return {
-            id: `simple-tab-${index}`,
-            'aria-controls': `simple-tabpanel-${index}`
-        };
     }
 
     handleChange = (event, newValue) => {
@@ -31,7 +32,7 @@ class TestRoute extends React.Component {
         return(
             <div>
                 <AppBar position="static">
-                    <Tabs value={this.state.value} onChange={this.handleChange} aria-label="simple tabs example">
+                    <Tabs value={this.state.value} onChange={this.handleChange}>
                         <Tab label="item One" component={Link} to="/" />
                         <Tab label="login" component={Link} to="/login"/>
                         <Tab label="grid" component={Link} to="/grid"/>
@@ -43,6 +44,7 @@ class TestRoute extends React.Component {
                     <Route exact path="/login" component={TestLogin} />
                     <Route exact path="/grid" component={Testgrid} />
                     <Route exact path="/test" component={Test} />
+                    <Route component={Page404}/>
                 </Switch>
             </div>
         );
