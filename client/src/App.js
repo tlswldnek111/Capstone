@@ -2,6 +2,11 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import Test from './component/Test';
+import Testgrid from './component/Testgrid';
+import TestTabs from './component/TestTabs';
+import Paper from '@material-ui/core/Paper';
+
 class App extends React.Component {
 
   constructor(props) {
@@ -36,21 +41,23 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-          {this.state.username ? `Hello ${this.state.username}` : 'SIGN IN'}
-          </p>
-          <form onSubmit={this.handleSubmit}>
-            <p><input type="text" name="ID"></input></p>
-            <p><input type="text" name="PASSWORD"></input></p>
-            <p><button type="submit">전송</button></p>
-          </form>
-        </header>
-      </div>
+      <Paper>
+        <TestTabs></TestTabs>
+      </Paper>
+      // <div className="App">
+      //   <header className="App-header">
+      //     <img src={logo} className="App-logo" alt="logo" />
+      //     <p>
+      //     {this.state.username ? `Hello ${this.state.username}` : 'SIGN IN'}
+      //     </p>
+      //     <form onSubmit={this.handleSubmit}>
+      //       <p><input type="text" name="ID"></input></p>
+      //       <p><input type="text" name="PASSWORD"></input></p>
+      //       <p><button type="submit">전송</button></p>
+      //     </form>
+      //   </header>
+      // </div>
     );
-    ;
   }
 }
 
