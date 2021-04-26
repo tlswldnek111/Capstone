@@ -1,6 +1,4 @@
 import React from 'react';
-import logo from '../logo.svg';
-import '../App.css';
 
 class TestLogin extends React.Component {
 
@@ -15,7 +13,7 @@ class TestLogin extends React.Component {
   
     handleSubmit(event) {
       event.preventDefault();
-      fetch('http://localhost:3001/api/select', {
+      fetch('http://localhost:3001/user/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -36,9 +34,7 @@ class TestLogin extends React.Component {
 
     render() {
         return(
-            <div className="App">
-                <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
+            <div>
                 <p>
                 {this.state.username ? `Hello ${this.state.username}` : 'SIGN IN'}
                 </p>
@@ -47,7 +43,6 @@ class TestLogin extends React.Component {
                     <p><input type="text" name="PASSWORD"></input></p>
                     <p><button type="submit">전송</button></p>
                 </form>
-                </header>
             </div>
         );
     }

@@ -16,7 +16,7 @@
 
     <insert id="insertUserInfo">
         INSERT INTO USERS
-        VALUES( #{ID} ,#{PASSWORD}, #{NAME}} )
+        VALUES( #{ID} ,#{PASSWORD}, #{NAME} )
     </insert>
 
 </mapper>

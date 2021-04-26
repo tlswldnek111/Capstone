@@ -8,8 +8,7 @@ var helmet = require('helmet');
 var cors = require('cors');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var apiRouter = require('./routes/api');
+var userRouter = require('./routes/user');
 
 var app = express();
 
@@ -26,9 +25,8 @@ app.use(compression());
 app.use(helmet());
 app.use(cors());
 
-app.use('/api', apiRouter);
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/user', userRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

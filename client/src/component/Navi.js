@@ -2,11 +2,12 @@ import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { Link, Route, Switch, BrowserRouter } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 import Test from './Test';
 import Testgrid from './Testgrid';
-import TestLogin from './TestLogin';
-import App from '../App';
+import Register from './Register';
+import Login from './Login';
+import Home from './Home';
 
 class Page404 extends React.Component {
     render() {
@@ -16,7 +17,7 @@ class Page404 extends React.Component {
     }
 }
 
-class TestRoute extends React.Component {
+class Navi extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -33,15 +34,17 @@ class TestRoute extends React.Component {
             <div>
                 <AppBar position="static">
                     <Tabs value={this.state.value} onChange={this.handleChange}>
-                        <Tab label="item One" component={Link} to="/" />
+                        <Tab label="home" component={Link} to="/" />
+                        <Tab label="register" component={Link} to="/register" />
                         <Tab label="login" component={Link} to="/login"/>
                         <Tab label="grid" component={Link} to="/grid"/>
                         <Tab label="test" component={Link} to="/test"/>
                     </Tabs>
                 </AppBar>
                 <Switch>
-                    <Route exact path="/" component={App} />
-                    <Route exact path="/login" component={TestLogin} />
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/register" component={Register} />
+                    <Route exact path="/login" component={Login} />
                     <Route exact path="/grid" component={Testgrid} />
                     <Route exact path="/test" component={Test} />
                     <Route component={Page404}/>
@@ -51,4 +54,4 @@ class TestRoute extends React.Component {
     };
 }
 
-export default TestRoute;
+export default Navi;
