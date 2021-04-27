@@ -41,7 +41,7 @@ class TestLogin extends React.Component {
                 <form onSubmit={this.handleSubmit}>
                     <p><input type="text" name="ID"></input></p>
                     <p><input type="text" name="PASSWORD"></input></p>
-                    <p><button type="submit">전송</button></p>
+                    <p><button type="submit">로그인</button></p>
                 </form>
             </div>
         );

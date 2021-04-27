@@ -42,7 +42,7 @@ class Register extends React.Component {
                     <p><input type="text" name="ID"></input></p>
                     <p><input type="text" name="NAME"></input></p>
                     <p><input type="text" name="PASSWORD"></input></p>
-                    <p><button type="submit">전송</button></p>
+                    <p><button type="submit">회원가입</button></p>
                 </form>
             </div>
         );
