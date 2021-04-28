@@ -6,7 +6,7 @@ import { Link, Route, Switch } from 'react-router-dom';
 import Test from './Test';
 import Testgrid from './Testgrid';
 import Register from './Register';
-import Login from '../../server/Login';
+import Login from './Login';
 import Home from './Home';
 class Page404 extends React.Component {
     render() {
