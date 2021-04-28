@@ -26,6 +26,10 @@ function Copyright() {
   );
 }
 
+
+
+
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -48,6 +52,35 @@ const useStyles = makeStyles((theme) => ({
 
 class Register extends React.Component{
 
+  constructor(props) {
+    super(props);
+    this.state = {
+        success:null,
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+}
+
+  handleSubmit(event) {
+    event.preventDefault();
+    fetch('http://localhost:3001/user/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        NAME: event.target.Name.value,
+        ID: event.target.ID.value,
+        PASSWORD: event.target.PASSWORD.value 
+      })
+    })
+    .then(res=>res.json()) 
+    .then(res=>{if (res.success === 0) {
+                  this.setState({success: null})
+                } else{
+                  this.setState({success: 1})
+                }
+              })
+  }
   render() {
 
     return (
@@ -59,7 +92,7 @@ class Register extends React.Component{
         <Typography component="h1" variant="h6">
           회원가입
         </Typography>
-        <form className={useStyles.form} noValidate>
+        <form className={useStyles.form} noValidate onSubmit={this.handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} >
               <TextField
@@ -95,18 +128,7 @@ class Register extends React.Component{
                 autoComplete="PASSWORD"
               />
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="NICKNAME"
-                label="NICKNAME"
-                type="NICKNAME"
-                id="NICKNAME"
-                autoComplete="NICKNAME"
-              />
-            </Grid>
+            
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
@@ -114,6 +136,7 @@ class Register extends React.Component{
               />
             </Grid>
           </Grid>
+
           <Button
             type="submit"
             fullWidth
@@ -123,6 +146,9 @@ class Register extends React.Component{
           >
             Sign Up
           </Button>
+          <p>
+          {this.state.success ? `Hello ${this.state.success}` : '로그인되는지테스트하기위한문장'}
+          </p>
           <Grid container justify="flex-end">
             <Grid item>
               <Link href="Login" variant="body2">
@@ -131,6 +157,7 @@ class Register extends React.Component{
             </Grid>
           </Grid>
         </form>
+
       </div>
       <Box mt={5}>
         <Copyright />
