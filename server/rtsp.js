@@ -8,15 +8,3 @@ stream = new Stream({
   width: 240,
   height: 160
 });
-
-// const Stream = require('node-rtsp-stream-es6')
-
-// const options = {
-//   name: 'ㅁㄴㅇㄹ',
-//   url: 'rtsp://184.72.239.149/vod/mp4:BigBuckBunny_115k.mov',
-//   port: 9999
-// }
-
-// stream = new Stream(options)
-
-// stream.start()

@@ -125,11 +125,11 @@ class Login extends React.Component {
       })
       .then(res=>res.json())
       .then(res=>{if (res.length === 0) {
-                    this.setState({username: null})
-                  } else{
-                    this.setState({username: res[0].NAME})
-                  }
-                })
+              this.setState({username: null})
+            } else{
+              this.setState({username: res[0].NAME})
+            }
+          })
     }
     render(){
      return (
