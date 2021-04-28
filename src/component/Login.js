@@ -144,7 +144,7 @@ class Login extends React.Component {
             로그인 화면
           </Typography>
 
-          <form className={useStyles.form} noValidate>
+          <form className={useStyles.form} noValidate onSubmit={this.handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -166,15 +166,7 @@ class Login extends React.Component {
             type="PASSWORD"
             id="PASSWORD"
             autoComplete="current-password"
-        />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
           />
-                <p>
-                {this.state.username ? `Hello ${this.state.username}` : '로그인되는지테스트하기위한문장'}
-                </p>
-           <form onSubmit={this.handleSubmit}> 
           <Button 
             type="submit"
             fullWidth
@@ -184,7 +176,13 @@ class Login extends React.Component {
           >
             로그인
           </Button>
-          </form>
+          <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="Remember me"
+          />
+          <p>
+          {this.state.username ? `Hello ${this.state.username}` : '로그인되는지테스트하기위한문장'}
+          </p>
 
           <Grid container>
           <Grid item xs>
