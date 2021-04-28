@@ -65,10 +65,10 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-
+//alignItems="center" "static"
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography variant="body2" color="textSecondary" >
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/" >
         Logistics
@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+    //alignItems: 'center',
   },
   avatar: {
     margin: theme.spacing(1),
@@ -125,77 +125,87 @@ class Login extends React.Component {
       })
       .then(res=>res.json())
       .then(res=>{if (res.length === 0) {
-              this.setState({username: null})
-            } else{
-              this.setState({username: res[0].NAME})
-            }
-          })
+                    this.setState({username: null})
+                  } else{
+                    this.setState({username: res[0].NAME})
+                  }
+                })
     }
     render(){
      return (
-      <Container component="main" maxWidth="xs" >
-        <CssBaseline />
-        <div className={useStyles.paper} align="center">  
+     
+      <Container component="main">
+        
+        <div className={useStyles.paper} >  
           <Avatar className={useStyles.avatar} >
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h6" align="center">
+          <Typography component="h1" variant="h6">
             로그인 화면
           </Typography>
+
           <form className={useStyles.form} noValidate>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button 
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={useStyles.submit}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body1">
-                 비밀번호 찾기
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body1">
-                  회원가입
-                </Link>
-              </Grid>
-            </Grid>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="ID"
+            label="ID"
+            name="ID"
+            autoComplete="ID"
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="PASSWORD"
+            label="PASSWORD"
+            type="PASSWORD"
+            id="PASSWORD"
+            autoComplete="current-password"
+        />
+          <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="Remember me"
+          />
+                <p>
+                {this.state.username ? `Hello ${this.state.username}` : '로그인되는지테스트하기위한문장'}
+                </p>
+           <form onSubmit={this.handleSubmit}> 
+          <Button 
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={useStyles.submit}
+          >
+            로그인
+          </Button>
+          </form>
+
+          <Grid container>
+          <Grid item xs>
+        <Link href="#" variant="body1">
+         비밀번호 찾기
+        </Link>
+          </Grid>
+          <Grid item>
+         <Link href="Register" variant="body1">
+          회원가입
+        </Link>
+    </Grid>
+    </Grid>
+
           </form>
         </div>
         <Box mt={8}>
           <Copyright />
         </Box>
       </Container>
+      
     );
     }
     /*
