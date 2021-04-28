@@ -6,9 +6,8 @@ import { Link, Route, Switch } from 'react-router-dom';
 import Test from './Test';
 import Testgrid from './Testgrid';
 import Register from './Register';
-import Login from './Login';
+import Login from '../../server/Login';
 import Home from './Home';
-
 class Page404 extends React.Component {
     render() {
         return(
@@ -35,20 +34,27 @@ class Navi extends React.Component {
                 <AppBar position="static">
                     <Tabs value={this.state.value} onChange={this.handleChange}>
                         <Tab label="home" component={Link} to="/" />
-                        <Tab label="register" component={Link} to="/register" />
                         <Tab label="login" component={Link} to="/login"/>
                         <Tab label="grid" component={Link} to="/grid"/>
                         <Tab label="test" component={Link} to="/test"/>
                     </Tabs>
                 </AppBar>
+
                 <Switch>
                     <Route exact path="/" component={Home} />
-                    <Route exact path="/register" component={Register} />
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/grid" component={Testgrid} />
                     <Route exact path="/test" component={Test} />
                     <Route component={Page404}/>
                 </Switch>
+
+                <AppBar  value="true" color="white">  
+                <Switch>
+                    <Route exact path="/register" component={Register} /> 
+                   
+                </Switch>
+                </AppBar>
+               
             </div>
         );
     };
