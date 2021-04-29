@@ -137,6 +137,10 @@ class Login extends React.Component {
       <Container component="main">
         
         <div className={useStyles.paper} >  
+        <Grid>
+           ㅤㅤㅤㅤ 
+          
+           </Grid>
           <Avatar className={useStyles.avatar} >
             <LockOutlinedIcon />
           </Avatar>
@@ -176,10 +180,7 @@ class Login extends React.Component {
           >
             로그인
           </Button>
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
+         
           <p>
           {this.state.username ? `Hello ${this.state.username}` : '로그인되는지테스트하기위한문장'}
           </p>
@@ -206,26 +207,6 @@ class Login extends React.Component {
       
     );
     }
-    /*
-    render() {
-      
-        return(
-            <div className="App">
-                <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                {this.state.username ? `Hello ${this.state.username}` : 'SIGN IN'}
-                </p>
-                <form onSubmit={this.handleSubmit}>
-                    <p><input type="text" name="ID"></input></p>
-                    <p><input type="text" name="PASSWORD"></input></p>
-                    <p><button type="submit">전송</button></p>
-                </form>
-                </header>
-            </div>
-        );
-    }
-    */
 }
 
 export default Login;
