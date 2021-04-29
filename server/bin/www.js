@@ -55,3 +55,7 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+var MediaServer = require('../rtmp');
+
+MediaServer.run();

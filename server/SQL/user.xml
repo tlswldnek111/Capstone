@@ -5,13 +5,8 @@
     <select id="selectUserInfo">
         SELECT *
         FROM USERS
-        WHERE 1=1
-        <if test="ID != null and ID != ''" >
-        AND ID = #{ID}
-        </if>
-        <if test="PASSWORD != null and PASSWORD != ''" >
+        WHERE ID = #{ID}
         AND PASSWORD = #{PASSWORD}
-        </if>
     </select>
 
     <insert id="insertUserInfo">
@@ -19,4 +14,9 @@
         VALUES( #{ID} ,#{PASSWORD}, #{NAME} )
     </insert>
 
+    <select id="checkId">
+        SELECT COUNT(ID)
+          FROM USERS
+        WHERE ID = #{ID}
+    </select>
 </mapper>
