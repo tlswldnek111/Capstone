@@ -1,62 +1,8 @@
-// import React from 'react';
-
-// class Login extends React.Component {
-
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             id:null,
-//             username:null
-//         };
-//         this.handleSubmit = this.handleSubmit.bind(this);
-//     }
-  
-//     handleSubmit(event) {
-//       event.preventDefault();
-//       fetch('http://localhost:3001/user/login', {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({
-//           ID: event.target.ID.value,
-//           PASSWORD: event.target.PASSWORD.value 
-//         })
-//       })
-//       .then(res=>res.json())
-//       .then(res=>{if (res.length === 0) {
-//                     this.setState({username: null})
-//                   } else{
-//                     this.setState({username: res[0].NAME})
-//                   }
-//                 })
-//     }
-
-//     render() {
-//         return(
-//             <div>
-//                 <p>
-//                 {this.state.username ? `Hello ${this.state.username}` : 'SIGN IN'}
-//                 </p>
-//                 <form onSubmit={this.handleSubmit}>
-//                     <p><input type="text" name="ID"></input></p>
-//                     <p><input type="text" name="PASSWORD"></input></p>
-//                     <p><button type="submit">로그인</button></p>
-//                 </form>
-//             </div>
-//         );
-//     }
-// }
-
-// export default Login;
 
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';

@@ -26,10 +26,6 @@ function Copyright() {
   );
 }
 
-
-
-
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -55,11 +51,20 @@ class Register extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-        success:null,
+        success:0,
+        check:0,
+        message: '',
+        ID:0,
+        NAME:null,
+        PASSWORD:null,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleCheck = this.handleCheck.bind(this);
+    this.handleChange = this.handleChange.bind(this);
 }
-
+handleChange(e){
+    this.setState({ID:e.target.value});
+}
   handleSubmit(event) {
     event.preventDefault();
     fetch('http://localhost:3001/user/register', {
@@ -68,7 +73,7 @@ class Register extends React.Component{
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        NAME: event.target.Name.value,
+        NAME: event.target.NAME.value,
         ID: event.target.ID.value,
         PASSWORD: event.target.PASSWORD.value 
       })
@@ -78,35 +83,62 @@ class Register extends React.Component{
                   this.setState({success: null})
                 } else{
                   this.setState({success: 1})
+                  alert("회원가입 성공");
+                  window.location.href = "/";//확인 누르면 홈으로 이동
                 }
               })
   }
+  handleCheck(event) {
+    event.preventDefault();
+    fetch('http://localhost:3001/user/check_id', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ID: this.state.ID
+      })
+    })
+    .then(res=>res.json()) 
+    .then(res=>{if (res.check === 0) {
+                  this.setState({check: null})
+                } else{
+                  this.setState({check: 1})
+                }
+              })
+  }
+  doAction(){alert("회원가입 완료 되었습니다.");}
   render() {
 
     return (
+      
       <Container component="main" >
       <div className={useStyles.paper}>
+      <Grid>
+           ㅤㅤㅤㅤ 
+          
+           </Grid>
         <Avatar className={useStyles.avatar}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h6">
           회원가입
         </Typography>
-        <form className={useStyles.form} noValidate onSubmit={this.handleSubmit}>
+        <form className={useStyles.form} noValidate  onSubmit={this.handleSubmit}  >
           <Grid container spacing={2}>
             <Grid item xs={12} >
               <TextField
                 autoComplete="fname"
-                name="Name"
+                name="NAME"
                 variant="outlined"
                 required
                 fullWidth
-                id="Name"
-                label="Name"
+                id="NAME"
+                label="NAME"
                 autoFocus
               />
             </Grid>
-            <Grid item xs={12} >
+            <Grid item xs={12} sm={6}>
               <TextField
                 variant="outlined"
                 required
@@ -115,8 +147,27 @@ class Register extends React.Component{
                 label="ID"
                 name="ID"
                 autoComplete="ID"
+                onChange={this.handleChange}
+                disabled={(this.state.check===null)}//중복체크확인되면 아이디 못바꿈
               />
             </Grid>
+            <Button 
+           //아이디 중복체크 확인되면 disabled로 변환
+            type="check"
+            variant="contained"
+            color="white"
+            onClick={this.handleCheck}
+            disabled={(this.state.check===null)}
+          >
+            아이디 중복체크
+          </Button>
+          <Grid>
+           ㅤㅤㅤㅤ 
+          
+           </Grid>
+          <p>
+          {this.state.check ? `사용불가능` : ` ` }
+          </p>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -126,15 +177,13 @@ class Register extends React.Component{
                 label="PASSWORD"
                 name="PASSWORD"
                 autoComplete="PASSWORD"
+               
               />
             </Grid>
-            
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />
-            </Grid>
+           <Grid>
+           ㅤㅤㅤㅤ 
+          
+           </Grid>
           </Grid>
 
           <Button
@@ -143,12 +192,15 @@ class Register extends React.Component{
             variant="contained"
             color="primary"
             className={useStyles.submit}
+            
           >
             Sign Up
           </Button>
+        
           <p>
-          {this.state.success ? `Hello ${this.state.success}` : '로그인되는지테스트하기위한문장'}
+          {this.state.success ? `Hello ${this.state.success}` : `${this.state.success}`}
           </p>
+         
           <Grid container justify="flex-end">
             <Grid item>
               <Link href="Login" variant="body2">

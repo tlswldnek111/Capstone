@@ -115,10 +115,10 @@ router.post('/check_id', function(req, res, next) {
         console.error(err.message);
       } else {
         if (result['rows'][0][0] === 0) {
-          res.json({ success: 0});
+          res.json({ check: 0});
         }
         else {
-          res.json({ success: 1});
+          res.json({ check: 1});
         }
       }
       connection.close();
