@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-class Register extends React.Component{
+class FindID extends React.Component{
 
   constructor(props) {
     super(props);
@@ -60,13 +60,9 @@ class Register extends React.Component{
         PHONE:null,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleCheck = this.handleCheck.bind(this);
-    this.handleChange = this.handleChange.bind(this);
 }
-handleChange(e){
-    this.setState({ID:e.target.value});
-}
-  handleSubmit(event) {
+
+handleSubmit(event) {
     event.preventDefault();
     fetch('http://localhost:3001/user/register', {
       method: 'POST',
@@ -89,25 +85,6 @@ handleChange(e){
                 }
               })
   }
-  handleCheck(event) {
-    event.preventDefault();
-    fetch('http://localhost:3001/user/check_id', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        ID: this.state.ID
-      })
-    })
-    .then(res=>res.json()) 
-    .then(res=>{if (res.check === 0) {
-                  this.setState({check: null})
-                } else{
-                  this.setState({check: 1})
-                }
-              })
-  }
   doAction(){alert("회원가입 완료 되었습니다.");}
   render() {
 
@@ -123,55 +100,11 @@ handleChange(e){
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h6">
-          회원가입
+          아이디 찾기
         </Typography>
         <form className={useStyles.form} noValidate  onSubmit={this.handleSubmit}  >
           <Grid container spacing={2}>
-           
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="ID"
-                label="ID"
-                name="ID"
-                autoComplete="ID"
-                onChange={this.handleChange}
-                disabled={(this.state.check===null)}//중복체크확인되면 아이디 못바꿈
-              />
-            </Grid>
-            <Button 
-           //아이디 중복체크 확인되면 disabled로 변환
-            type="check"
-            variant="contained"
-            color="white"
-            onClick={this.handleCheck}
-            disabled={(this.state.check===null)}
-          >
-            아이디 중복체크
-          </Button>
-          <Grid>
-           ㅤㅤㅤㅤ 
-           </Grid>
-          <p>
-          {this.state.check ? `사용불가능` : ` ` }
-          </p>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="PASSWORD"
-                label="PASSWORD"
-                name="PASSWORD"
-                autoComplete="PASSWORD"
-               
-              />
-            </Grid>
-           <Grid>
-           </Grid>
-           <Grid item xs={12} >
+            <Grid item xs={12} >
               <TextField
                 autoComplete="fname"
                 name="NAME"
@@ -183,19 +116,30 @@ handleChange(e){
                 autoFocus
               />
             </Grid>
-            <Grid item xs={12} >
+           <Grid item xs={12}>
               <TextField
-                autoComplete="PHONE"
-                name="PHONE"
                 variant="outlined"
                 required
                 fullWidth
                 id="PHONE"
-                label="PHONE (-제외 입력)"
-                autoFocus
+                label="PHONE"
+                name="PHONE"
+                autoComplete="PHONE"
+               
               />
             </Grid>
-            <Button
+
+
+          <Grid>
+           </Grid>
+           
+           <Grid>
+           ㅤㅤㅤㅤ 
+          
+           </Grid>
+          </Grid>
+
+          <Button
             type="submit"
             fullWidth
             variant="contained"
@@ -203,15 +147,9 @@ handleChange(e){
             className={useStyles.submit}
             
           >
-            Sign Up
+            아이디 검색
           </Button>
-          </Grid>
-
         
-          <p>
-          {this.state.success ? `Hello ${this.state.success}` : `${this.state.success}`}
-          </p>
-         
           <Grid container justify="flex-end">
             <Grid item>
               <Link href="Login" variant="body2">
@@ -230,4 +168,4 @@ handleChange(e){
   }
 }
 
-export default Register;
+export default FindID;

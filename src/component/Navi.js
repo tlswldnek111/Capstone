@@ -6,6 +6,8 @@ import { Link, Route, Switch } from 'react-router-dom';
 import Test from './Test';
 import Testgrid from './Testgrid';
 import Register from './Register';
+import FindID from './FindID';
+import FindPW from './FindPW';
 import Login from './Login';
 import Home from './Home';
 class Page404 extends React.Component {
@@ -51,7 +53,8 @@ class Navi extends React.Component {
                 <AppBar  value="true" color="white">  
                 <Switch>
                     <Route exact path="/register" component={Register} /> 
-                   
+                    <Route exact path="/findID" component={FindID} /> 
+                    <Route exact path="/findPW" component={FindPW} /> 
                 </Switch>
                 </AppBar>
                
