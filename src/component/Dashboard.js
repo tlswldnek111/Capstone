@@ -19,7 +19,12 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
-
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Draggable from 'react-draggable';
 
 function Copyright() {
   return (
@@ -33,6 +38,24 @@ function Copyright() {
     </Typography>
   );
 }
+function Login(){
+  
+    if(localStorage.getItem('username')==null) //로그인 해야하는상황일때
+     {return(
+   <IconButton size="small" color="inherit" href="Login">
+              로그인
+          </IconButton>
+          );
+  }
+    else{
+      return(
+        <IconButton size="small" color="inherit" >
+              마이페이지
+          </IconButton>
+      );
+    }
+}
+
 
 const drawerWidth = 240;
 
@@ -124,6 +147,7 @@ export default function Dashboard() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
@@ -140,12 +164,12 @@ export default function Dashboard() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title} >
             Logistics
           </Typography>
 
           <IconButton size="small" color="inherit" href="Login">
-              로그인
+            <Login />
           </IconButton>
 
         </Toolbar>

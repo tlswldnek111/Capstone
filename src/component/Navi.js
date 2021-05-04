@@ -10,6 +10,7 @@ import FindID from './FindID';
 import FindPW from './FindPW';
 import Login from './Login';
 import Home from './Home';
+import Dashboard from './Dashboard';
 class Page404 extends React.Component {
     render() {
         return(
@@ -30,28 +31,33 @@ class Navi extends React.Component {
         this.setState( { value: newValue } );
     }
 
-    render() {
-        return(
-            <div>
-                <AppBar position="static">
+    /*
+     <AppBar position="static">
                     <Tabs value={this.state.value} onChange={this.handleChange}>
                         <Tab label="home" component={Link} to="/" />
-                        <Tab label="login" component={Link} to="/login"/>
                         <Tab label="grid" component={Link} to="/grid"/>
                         <Tab label="test" component={Link} to="/test"/>
+                        <Tab label="dashboard" component={Link} to="/dashboard"/>
                     </Tabs>
                 </AppBar>
-
                 <Switch>
                     <Route exact path="/" component={Home} />
-                    <Route exact path="/login" component={Login} />
                     <Route exact path="/grid" component={Testgrid} />
                     <Route exact path="/test" component={Test} />
                     <Route component={Page404}/>
                 </Switch>
+    */
+    render() {
+        return(
+            <div>
+
+                <Switch>
+                    <Route exact path="/" component={Dashboard} />
+                </Switch>
 
                 <AppBar  value="true" color="white">  
                 <Switch>
+                     <Route exact path="/login" component={Login} />
                     <Route exact path="/register" component={Register} /> 
                     <Route exact path="/findID" component={FindID} /> 
                     <Route exact path="/findPW" component={FindPW} /> 
