@@ -82,6 +82,7 @@ handleChange(e){
     .then(res=>res.json()) 
     .then(res=>{if (res.success === 0) {
                   this.setState({success: null})
+                  alert("잘못입력했습니다. 다시 입력해주세요.");
                 } else{
                   this.setState({success: 1})
                   alert("회원가입 성공");

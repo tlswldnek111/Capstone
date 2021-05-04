@@ -10,6 +10,30 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
+
+function Login(){
+  
+  if(localStorage.getItem('username')==null) //로그인 해야하는상황일때
+   {return(
+    <ListItem button component="a" href="Login">
+    <ListItemText primary="로그인" />
+
+  </ListItem>
+        );
+}
+  else{//localStorage.clear() 
+    return(//로그인
+      <ListItem button component="a" href="/" >
+      <ListItemText primary="로그아웃" onClick={Logout}/>
+    </ListItem>
+       
+    );
+  }
+}
+function Logout(){
+  localStorage.clear();
+  alert('로그아웃되었습니다.');
+}
 export const mainListItems = (
   <div>
     <ListItem button>
@@ -33,6 +57,7 @@ export const mainListItems = (
 );
 
 export const secondaryListItems = (
+  
   <div>
     <ListSubheader inset>마이페이지</ListSubheader>
     <ListItem button>
@@ -44,7 +69,8 @@ export const secondaryListItems = (
     </ListItem>
 
     <ListItem button>
-      <ListItemText primary="TEST" />
+      <Login/>
     </ListItem>
+
   </div>
 );
