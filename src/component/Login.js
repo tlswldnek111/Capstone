@@ -72,8 +72,13 @@ class Login extends React.Component {
       .then(res=>res.json())
       .then(res=>{if (res.length === 0) {
                     this.setState({username: null})
+                    alert("아이디 혹은 비밀번호를 잘못입력하셨습니다.");
                   } else{
                     this.setState({username: res[0].NAME})
+                    alert( `환영합니다 ${this.state.username} 님`);
+                    localStorage.setItem('username',`${this.state.username}`);
+                    window.location.href = "/";//확인 누르면 홈으로 이동
+
                   }
                 })
     }
