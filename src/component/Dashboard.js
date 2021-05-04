@@ -48,10 +48,11 @@ function Login(){
           );
   }
     else{
-      return(
-        <IconButton size="small" color="inherit" >
-              마이페이지
+      return(//로그인했으니까 마이페이지로 넘어가면 될듯 
+        <IconButton size="small" color="inherit" href="/">
+           {localStorage.getItem('username')}님, 환영합니다 !
           </IconButton>
+         
       );
     }
 }
