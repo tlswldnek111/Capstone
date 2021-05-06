@@ -59,3 +59,9 @@ function onListening() {
 var MediaServer = require('../rtmp');
 
 MediaServer.run();
+
+var ChatServer = require('../chat');
+
+ChatServer.listen(3003, () => {
+    console.log(`ChatServer is running on 3003`);
+  });

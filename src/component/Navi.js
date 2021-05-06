@@ -11,6 +11,7 @@ import FindPW from './FindPW';
 import Login from './Login';
 import Home from './Home';
 import Dashboard from './Dashboard';
+import Live from './Live';
 class Page404 extends React.Component {
     render() {
         return(
@@ -57,10 +58,11 @@ class Navi extends React.Component {
 
                 <AppBar  value="true" color="white">  
                 <Switch>
-                     <Route exact path="/login" component={Login} />
+                    <Route exact path="/login" component={Login} />
                     <Route exact path="/register" component={Register} /> 
                     <Route exact path="/findID" component={FindID} /> 
                     <Route exact path="/findPW" component={FindPW} /> 
+                    <Route exact path="/live" component={Live} />
                 </Switch>
                 </AppBar>
                

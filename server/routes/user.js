@@ -126,4 +126,41 @@ router.post('/check_id', function(req, res, next) {
   })
 })
 
+router.post('/find_id', function(req, res, next) {
+  oracledb.getConnection({
+    user : dbConfig.user,
+    password : dbConfig.password,
+    connectString : dbConfig.connectString
+  },
+  function(err, connection) {
+    if (err) {
+      console.error(err.message);
+      return;
+    }
+    
+    var param = {
+      NAME: req.body.ID,
+      PHONE: req.body.PHONE
+    };
+
+    let format = {language: 'sql', indent: ' '};
+    let query = mybatisMapper.getStatement('oracleMapper', 'findId', param, format);
+    console.log(query);
+
+    connection.execute(query, [], function(err, result) {
+      if (err) {
+        console.error(err.message);
+      } else {
+        if (result['rows'][0][0] === 0) {
+          res.json({ check: 0});
+        }
+        else {
+          res.json({ check: 1});
+        }
+      }
+      connection.close();
+    });
+  })
+})
+
 module.exports = router;

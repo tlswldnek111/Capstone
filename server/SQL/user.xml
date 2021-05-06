@@ -17,6 +17,20 @@
     <select id="checkId">
         SELECT COUNT(ID)
           FROM USERS
-        WHERE ID = #{ID}
+         WHERE ID = #{ID}
+    </select>
+
+    <select id="findId">
+        SELECT ID
+          FROM USERS
+         WHERE NAME = #{NAME}
+           AND PHONE = #{PHONE}
+    </select>
+
+    <select id="findPw">
+        SELECT PASSWORD
+          FROM USERS
+         WHERE ID = #{ID}
+           AND PASSWORD = #{PASSWORD}
     </select>
 </mapper>

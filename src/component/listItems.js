@@ -40,9 +40,8 @@ export const mainListItems = (
       <ListItemText primary="" />
     </ListItem>
 
-    <ListItem button>
-      <ListItemText primary="LIVE" />
-     
+    <ListItem button component="a" href="live">
+      <ListItemText primary="LIVE"/>
     </ListItem>
 
     <ListItem button>
