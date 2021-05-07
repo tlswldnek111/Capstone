@@ -1,11 +1,26 @@
-import http from "http";
-import express from "express";
-import io from "socket.io";
-const app = express();
-const httpServer = http.createServer(app).listen(3003, () => {
-    console.log("포트 3003에 연결되었습니다.");
-});
-const socketServer = io(httpServer);
-socketServer.on("connection", socket => {
-    console.log("connect client by Socket.io");
-});
+const express = require('express')
+const app = express()
+const Server = require('http').createServer(app)
+const Port = 3003
+
+Server.listen(Port, () => {
+    console.log('채팅서버 실행 완료', 'http://localhost:' + Port)
+})
+ 
+const io = require('socket.io')(Server, {
+    cors: {
+      origin: "http://localhost:3000",
+      methods: ["GET", "POST"]
+    }
+  });
+
+io.on('connection', (socket) => {
+    console.log('사용자 접속: ', socket.client.id)
+
+    socket.on('chat-msg', (msg) => {
+        console.log('message: ', msg)
+        io.emit('chat-msg', msg)
+    })
+})
+
+module.exports = io;
