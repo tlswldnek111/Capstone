@@ -2,7 +2,6 @@ import React from 'react';
 import io from "socket.io-client";
 import SplitPane from 'react-split-pane/lib/SplitPane';
 import Pane from 'react-split-pane/lib/Pane'
-import { Height } from '@material-ui/icons';
 
 const socket = io("http://localhost:3003");
 
@@ -25,6 +24,8 @@ class ChatForm extends React.Component {
       message: e.target.message.value
     });
     this.setState({message: ''});
+    let message = document.getElementById('message');
+    message.value = '';
   }
   render() {
     return(
@@ -43,8 +44,10 @@ class Chat extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      logs: []
+      logs: [],
+      height: 0
     }
+    console.log('props 테스트 ' + this.props.height);
   }
 
   componentDidMount() {
@@ -55,7 +58,18 @@ class Chat extends React.Component {
       logs2.push(obj);
       this.setState({logs: logs2});
     })
+    this.setState({
+      height: this.props.height
+    });
   }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (this.props.height !== prevProps.height) {
+      this.setState({
+        height: this.props.height
+      });
+    }
+  };
 
   render() {
     const messages = this.state.logs.map(e => (
@@ -63,17 +77,17 @@ class Chat extends React.Component {
         <span>{e.id}: </span>
         <span>{e.message}</span>
       </div>
-    ))
+    ));
     return(
       <SplitPane split="horizontal">
-        <Pane initialSize="90%">
-          <div style={{overflowY:'scroll', height:'100%'}}>
+        <Pane initialSize='90%'>
+          <div style={{overflowY:'scroll', height: this.state.height * 0.9}}>
             {messages}
           </div>
         </Pane>
         <Pane><ChatForm/></Pane>
       </SplitPane>
-    )
+    );
   }
 }
 
