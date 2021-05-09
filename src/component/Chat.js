@@ -3,9 +3,10 @@ import io from "socket.io-client";
 import SplitPane from 'react-split-pane/lib/SplitPane';
 import Pane from 'react-split-pane/lib/Pane'
 
-const socket = io("http://localhost:3003");
+const socket = io("http://121.145.133.119:3003");
 
 socket.on("connect", () => { console.log("connection server"); });
+const internalIp = require('internal-ip');
 
 class Chat extends React.Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class Chat extends React.Component {
     }
     this.send = this.send.bind(this);
     this.scrollToBottom = this.scrollToBottom.bind(this);
+    console.log('myip:' + internalIp.v4.sync());
   }
 
   send(e) {

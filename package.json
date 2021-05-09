@@ -21,6 +21,8 @@
     "helmet": "^4.5.0",
     "http-errors": "^1.8.0",
     "http-proxy-middleware": "^0.19.2",
+    "internal-ip": "^6.2.0",
+    "ip": "^1.1.5",
     "jade": "^1.11.0",
     "morgan": "^1.10.0",
     "mybatis-mapper": "^0.6.5",
