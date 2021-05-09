@@ -17,7 +17,7 @@ class Chat extends React.Component {
       height: 0
     }
     this.send = this.send.bind(this);
-    this.scrollToChange = this.scrollToChange.bind(this);
+    this.scrollToBottom = this.scrollToBottom.bind(this);
   }
 
   send(e) {
