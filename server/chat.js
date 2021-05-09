@@ -3,16 +3,13 @@ const app = express()
 const Server = require('http').createServer(app)
 const Port = 3003
 
-const ip = require("ip");
-const myIp = ip.address();
-
 Server.listen(Port, () => {
     console.log('채팅서버 실행 완료', 'http://localhost:' + Port)
 })
  
 const io = require('socket.io')(Server, {
     cors: {
-      origin: "*",
+      origin: "http://121.145.133.119:3000",
       methods: ["GET", "POST"]
     }
   });
