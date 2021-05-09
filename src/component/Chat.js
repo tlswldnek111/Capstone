@@ -7,15 +7,19 @@ const socket = io("http://localhost:3003");
 
 socket.on("connect", () => { console.log("connection server"); });
 
-class ChatForm extends React.Component {
+class Chat extends React.Component {
   constructor(props) {
-    super(props);
-        this.state = {
-            id: '',
-            message: ''
-        };
+    super(props)
+    this.state = {
+      id: '',
+      message: '',
+      logs: [],
+      height: 0
+    }
     this.send = this.send.bind(this);
-  };
+    this.scrollToChange = this.scrollToChange.bind(this);
+  }
+
   send(e) {
     e.preventDefault();
     console.log('아이디 ' + e.target.id.value + '메세지 ' + e.target.message);
@@ -26,28 +30,6 @@ class ChatForm extends React.Component {
     this.setState({message: ''});
     let message = document.getElementById('message');
     message.value = '';
-  }
-  render() {
-    return(
-      <div>
-        <form onSubmit={this.send}>
-          <input id="id"></input>
-          <input id="message"></input>
-          <button type="submit"> 보내기 </button>
-        </form>
-      </div>
-    );
-  };
-}
-
-class Chat extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      logs: [],
-      height: 0
-    }
-    console.log('props 테스트 ' + this.props.height);
   }
 
   componentDidMount() {
@@ -69,7 +51,13 @@ class Chat extends React.Component {
         height: this.props.height
       });
     }
+    this.scrollToBottom();
   };
+
+  scrollToBottom =() =>{
+    const objDiv = document.getElementById('MessageBox');
+    objDiv.scrollTop = objDiv.scrollHeight;
+  }
 
   render() {
     const messages = this.state.logs.map(e => (
@@ -81,11 +69,21 @@ class Chat extends React.Component {
     return(
       <SplitPane split="horizontal">
         <Pane initialSize='90%'>
-          <div style={{overflowY:'scroll', height: this.state.height * 0.9}}>
+          <div 
+          id="MessageBox"
+          style={{overflowY:'scroll', height: this.state.height * 0.9}}>
             {messages}
           </div>
         </Pane>
-        <Pane><ChatForm/></Pane>
+        <Pane>
+          <div>
+            <form onSubmit={this.send}>
+              <input id="id"></input>
+              <input id="message"></input>
+              <button type="submit"> 보내기 </button>
+            </form>
+          </div>
+        </Pane>
       </SplitPane>
     );
   }
