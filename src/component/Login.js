@@ -52,7 +52,9 @@ class Login extends React.Component {
         super(props);
         this.state = {
             id:null,
-            username:null
+            username:null,
+            password:null,
+            phone:null
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -75,10 +77,16 @@ class Login extends React.Component {
                     alert("아이디 혹은 비밀번호를 잘못입력하셨습니다.");
                   } else{
                     this.setState({username: res[0].NAME})
-                    alert( `환영합니다 ${this.state.username} 님`);
+                    this.setState({id: res[0].ID})
+                    this.setState({password: res[0].PASSWROD})
+                    this.setState({phone: res[0].PHONE})
+                   
                     localStorage.setItem('username',`${this.state.username}`);
+                    localStorage.setItem('id',`${this.state.id}`);
+                    localStorage.setItem('password',`${this.state.password}`);
+                    localStorage.setItem('phone',`${this.state.phone}`);
                     window.location.href = "/";//확인 누르면 홈으로 이동
-
+                    alert( `환영합니다 ${this.state.username} 님`);
                   }
                 })
     }

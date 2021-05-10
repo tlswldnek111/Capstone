@@ -83,12 +83,27 @@ handleSubmit(event) {
                 } else{
                 this.setState({message:'회원정보 수정'})
                 this.setState({text: '수정'})
+                this.setState({PHONE:localStorage.getItem('phone')})
+                this.setState({NAME:localStorage.getItem('username')})
                 }
               })
   }
   else if (this.state.text==='수정') {
-
-
+    fetch('http://localhost:3001/user/update', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            NAME: event.target.NAME.value,
+            ID: event.target.ID.value,
+            PASSWORD: event.target.PASSWORD.value ,
+            PHONE: event.target.PHONE.value 
+        })
+      })
+      .then(res=>res.json())
+      .then(res=>{   alert("정상적으로 수정되었습니다!");})
+             window.location.href = "/";//확인 누르면 홈으로 이동
   }
 }
   render() {
@@ -120,7 +135,7 @@ handleSubmit(event) {
                 name="ID"
                 autoComplete="ID"
                 disabled//아이디는 고정되어있음.
-                value={localStorage.getItem('username')}
+                value={localStorage.getItem('id')}
               />
             </Grid>
            <Grid item xs={12}>
@@ -147,7 +162,6 @@ handleSubmit(event) {
                       label="NAME"
                       name="NAME"
                       autoComplete="NAME"
-                     
                     />
                   </Grid>
                      <Grid>
@@ -162,7 +176,6 @@ handleSubmit(event) {
                       label="PHONE"
                       name="PHONE"
                       autoComplete="PHONE"
-                     
                     />
                   </Grid>
                   

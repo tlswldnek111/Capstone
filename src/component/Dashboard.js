@@ -50,7 +50,7 @@ function Login(){
     else{
       return(//로그인
         <IconButton size="small" color="inherit" href="/">
-           {localStorage.getItem('username')}님, 환영합니다 !
+           {localStorage.getItem('id')}님, 환영합니다 !
           </IconButton>
          
       );
