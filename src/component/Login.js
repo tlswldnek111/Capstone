@@ -139,13 +139,18 @@ class Login extends React.Component {
           <Grid container>
           <Grid item xs>
         <Link href="FindID" variant="body1">
-         -아이디 찾기-
+         아이디 찾기
         </Link>
+/
         <Link href="FindPW" variant="body1">
-            -비밀번호 찾기-
+            비밀번호 찾기
         </Link>
           </Grid>
           <Grid item>
+          <Link href="/" variant="body1">
+            메인화면으로
+        </Link>
+        /
          <Link href="Register" variant="body1">
           회원가입
         </Link>

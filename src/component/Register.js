@@ -76,7 +76,8 @@ handleChange(e){
       body: JSON.stringify({
         NAME: event.target.NAME.value,
         ID: event.target.ID.value,
-        PASSWORD: event.target.PASSWORD.value 
+        PASSWORD: event.target.PASSWORD.value ,
+        PHONE: event.target.PHONE.value 
       })
     })
     .then(res=>res.json()) 
@@ -84,7 +85,6 @@ handleChange(e){
                   this.setState({success: null})
                   alert("잘못입력했습니다. 다시 입력해주세요.");
                 } else{
-                  this.setState({success: 1})
                   alert("회원가입 성공");
                   window.location.href = "/";//확인 누르면 홈으로 이동
                 }

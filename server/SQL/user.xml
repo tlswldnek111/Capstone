@@ -11,7 +11,7 @@
 
     <insert id="insertUserInfo">
         INSERT INTO USERS
-        VALUES( #{ID} ,#{PASSWORD}, #{NAME} )
+        VALUES( #{ID} ,#{PASSWORD}, #{NAME} ,#{PHONE})
     </insert>
 
     <select id="checkId">
@@ -21,16 +21,16 @@
     </select>
 
     <select id="findId">
-        SELECT ID
+        SELECT ID 
           FROM USERS
          WHERE NAME = #{NAME}
            AND PHONE = #{PHONE}
     </select>
 
-    <select id="findPw">
+    <select id="findPW">
         SELECT PASSWORD
           FROM USERS
          WHERE ID = #{ID}
-           AND PASSWORD = #{PASSWORD}
+           AND PHONE = #{PHONE}
     </select>
 </mapper>

@@ -64,28 +64,27 @@ class FindPW extends React.Component{
 
 handleSubmit(event) {
     event.preventDefault();
-    fetch('http://localhost:3001/user/register', {
+    fetch('http://localhost:3001/user/find_pw', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        NAME: event.target.NAME.value,
         ID: event.target.ID.value,
-        PASSWORD: event.target.PASSWORD.value 
+        PHONE: event.target.PHONE.value 
       })
     })
     .then(res=>res.json()) 
-    .then(res=>{if (res.success === 0) {
-                  this.setState({success: null})
-                } else{
-                  this.setState({success: 1})
-                  alert("회원가입 성공");
+    .then(res=>{  if(res.PASSWORD.length<=0){ //없을때..
+                      alert("일치하지 않는 정보입니다."); 
+                 }else//값이 있을때....
+                {
+                  alert("현재 비밀번호 : "+res.PASSWORD); //아이디 검색에 성공한경우
                   window.location.href = "/";//확인 누르면 홈으로 이동
                 }
-              })
-  }
-  doAction(){alert("회원가입 완료 되었습니다.");}
+
+})
+}
   render() {
 
     return (

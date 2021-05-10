@@ -71,7 +71,8 @@ router.post('/register', function(req, res, next) {
     var param = {
       ID: req.body.ID,
       NAME: req.body.NAME,
-      PASSWORD: req.body.PASSWORD
+      PASSWORD: req.body.PASSWORD,
+      PHONE: req.body.PHONE
     };
 
     let format = {language: 'sql', indent: ' '};
@@ -115,10 +116,10 @@ router.post('/check_id', function(req, res, next) {
         console.error(err.message);
       } else {
         if (result['rows'][0][0] === 0) {
-          res.json({ check: 0});
+          res.json({ check: 0});//없을때
         }
         else {
-          res.json({ check: 1});
+          res.json({ check: 1});//있을때
         }
       }
       connection.close();
@@ -139,7 +140,7 @@ router.post('/find_id', function(req, res, next) {
     }
     
     var param = {
-      NAME: req.body.ID,
+      NAME: req.body.NAME,
       PHONE: req.body.PHONE
     };
 
@@ -151,11 +152,44 @@ router.post('/find_id', function(req, res, next) {
       if (err) {
         console.error(err.message);
       } else {
-        if (result['rows'][0][0] === 0) {
-          res.json({ check: 0});
+        if (result['rows']) {//존재하면 열전체가가는데 검색값없으면 배열수는0 있으면 1
+           res.json({ ID:result['rows']});
+          console.log(result['rows']);
         }
-        else {
-          res.json({ check: 1});
+      }
+      connection.close();
+    });
+  })
+})
+
+router.post('/find_pw', function(req, res, next) {
+  oracledb.getConnection({
+    user : dbConfig.user,
+    password : dbConfig.password,
+    connectString : dbConfig.connectString
+  },
+  function(err, connection) {
+    if (err) {
+      console.error(err.message);
+      return;
+    }
+    
+    var param = {
+      ID: req.body.ID,
+      PHONE: req.body.PHONE
+    };
+
+    let format = {language: 'sql', indent: ' '};
+    let query = mybatisMapper.getStatement('oracleMapper', 'findPW', param, format);
+    console.log(query);
+
+    connection.execute(query, [], function(err, result) {
+      if (err) {
+        console.error(err.message);
+      } else {
+        if (result['rows']) {//존재하면 열전체가가는데 검색값없으면 배열수는0 있으면 1
+           res.json({ PASSWORD:result['rows']});
+          console.log(result['rows']);
         }
       }
       connection.close();
