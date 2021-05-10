@@ -33,4 +33,19 @@
          WHERE ID = #{ID}
            AND PHONE = #{PHONE}
     </select>
+
+    <update id="updateUser">
+        UPDATE USERS
+           SET ID = #{ID}
+           <if test="PASSWORD != null">
+               ,PASSWORD = #{PASSWORD}
+           </if>
+           <if test="NAME != null">
+               ,NAME = #{NAME}
+           </if>
+           <if test="PHONE != null">
+               ,PHONE = #{PHONE}
+           </if>
+         WHERE ID = #{ID}
+    </update>
 </mapper>

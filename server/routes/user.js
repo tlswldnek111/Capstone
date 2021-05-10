@@ -37,19 +37,7 @@ router.post('/login', function(req, res, next) {
       if (err) {
         console.error(err.message);
       } else {
-        var column = [];
-        var row = {};
-        var data = [];
-        for (var i of result.metaData) {
-          column.push(i['name']);
-        }
-        for (var i = 0; i < result.rows.length; i++) {
-          for (var j = 0; j < column.length; j++) {
-            row[column[j]] = result.rows[i][j];
-          }
-          data.push(row);
-        }
-        res.json(data);
+        res.json(Update_data(result));
       }
       connection.close();
     });
@@ -71,8 +59,7 @@ router.post('/register', function(req, res, next) {
     var param = {
       ID: req.body.ID,
       NAME: req.body.NAME,
-      PASSWORD: req.body.PASSWORD,
-      PHONE: req.body.PHONE
+      PASSWORD: req.body.PASSWORD
     };
 
     let format = {language: 'sql', indent: ' '};
@@ -116,10 +103,10 @@ router.post('/check_id', function(req, res, next) {
         console.error(err.message);
       } else {
         if (result['rows'][0][0] === 0) {
-          res.json({ check: 0});//없을때
+          res.json({ check: 0});
         }
         else {
-          res.json({ check: 1});//있을때
+          res.json({ check: 1});
         }
       }
       connection.close();
@@ -140,7 +127,7 @@ router.post('/find_id', function(req, res, next) {
     }
     
     var param = {
-      NAME: req.body.NAME,
+      NAME: req.body.ID,
       PHONE: req.body.PHONE
     };
 
@@ -152,9 +139,11 @@ router.post('/find_id', function(req, res, next) {
       if (err) {
         console.error(err.message);
       } else {
-        if (result['rows']) {//존재하면 열전체가가는데 검색값없으면 배열수는0 있으면 1
-           res.json({ ID:result['rows']});
-          console.log(result['rows']);
+        if (result['rows'][0][0] === 0) {
+          res.json({ check: 0});
+        }
+        else {
+          res.json({ check: 1});
         }
       }
       connection.close();
@@ -162,7 +151,23 @@ router.post('/find_id', function(req, res, next) {
   })
 })
 
-router.post('/find_pw', function(req, res, next) {
+function Update_data(result) {
+  var column = [];
+  var row = {};
+  var data = [];
+  for (var i of result.metaData) {
+    column.push(i['name']);
+  }
+  for (var i = 0; i < result.rows.length; i++) {
+    for (var j = 0; j < column.length; j++) {
+      row[column[j]] = result.rows[i][j];
+    }
+    data.push(row);
+  }
+  return data;
+}
+
+router.post('/update', function(req, res, next) {
   oracledb.getConnection({
     user : dbConfig.user,
     password : dbConfig.password,
@@ -174,27 +179,30 @@ router.post('/find_pw', function(req, res, next) {
       return;
     }
     
+    const PASSWORD = req.body.PASSWORD ? req.body.PASSWORD : null;
+    const NAME = req.body.NAME ? req.body.NAME : null;
+    const PHONE = req.body.PHONE ? req.body.PHONE : null;
+
     var param = {
       ID: req.body.ID,
-      PHONE: req.body.PHONE
+      PASSWORD: PASSWORD,
+      NAME: NAME,
+      PHONE: PHONE
     };
 
     let format = {language: 'sql', indent: ' '};
-    let query = mybatisMapper.getStatement('oracleMapper', 'findPW', param, format);
+    let query = mybatisMapper.getStatement('oracleMapper', 'updateUser', param, format);
     console.log(query);
 
     connection.execute(query, [], function(err, result) {
       if (err) {
         console.error(err.message);
       } else {
-        if (result['rows']) {//존재하면 열전체가가는데 검색값없으면 배열수는0 있으면 1
-           res.json({ PASSWORD:result['rows']});
-          console.log(result['rows']);
-        }
+        res.json(result);
       }
       connection.close();
     });
   })
-})
+});
 
 module.exports = router;
