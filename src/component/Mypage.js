@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 class Register extends React.Component{
 
   constructor(props) {
@@ -53,63 +54,43 @@ class Register extends React.Component{
     this.state = {
         success:0,
         check:0,
-        message: '',
+        message: '로그인',
         ID:0,
         NAME:null,
         PASSWORD:null,
         PHONE:null,
+        text:'로그인',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleCheck = this.handleCheck.bind(this);
-    this.handleChange = this.handleChange.bind(this);
 }
-handleChange(e){
-    this.setState({ID:e.target.value});
-}
-  handleSubmit(event) {
+
+handleSubmit(event) {
     event.preventDefault();
-    fetch('http://localhost:3001/user/register', {
+    if(this.state.text==='로그인'){
+    fetch('http://localhost:3001/user/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        NAME: event.target.NAME.value,
         ID: event.target.ID.value,
-        PASSWORD: event.target.PASSWORD.value ,
-        PHONE: event.target.PHONE.value 
+        PASSWORD: event.target.PASSWORD.value
       })
     })
-    .then(res=>res.json()) 
-    .then(res=>{if (res.success === 0) {
-                  this.setState({success: null})
-                  alert("잘못입력했습니다. 다시 입력해주세요.");
+    .then(res=>res.json())
+    .then(res=>{if (res.length === 0) {
+                  alert("아이디 혹은 비밀번호를 잘못입력하셨습니다.");
                 } else{
-                  alert("회원가입 성공");
-                  window.location.href = "/";//확인 누르면 홈으로 이동
+                this.setState({message:'회원정보 수정'})
+                this.setState({text: '수정'})
                 }
               })
   }
-  handleCheck(event) {
-    event.preventDefault();
-    fetch('http://localhost:3001/user/check_id', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        ID: this.state.ID
-      })
-    })
-    .then(res=>res.json()) 
-    .then(res=>{if (res.check === 0) {
-                  this.setState({check: null})
-                } else{
-                  this.setState({check: 1})
-                }
-              })
+  else if (this.state.text==='수정') {
+
+
   }
-  doAction(){alert("회원가입 완료 되었습니다.");}
+}
   render() {
 
     return (
@@ -121,16 +102,16 @@ handleChange(e){
           
            </Grid>
         <Avatar className={useStyles.avatar}>
-          <LockOutlinedIcon />
+          <LockOutlinedIcon /> 
         </Avatar>
         <Typography component="h1" variant="h6">
-          회원가입
+          {this.state.message}
         </Typography>
+
         <form className={useStyles.form} noValidate  onSubmit={this.handleSubmit}  >
           <Grid container spacing={2}>
-           
-            <Grid item xs={18} sm={6}>
-              <TextField
+          <Grid item xs={12} >
+           <TextField
                 variant="outlined"
                 required
                 fullWidth
@@ -138,27 +119,11 @@ handleChange(e){
                 label="ID"
                 name="ID"
                 autoComplete="ID"
-                onChange={this.handleChange}
-                disabled={(this.state.check===null)}//중복체크확인되면 아이디 못바꿈
+                disabled//아이디는 고정되어있음.
+                value={localStorage.getItem('username')}
               />
             </Grid>
-            <Button 
-           //아이디 중복체크 확인되면 disabled로 변환
-            type="check"
-            variant="contained"
-            color="white"
-            onClick={this.handleCheck}
-            disabled={(this.state.check===null)}
-          >
-            아이디 중복체크
-          </Button>
-          <Grid>
-           ㅤㅤㅤㅤ 
-           </Grid>
-          <p>
-          {this.state.check ? `사용불가능` : ` ` }
-          </p>
-            <Grid item xs={12}>
+           <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
@@ -170,53 +135,59 @@ handleChange(e){
                
               />
             </Grid>
-           <Grid>
-           </Grid>
-           <Grid item xs={12} >
-              <TextField
-                autoComplete="fname"
-                name="NAME"
-                variant="outlined"
-                required
-                fullWidth
-                id="NAME"
-                label="NAME"
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} >
-              <TextField
-                autoComplete="PHONE"
-                name="PHONE"
-                variant="outlined"
-                required
-                fullWidth
-                id="PHONE"
-                label="PHONE (-제외 입력)"
-                autoFocus
-              />
-            </Grid>
+            
+           { this.state.text==='수정' ?  
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="NAME"
+                      label="NAME"
+                      name="NAME"
+                      autoComplete="NAME"
+                     
+                    />
+                  </Grid>
+                     <Grid>
+
+                    </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="PHONE"
+                      label="PHONE"
+                      name="PHONE"
+                      autoComplete="PHONE"
+                     
+                    />
+                  </Grid>
+                  
+                  </Grid>
+                  
+                  : <div></div>}
+
+                  
             <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={useStyles.submit}
-            
           >
-            Sign Up
+           {this.state.text}
           </Button>
           </Grid>
 
-        
-          <p>
-          {this.state.success ? `Hello ${this.state.success}` : `${this.state.success}`}
-          </p>
+          <p> </p>
          
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="Login" variant="body2">
-               로그인하러 가기
+              <Link href="/" variant="body2">
+               뒤로가기
               </Link>
             </Grid>
           </Grid>

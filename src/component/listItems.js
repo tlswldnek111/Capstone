@@ -34,6 +34,24 @@ function Logout(){
   localStorage.clear();
   alert('로그아웃되었습니다.');
 }
+
+function Mypage(){
+  if(localStorage.getItem('username')!=null) //로그인 되있는 상태일때
+  {//localStorage.clear() 
+   return(
+   
+     <ListItem button component="a" href="/mypage" >
+     <ListItemText primary="회원정보수정" />
+   </ListItem>
+     
+   );
+ }
+ else{
+   return(<p></p>);//로그아웃상태에선 마이페이지를 볼수없음.
+ }
+
+}
+
 export const mainListItems = (
   <div>
     <ListItem button>
@@ -58,18 +76,17 @@ export const mainListItems = (
 export const secondaryListItems = (
   
   <div>
-    <ListSubheader inset>마이페이지</ListSubheader>
-    <ListItem button>
-      <ListItemText primary="TEST" />
-    </ListItem>
-
-    <ListItem button>
-      <ListItemText primary="TEST" />
-    </ListItem>
-
-    <ListItem button>
+     <ListItemText >
       <Login/>
-    </ListItem>
+    </ListItemText>
 
+    <ListItemText >
+      <Mypage/>
+    </ListItemText>
+
+    <ListItem button>
+      <ListItemText primary="TEST" />
+    </ListItem>
+ 
   </div>
 );
