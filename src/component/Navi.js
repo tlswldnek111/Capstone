@@ -13,6 +13,8 @@ import Home from './Home';
 import Dashboard from './Dashboard';
 import Live from './Live';
 import Mypage from './Mypage';
+import Noticeboard from './Noticeboard';
+
 class Page404 extends React.Component {
     render() {
         return(
@@ -54,6 +56,7 @@ class Navi extends React.Component {
             <div>
                 <Switch>
                     <Route exact path="/" component={Dashboard} />
+                    <Route exact path="/noticeboard" component={Noticeboard} />
                 </Switch>
 
                 <AppBar  value="true" color="white">  

@@ -198,9 +198,7 @@ export default function Dashboard() {
           <Grid container spacing={2}> 
          
             <Grid item xs={12} md={4} lg={9}>
-              <Paper className={fixedHeightPaper}>
-               테스트
-              </Paper>
+             <button>안녕</button>
             </Grid>
            
             <Grid item xs={12} md={4} lg={3}>

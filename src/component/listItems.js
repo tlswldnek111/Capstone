@@ -66,7 +66,7 @@ export const mainListItems = (
       <ListItemText primary="카테고리" />
     </ListItem>
 
-    <ListItem button>
+    <ListItem button component="a" href="noticeboard">
       <ListItemText primary="시청자 게시판" />
     </ListItem>
 
