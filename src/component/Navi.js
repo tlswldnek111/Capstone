@@ -14,6 +14,7 @@ import Dashboard from './Dashboard';
 import Live from './Live';
 import Mypage from './Mypage';
 import Noticeboard from './Noticeboard';
+import Write from './Write';
 
 class Page404 extends React.Component {
     render() {
@@ -67,6 +68,7 @@ class Navi extends React.Component {
                     <Route exact path="/findPW" component={FindPW} /> 
                     <Route exact path="/live" component={Live} />
                     <Route exact path="/mypage" component={Mypage} />
+                    <Route exact path="/write" component={Write} />
                 </Switch>
                 </AppBar>
                
