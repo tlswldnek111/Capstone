@@ -14,6 +14,8 @@ import Divider from '@material-ui/core/Divider';
 import DirectionsIcon from '@material-ui/icons/Directions';
 import MenuIcon from '@material-ui/icons/Menu';
 
+import clsx from 'clsx';
+import CssBaseline from '@material-ui/core/CssBaseline';
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
     toolbar: {
@@ -39,9 +41,10 @@ const useStyles = makeStyles((theme) => ({
     flexShrink: 0,
   },
   root: {
-    padding: '2px 2px',
     display: 'flex',
-    width: 200,
+    width: `calc(100%)`,
+    justifyContent: 'space-between',
+    overflowX: 'auto',
   },
   input: {
     padding: '2px 2px',
@@ -85,8 +88,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const section = [
+  { title: '홈', url: '/' },
   { title: '라이브', url: 'live' },
   { title: '방송', url: '#' },
+  { title: '테스트', url: 'test' },
 ];
 
 
@@ -116,13 +121,13 @@ export default function Header(props) {
   const { title } = props;
 
   return (
-    <React.Fragment>
+   <div className={classes.root}>
+      <CssBaseline /> 
       <Toolbar className={classes.toolbar}>
-        <IconButton component="h1" variant="h6" color="inherit" href="/">
-          Logistics
-        </IconButton>
-        </Toolbar>
-
+      <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title} >
+            Logistics
+          </Typography>
+      </Toolbar>
       <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
         {section.map((section) => (
           <Link
@@ -137,8 +142,8 @@ export default function Header(props) {
           </Link>
         ))}
       </Toolbar>
-
-    </React.Fragment>
+      </div>
+    
   );
 }
 

@@ -30,7 +30,7 @@ import Header from './Header';
 import Tablee from './Tablee';
 import SplitPane from 'react-split-pane/lib/SplitPane';
 import Pane from 'react-split-pane/lib/Pane';
-
+import Button from '@material-ui/core/Button';
 const drawerWidth = 240;
 
 const sections = [
@@ -97,26 +97,6 @@ function Copyright() {
     title: {
       flexGrow: 1,
     },
-    drawerPaper: {
-      position: 'relative',
-      whiteSpace: 'nowrap',
-      width : drawerWidth,
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    },
-    drawerPaperClose: {
-      overflowX: 'hidden',
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      width: theme.spacing(0),
-      [theme.breakpoints.up('sm')]: {
-        width: theme.spacing(0),
-      },
-    },
     appBarSpacer: theme.mixins.toolbar,
     content: {
       flexGrow: 1,
@@ -140,8 +120,15 @@ function Copyright() {
     mainGrid: {
         marginTop: theme.spacing(3),
       },
+      list: {
+        width: 250,
+      },
+      fullList: {
+        width: 'auto',
+      },
+    
   }));
-
+ 
   export default function Noticeboard(){
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
@@ -152,46 +139,55 @@ function Copyright() {
       setOpen(false);
     };
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+    const [state, setState] = React.useState({
+      left: false,
+    });
+    const toggleDrawer = (anchor, open) => (event) => {
+      if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+        return;
+      }
+  
+      setState({ ...state, [anchor]: open });
+    };
+  
+    const list = (anchor) => (
+      <div
+        className={clsx(classes.list, {
+          [classes.fullList]: anchor === 'top' || anchor === 'bottom',
+        })}
+        role="presentation"
+        onClick={toggleDrawer(anchor, false)}
+        onKeyDown={toggleDrawer(anchor, false)}
+      >
+        
+        <Divider />
+          <List>{mainListItems}</List>
+          <Divider />
+          <List>{secondaryListItems}</List>
+       
+        
+      </div>
+    );
     return(
      <div className={classes.root}>
          <CssBaseline />
-
-
-
          <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
              <Toolbar className={classes.toolbar}>
-                 <IconButton
-                 edge="start"
-                 color="inherit"
-                 aria-label="open drawer"
-                 onClick={handleDrawerOpen}
-                 className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-                 >
-                     <MenuIcon />
-                 </IconButton>
-                 <Header title="Logistics"  />
-               
-                
+           
+             {['MENU'].map((anchor) => (
+        <React.Fragment key={anchor}>
+          <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
+          <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
+            {list(anchor)}
+          </Drawer>
+        </React.Fragment>
+      ))}
+
+           <Header title="Logistics"  />
              </Toolbar>
          </AppBar>
   
-         <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-        }}
-        open={open}
-      >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <List>{mainListItems}</List>
-        <Divider />
-        <List>{secondaryListItems}</List>
-      </Drawer>
+             
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
       
