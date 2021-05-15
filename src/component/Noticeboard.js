@@ -169,7 +169,7 @@ function Copyright() {
                  >
                      <MenuIcon />
                  </IconButton>
-                 <Header title="Logistics" sections={sections} />
+                 <Header title="Logistics"  />
                
                 
              </Toolbar>
