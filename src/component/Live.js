@@ -3,7 +3,7 @@ import ReactHlsPlayer from 'react-hls-player';
 import Chat from './Chat';
 import SplitPane from 'react-split-pane/lib/SplitPane';
 import Pane from 'react-split-pane/lib/Pane'
-
+import Header2 from './Header2';
 class Live extends React.Component {
     constructor(props) {
         super(props);
@@ -21,7 +21,9 @@ class Live extends React.Component {
     }
 
     render(){
-        return(
+        return(<div>
+            <Header2/>
+
             <SplitPane split="vertical">
                 <Pane initialSize="80%">
                     <div ref={this.videoHeight}>
@@ -38,6 +40,7 @@ class Live extends React.Component {
                     <Chat height={this.state.height}/>
                 </Pane>
             </SplitPane>
+            </div>
             )
     }
 }

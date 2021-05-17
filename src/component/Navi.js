@@ -3,7 +3,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { Link, Route, Switch } from 'react-router-dom';
-import Test from './Test';
 import Testgrid from './Testgrid';
 import Register from './Register';
 import FindID from './FindID';
@@ -70,8 +69,8 @@ class Navi extends React.Component {
                     <Route exact path="/live" component={Live} />
                     <Route exact path="/mypage" component={Mypage} />
                     <Route exact path="/write" component={Write} />
-                    <Route exact path="/test" component={Test} />
                     <Route exact path="/vod" component={Vod} />
+                    <Route exact path="/grid" component={Testgrid} />
                 </Switch>
                 </AppBar>
                

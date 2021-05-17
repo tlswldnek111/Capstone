@@ -91,7 +91,7 @@ const section = [
   { title: '홈', url: '/' },
   { title: '라이브', url: 'live' },
   { title: '방송', url: '#' },
-  { title: '테스트', url: 'test' },
+  { title: '테스트', url: 'grid' },
 ];
 
 
