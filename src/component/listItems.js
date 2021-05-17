@@ -9,8 +9,15 @@ import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-
-
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Logout from './Logout';
 function Login(){
   
   if(localStorage.getItem('username')==null) //로그인 해야하는상황일때
@@ -22,19 +29,16 @@ function Login(){
         );
 }
   else{//localStorage.clear() 
+  
     return(//로그인
       <div>
-      <ListSubheader>{localStorage.getItem('username')} 회원님의 마이페이지</ListSubheader>
-      <ListItem button component="a" href="/" >
-      <ListItemText primary="로그아웃" onClick={Logout}/>
+      <ListSubheader align="center">{localStorage.getItem('username')} 회원님의 마이페이지</ListSubheader>
+      <ListItem button component="a"  >
+        <Logout/>
     </ListItem>
     </div>
     );
   }
-}
-function Logout(){
-  localStorage.clear();
-  alert('로그아웃되었습니다.');
 }
 
 function Mypage(){
