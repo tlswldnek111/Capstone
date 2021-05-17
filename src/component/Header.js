@@ -14,6 +14,8 @@ import Divider from '@material-ui/core/Divider';
 import DirectionsIcon from '@material-ui/icons/Directions';
 import MenuIcon from '@material-ui/icons/Menu';
 
+import clsx from 'clsx';
+import CssBaseline from '@material-ui/core/CssBaseline';
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
     toolbar: {
@@ -27,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
         ...theme.mixins.toolbar,
       },
   toolbarTitle: {
+    padding: theme.spacing(0),
     flex: 1,
   },
   toolbarSecondary: {
@@ -38,12 +41,15 @@ const useStyles = makeStyles((theme) => ({
     flexShrink: 0,
   },
   root: {
-    padding: '2px 4px',
     display: 'flex',
-    alignItems: 'center',
-    width: 400,
+    width: `calc(100%)`,
+    justifyContent: 'space-between',
+    overflowX: 'auto',
   },
   input: {
+    padding: '2px 2px',
+    display: 'flex',
+    width: 200,
     marginLeft: 1,
     flex: 1,
   },
@@ -81,6 +87,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const section = [
+  { title: '홈', url: '/' },
+  { title: '라이브', url: 'live' },
+  { title: '방송', url: '#' },
+  { title: '테스트', url: 'test' },
+];
+
+
 function Login(){
   
     if(localStorage.getItem('username')==null) //로그인 해야하는상황일때
@@ -92,28 +106,30 @@ function Login(){
   }
     else{
       return(//로그인
+        <div>
         <IconButton size="small" color="inherit" href="/" >
         {localStorage.getItem('id')}님, 환영합니다 !
        </IconButton>
-         
+
+       </div>
       );
     }
 }
 
 export default function Header(props) {
   const classes = useStyles();
-  const { sections, title } = props;
+  const { title } = props;
 
   return (
-    <React.Fragment>
+   <div className={classes.root}>
+      <CssBaseline /> 
       <Toolbar className={classes.toolbar}>
-        <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.toolbarTitle} >
-          {title}
-        </Typography>
-        </Toolbar>
-
+      <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title} >
+            Logistics
+          </Typography>
+      </Toolbar>
       <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
-        {sections.map((section) => (
+        {section.map((section) => (
           <Link
             color="inherit"
             noWrap
@@ -126,26 +142,8 @@ export default function Header(props) {
           </Link>
         ))}
       </Toolbar>
-
-      <Paper component="form" className={classes.root}>
-     
-     <InputBase item xs={18} sm={6}
-       className={classes.input}
-       placeholder="프로그램 명 검색"
-       inputProps={{ 'aria-label': 'search google maps' }}
-     />
-     <IconButton type="submit" className={classes.iconButton} aria-label="search">
-       <SearchIcon />
-     </IconButton>
-   </Paper>
-
-
-<Toolbar>
-      <IconButton size="small" color="inherit" href="Login" >
-                  <Login />
-      </IconButton>
-</Toolbar>
-    </React.Fragment>
+      </div>
+    
   );
 }
 

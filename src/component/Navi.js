@@ -69,6 +69,7 @@ class Navi extends React.Component {
                     <Route exact path="/live" component={Live} />
                     <Route exact path="/mypage" component={Mypage} />
                     <Route exact path="/write" component={Write} />
+                    <Route exact path="/test" component={Test} />
                 </Switch>
                 </AppBar>
                

@@ -23,10 +23,12 @@ function Login(){
 }
   else{//localStorage.clear() 
     return(//로그인
+      <div>
+      <ListSubheader>{localStorage.getItem('username')} 회원님의 마이페이지</ListSubheader>
       <ListItem button component="a" href="/" >
       <ListItemText primary="로그아웃" onClick={Logout}/>
     </ListItem>
-       
+    </div>
     );
   }
 }
@@ -50,6 +52,20 @@ function Mypage(){
    return(<p></p>);//로그아웃상태에선 마이페이지를 볼수없음.
  }
 
+}
+
+function Manage(){
+  if(localStorage.getItem('username')!=null) //로그인 되있는 상태일때
+  {//localStorage.clear() 
+   return(
+   
+    <ListItemText primary="작성한 글 관리" />
+     
+   );
+ }
+ else{
+   return(<p></p>);//로그아웃상태에선 마이페이지를 볼수없음.
+ }
 }
 
 export const mainListItems = (
@@ -76,6 +92,7 @@ export const mainListItems = (
 export const secondaryListItems = (
   
   <div>
+    
      <ListItemText >
       <Login/>
     </ListItemText>
@@ -85,7 +102,7 @@ export const secondaryListItems = (
     </ListItemText>
 
     <ListItem button>
-      <ListItemText primary="TEST" />
+      <Manage/>
     </ListItem>
  
   </div>

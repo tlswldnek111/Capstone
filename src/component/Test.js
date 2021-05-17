@@ -1,41 +1,69 @@
 import React from 'react';
+import clsx from 'clsx';
+import { makeStyles } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
-import Box from '@material-ui/core/Box';
-import { withStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
 
-const styles = {
-    root: {
-        background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-        border: 0,
-        boderRadius: 3,
-        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-        color: 'white',
-        height: 48,
-        padding: '0 30px',
-        margin: '10px'
-    },
-};
+import { mainListItems, secondaryListItems } from './listItems';
+const useStyles = makeStyles({
+  list: {
+    width: 250,
+  },
+  fullList: {
+    width: 'auto',
+  },
+});
 
-class Test extends React.Component {
-    render() {
-        const {classes} = this.props;
-        return(
-            <div>
-                <Box p={2} m={1}>
-                    <Button variant='contained' color="primary">Button 1</Button>
-                </Box>
-                <Box color="primary.main" p={2} m={1}>
-                    <Button variant='contained'>Button 2</Button>
-                </Box>
-                <Box clone className={classes.root} p={2} m={1}>
-                    <Button variant='contained'>Button 3</Button>
-                </Box>
-                <Box component="span" p={2} m={1}>
-                    <Button variant='contained'>Button 4</Button>
-                </Box>
-            </div>
-        );
+export default function TemporaryDrawer() {
+  const classes = useStyles();
+  const [state, setState] = React.useState({
+    left: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
     }
-}
 
-export default withStyles(styles)(Test);
+    setState({ ...state, [anchor]: open });
+  };
+
+  const list = (anchor) => (
+    <div
+      className={clsx(classes.list, {
+        [classes.fullList]: anchor === 'top' || anchor === 'bottom',
+      })}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      
+      <Divider />
+        <List>{mainListItems}</List>
+        <Divider />
+        <List>{secondaryListItems}</List>
+     
+      
+    </div>
+  );
+
+  return (
+    <div>
+      {['left'].map((anchor) => (
+        <React.Fragment key={anchor}>
+          <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
+          <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
+            {list(anchor)}
+          </Drawer>
+        </React.Fragment>
+      ))}
+    </div>
+  );
+}
