@@ -15,6 +15,7 @@ import Live from './Live';
 import Mypage from './Mypage';
 import Noticeboard from './Noticeboard';
 import Write from './Write';
+import Vod from './Vod';
 
 class Page404 extends React.Component {
     render() {
@@ -70,6 +71,7 @@ class Navi extends React.Component {
                     <Route exact path="/mypage" component={Mypage} />
                     <Route exact path="/write" component={Write} />
                     <Route exact path="/test" component={Test} />
+                    <Route exact path="/vod" component={Vod} />
                 </Switch>
                 </AppBar>
                

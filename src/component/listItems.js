@@ -70,16 +70,13 @@ function Manage(){
 
 export const mainListItems = (
   <div>
-    <ListItem button>
-      <ListItemText primary="" />
-    </ListItem>
 
     <ListItem button component="a" href="live">
       <ListItemText primary="LIVE"/>
     </ListItem>
 
-    <ListItem button>
-      <ListItemText primary="카테고리" />
+    <ListItem button component="a" href="vod">
+      <ListItemText primary="VOD"/>
     </ListItem>
 
     <ListItem button component="a" href="noticeboard">
