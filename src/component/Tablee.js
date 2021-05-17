@@ -19,6 +19,12 @@ import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { SyncDisabled } from '@material-ui/icons';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
+
 const columns = [
   { id: '번호', label: '번호', minWidth: 15 },
   { id: '제목', label: '제목', minWidth: 150 },
@@ -67,7 +73,7 @@ const useStyles =makeStyles((theme) => ({
     width: '100%',
   },
   container: {
-    maxHeight: 440,
+    maxHeight: '100%',
   },
   input: {
     marginLeft: 10,
@@ -81,6 +87,14 @@ const useStyles =makeStyles((theme) => ({
     height: 28,
     margin: 4,
   }, 
+  button: {
+    display: 'block',
+    marginTop: theme.spacing(2),
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
 }));
 const combomenu = [
   { title: '제목' },
@@ -92,6 +106,8 @@ export default function Tablee() {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [program, setprogram] = React.useState('');
+  const [open, setOpen] = React.useState(false);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -101,21 +117,52 @@ export default function Tablee() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+  const handleChange = (event) => {
+    setprogram(event.target.value);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
   return (
     <div >
       
       <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title} align="center">
-            시청자 게시판
+           {program} 시청자 게시판
           </Typography>
+  
+      <FormControl className={classes.formControl}  >
+        <InputLabel id="inputlabel" >프로그램 명</InputLabel>
+        <Select
+          labelId="select"
+          id="select"
+          open={open}
+          onClose={handleClose}
+          onOpen={handleOpen}
+          value={program}
+          onChange={handleChange}
+        >
+         
+          <MenuItem value={"신서유기"}>신서유기</MenuItem>
+          <MenuItem value={"런닝맨"}>런닝맨</MenuItem>
+          <MenuItem value={"킹덤"}>킹덤</MenuItem>
+          <MenuItem value={"코미디빅리그"}>코미디빅리그</MenuItem>
+        </Select>
+      </FormControl>
+     <div style={{float: 'right'}}>
           <Button 
-           //아이디 중복체크 확인되면 disabled로 변환
             type="check"
             variant="contained"
             color="white"
           >
            글 작성
           </Button>
+          </div>
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">

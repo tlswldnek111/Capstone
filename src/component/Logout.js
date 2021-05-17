@@ -7,14 +7,16 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
-function Logout(){
+function Logout1(){
 
   localStorage.clear();
   alert('로그아웃되었습니다.');
 }
 
-export default function Testgrid() {
+export default function Logout() {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -29,9 +31,7 @@ export default function Testgrid() {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        로그아웃
-      </Button>
+       <ListItemText primary="로그아웃" onClick={handleClickOpen} />
       <Dialog
         open={open}
         onClose={handleClose}
@@ -44,10 +44,10 @@ export default function Testgrid() {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={Logout} color="primary">
+          <Button autoFocus onClick={Logout1} color="primary" href="/">
            네
           </Button>
-          <Button onClick={handleClose} color="primary" autoFocus>
+          <Button onClick={handleClose} color="primary" >
             아니요
           </Button>
         </DialogActions>
