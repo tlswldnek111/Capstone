@@ -95,27 +95,6 @@ const section = [
 ];
 
 
-function Login(){
-  
-    if(localStorage.getItem('username')==null) //로그인 해야하는상황일때
-     {return(
-   <IconButton size="small" color="inherit" href="Login">
-              로그인
-          </IconButton>
-          );
-  }
-    else{
-      return(//로그인
-        <div>
-        <IconButton size="small" color="inherit" href="/" >
-        {localStorage.getItem('id')}님, 환영합니다 !
-       </IconButton>
-
-       </div>
-      );
-    }
-}
-
 export default function Header(props) {
   const classes = useStyles();
   const { title } = props;
