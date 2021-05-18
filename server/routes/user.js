@@ -4,6 +4,7 @@ var mybatisMapper = require('mybatis-mapper');
 var dbConfig = require('../config/dbConfig');
 mybatisMapper.createMapper([ './server/SQL/user.xml' ]);
 oracledb.autoCommit = true;
+var common = require('../common');
 
 var router = express.Router();
 
@@ -37,7 +38,7 @@ router.post('/login', function(req, res, next) {
       if (err) {
         console.error(err.message);
       } else {
-        res.json(Update_data(result));
+        res.json(common.Update_data(result));
       }
       connection.close();
     });
@@ -150,22 +151,6 @@ router.post('/find_id', function(req, res, next) {
     });
   })
 })
-
-function Update_data(result) {
-  var column = [];
-  var row = {};
-  var data = [];
-  for (var i of result.metaData) {
-    column.push(i['name']);
-  }
-  for (var i = 0; i < result.rows.length; i++) {
-    for (var j = 0; j < column.length; j++) {
-      row[column[j]] = result.rows[i][j];
-    }
-    data.push(row);
-  }
-  return data;
-}
 
 router.post('/update', function(req, res, next) {
   oracledb.getConnection({
