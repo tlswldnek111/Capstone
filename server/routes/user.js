@@ -31,7 +31,7 @@ router.post('/login', function(req, res, next) {
     };
 
     let format = {language: 'sql', indent: ' '};
-    let query = mybatisMapper.getStatement('oracleMapper', 'selectUserInfo', param, format);
+    let query = mybatisMapper.getStatement('user', 'selectUserInfo', param, format);
     console.log(query);
 
     connection.execute(query, [], function(err, result) {
@@ -64,7 +64,7 @@ router.post('/register', function(req, res, next) {
     };
 
     let format = {language: 'sql', indent: ' '};
-    let query = mybatisMapper.getStatement('oracleMapper', 'insertUserInfo', param, format);
+    let query = mybatisMapper.getStatement('user', 'insertUserInfo', param, format);
     console.log(query);
 
     connection.execute(query, [], function(err, result) {
@@ -96,7 +96,7 @@ router.post('/check_id', function(req, res, next) {
     };
 
     let format = {language: 'sql', indent: ' '};
-    let query = mybatisMapper.getStatement('oracleMapper', 'checkId', param, format);
+    let query = mybatisMapper.getStatement('user', 'checkId', param, format);
     console.log(query);
 
     connection.execute(query, [], function(err, result) {
@@ -133,7 +133,7 @@ router.post('/find_id', function(req, res, next) {
     };
 
     let format = {language: 'sql', indent: ' '};
-    let query = mybatisMapper.getStatement('oracleMapper', 'findId', param, format);
+    let query = mybatisMapper.getStatement('user', 'findId', param, format);
     console.log(query);
 
     connection.execute(query, [], function(err, result) {
@@ -176,7 +176,7 @@ router.post('/update', function(req, res, next) {
     };
 
     let format = {language: 'sql', indent: ' '};
-    let query = mybatisMapper.getStatement('oracleMapper', 'updateUser', param, format);
+    let query = mybatisMapper.getStatement('user', 'updateUser', param, format);
     console.log(query);
 
     connection.execute(query, [], function(err, result) {

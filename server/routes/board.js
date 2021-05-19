@@ -28,7 +28,7 @@ router.post('/write', function(req, res, next) {
       };
   
       let format = {language: 'sql', indent: ' '};
-      let query = mybatisMapper.getStatement('oracleMapper', 'insert_board', param, format);
+      let query = mybatisMapper.getStatement('board', 'insert_board', param, format);
       console.log(query);
   
       connection.execute(query, [], function(err, result) {
