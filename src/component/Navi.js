@@ -15,6 +15,7 @@ import Mypage from './Mypage';
 import Noticeboard from './Noticeboard';
 import Write from './Write';
 import Vod from './Vod';
+import Vod_upload from './Vod_upload';
 
 class Page404 extends React.Component {
     render() {
@@ -36,32 +37,13 @@ class Navi extends React.Component {
         this.setState( { value: newValue } );
     }
 
-    /*
-     <AppBar position="static">
-                    <Tabs value={this.state.value} onChange={this.handleChange}>
-                        <Tab label="home" component={Link} to="/" />
-                        <Tab label="grid" component={Link} to="/grid"/>
-                        <Tab label="test" component={Link} to="/test"/>
-                        <Tab label="dashboard" component={Link} to="/dashboard"/>
-                    </Tabs>
-                </AppBar>
-                <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route exact path="/grid" component={Testgrid} />
-                    <Route exact path="/test" component={Test} />
-                    <Route component={Page404}/>
-                </Switch>
-    */
     render() {
         return(
             <div>
+                <AppBar  value="true" color="white">  
                 <Switch>
                     <Route exact path="/" component={Dashboard} />
                     <Route exact path="/noticeboard" component={Noticeboard} />
-                </Switch>
-
-                <AppBar  value="true" color="white">  
-                <Switch>
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/register" component={Register} /> 
                     <Route exact path="/findID" component={FindID} /> 
@@ -71,6 +53,7 @@ class Navi extends React.Component {
                     <Route exact path="/write" component={Write} />
                     <Route exact path="/vod" component={Vod} />
                     <Route exact path="/grid" component={Testgrid} />
+                    <Route exact path="/vod_upload" component={Vod_upload} />
                 </Switch>
                 </AppBar>
                
