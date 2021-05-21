@@ -78,7 +78,12 @@ class Chat extends React.Component {
         <Pane>
           <div>
             <form onSubmit={this.send}>
-              <input id="id"></input>
+              <input 
+              id="id"
+              value={localStorage.getItem('id')}
+              disabled
+              >
+              </input>
               <input id="message"></input>
               <button type="submit"> 보내기 </button>
             </form>

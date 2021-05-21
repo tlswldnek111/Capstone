@@ -12,12 +12,13 @@ import InputBase from '@material-ui/core/InputBase';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import AppBar from '@material-ui/core/AppBar';
+import Button from '@material-ui/core/Button';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
-import Grid from '@material-ui/core/Grid';
-import { SyncDisabled } from '@material-ui/icons';
+
 const columns = [
   { id: '번호', label: '번호', minWidth: 15 },
   { id: '제목', label: '제목', minWidth: 150 },
@@ -60,25 +61,35 @@ const rows = [
   createData('1', 'BR', 25, 8515767),
 ];
 
-const useStyles = makeStyles({
-  root: {
+const useStyles =makeStyles((theme) => ({
+  root: { 
+    flexGrow: 1,
     width: '100%',
   },
   container: {
-    maxHeight: 440,
+    maxHeight: '100%',
   },
   input: {
-    marginLeft: 1,
-    flex: 1,
+    marginLeft: 10,
+    padding: 5,
+    margin: theme.spacing(0),
   },
   iconButton: {
-    padding: 10,
+    padding: 5,
   },
   divider: {
     height: 28,
     margin: 4,
+  }, 
+  button: {
+    display: 'block',
+    marginTop: theme.spacing(2),
   },
-});
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+}));
 const combomenu = [
   { title: '제목' },
   { title: '제목+내용' },
@@ -89,6 +100,8 @@ export default function Tablee() {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [program, setprogram] = React.useState('');
+  const [open, setOpen] = React.useState(false);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -98,14 +111,52 @@ export default function Tablee() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+  const handleChange = (event) => {
+    setprogram(event.target.value);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
   return (
-    <div>
+    <div >
       
-      <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title} >
-            시청자 게시판
+      <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title} align="center">
+           {program} 시청자 게시판
           </Typography>
-
+  
+      <FormControl className={classes.formControl}  >
+        <InputLabel id="inputlabel" >프로그램 명</InputLabel>
+        <Select
+          labelId="select"
+          id="select"
+          open={open}
+          onClose={handleClose}
+          onOpen={handleOpen}
+          value={program}
+          onChange={handleChange}
+        >
+         
+          <MenuItem value={"신서유기"}>신서유기</MenuItem>
+          <MenuItem value={"런닝맨"}>런닝맨</MenuItem>
+          <MenuItem value={"킹덤"}>킹덤</MenuItem>
+          <MenuItem value={"코미디빅리그"}>코미디빅리그</MenuItem>
+        </Select>
+      </FormControl>
+     <div style={{float: 'right'}}>
+          <Button 
+            type="check"
+            variant="contained"
+            color="white"
+          >
+           글 작성
+          </Button>
+          </div>
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
@@ -140,6 +191,16 @@ export default function Tablee() {
           </TableBody>
         </Table>
       </TableContainer>
+         
+      <InputBase 
+       className={classes.input}
+       placeholder="검색"
+       inputProps={{ 'aria-label': 'search' }}
+     />
+      <IconButton type="submit" className={classes.iconButton} aria-label="search">
+       <SearchIcon />
+     </IconButton>
+
       <TablePagination
         rowsPerPageOptions={[10, 15, 20]}
         component="div"
@@ -151,25 +212,9 @@ export default function Tablee() {
       />
     </Paper>
 
-    <Grid item xs={12} >
-    <Autocomplete
-      id="combo-box-demo"
-      options={combomenu}
-      getOptionLabel={(option) => option.title}
-      style={{ width: 170 }}
-      renderInput={(params) => <TextField {...params} label="" variant="outlined" />}
-    />
-     
-   <InputBase 
-       className={classes.input}
-       placeholder="검색"
-       inputProps={{ 'aria-label': 'search' }}
-     />
-      <IconButton type="submit" className={classes.iconButton} aria-label="search">
-       <SearchIcon />
-     </IconButton>
-     </Grid>
-   
+ 
     </div>
+
+
   );
 }
