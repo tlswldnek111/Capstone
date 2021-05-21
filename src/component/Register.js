@@ -2,7 +2,7 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
+import { Link } from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -146,6 +146,7 @@ handleChange(e){
             color="white"
             onClick={this.handleCheck}
             disabled={(this.state.check===null)}
+            
           >
             아이디 중복체크
           </Button>
@@ -201,19 +202,17 @@ handleChange(e){
             className={useStyles.submit}
             
           >
-            Sign Up
+            회원가입
           </Button>
           </Grid>
 
-        
-          <p>
-          {this.state.success ? `Hello ${this.state.success}` : `${this.state.success}`}
-          </p>
          
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="Login" variant="body2">
+              <Link to="Login" style={{textDecoration:"none", color:"black"}} variant="body2">
+                <Button >
                로그인하러 가기
+               </Button>
               </Link>
             </Grid>
           </Grid>
