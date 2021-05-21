@@ -83,7 +83,7 @@ handleChange(e){
                   alert("잘못입력했습니다. 다시 입력해주세요.");
                 } else{
                   alert("회원가입 성공");
-                  window.location.href = "/";//확인 누르면 홈으로 이동
+                  this.props.history.push('/');//확인 누르면 홈으로 이동
                 }
               })
   }

@@ -12,7 +12,7 @@ function Logout1(){
 
   localStorage.clear();
   alert('로그아웃되었습니다.');
-  window.location.replace("/");//뒤로가기불가능
+  window.location.replace("/");//확인 누르면 홈으로 이동
 }
 
 export default function Logout() {

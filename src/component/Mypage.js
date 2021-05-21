@@ -100,7 +100,7 @@ handleSubmit(event) {
       })
       .then(res=>res.json())
       .then(res=>{   alert("정상적으로 수정되었습니다!");})
-             window.location.href = "/";//확인 누르면 홈으로 이동
+      this.props.history.push('/');//확인 누르면 홈으로 이동
   }
 }
   render() {

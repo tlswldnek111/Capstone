@@ -77,7 +77,7 @@ handleSubmit(event) {
                  }else//값이 있을때....
                 {
                   alert("현재 비밀번호 : "+res.PASSWORD); //아이디 검색에 성공한경우
-                  window.location.href = "/";//확인 누르면 홈으로 이동
+                  this.props.history.push('/');//확인 누르면 홈으로 이동
                 }
 
 })
