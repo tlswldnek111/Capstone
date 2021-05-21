@@ -1,14 +1,11 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import { Link, Route, Switch } from 'react-router-dom';
 import Testgrid from './Testgrid';
 import Register from './Register';
 import FindID from './FindID';
 import FindPW from './FindPW';
 import Login from './Login';
-import Home from './Home';
 import Dashboard from './Dashboard';
 import Live from './Live';
 import Mypage from './Mypage';

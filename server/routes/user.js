@@ -60,7 +60,8 @@ router.post('/register', function(req, res, next) {
     var param = {
       ID: req.body.ID,
       NAME: req.body.NAME,
-      PASSWORD: req.body.PASSWORD
+      PASSWORD: req.body.PASSWORD,
+      PHONE: req.body.PHONE
     };
 
     let format = {language: 'sql', indent: ' '};
