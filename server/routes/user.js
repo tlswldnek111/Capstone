@@ -129,7 +129,7 @@ router.post('/find_id', function(req, res, next) {
     }
     
     var param = {
-      NAME: req.body.ID,
+      NAME: req.body.NAME,
       PHONE: req.body.PHONE
     };
 
@@ -141,12 +141,39 @@ router.post('/find_id', function(req, res, next) {
       if (err) {
         console.error(err.message);
       } else {
-        if (result['rows'][0][0] === 0) {
-          res.json({ check: 0});
-        }
-        else {
-          res.json({ check: 1});
-        }
+        res.json(common.Update_data(result)[0]);
+      }
+      connection.close();
+    });
+  })
+})
+
+router.post('/find_pw', function(req, res, next) {
+  oracledb.getConnection({
+    user : dbConfig.user,
+    password : dbConfig.password,
+    connectString : dbConfig.connectString
+  },
+  function(err, connection) {
+    if (err) {
+      console.error(err.message);
+      return;
+    }
+    
+    var param = {
+      ID: req.body.ID,
+      PHONE: req.body.PHONE
+    };
+
+    let format = {language: 'sql', indent: ' '};
+    let query = mybatisMapper.getStatement('user', 'findPW', param, format);
+    console.log(query);
+
+    connection.execute(query, [], function(err, result) {
+      if (err) {
+        console.error(err.message);
+      } else {
+        res.json(common.Update_data(result)[0]);
       }
       connection.close();
     });
