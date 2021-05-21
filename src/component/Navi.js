@@ -1,6 +1,6 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Link, Route, Switch, withRouter } from 'react-router-dom';
 import Testgrid from './Testgrid';
 import Register from './Register';
 import FindID from './FindID';
@@ -41,7 +41,7 @@ class Navi extends React.Component {
                 <Switch>
                     <Route exact path="/" component={Dashboard} />
                     <Route exact path="/noticeboard" component={Noticeboard} />
-                    <Route exact path="/login" component={Login} />
+                    <Route exact path="/login" component={Login} history={this.props.history} />
                     <Route exact path="/register" component={Register} /> 
                     <Route exact path="/findID" component={FindID} /> 
                     <Route exact path="/findPW" component={FindPW} /> 
@@ -59,4 +59,4 @@ class Navi extends React.Component {
     };
 }
 
-export default Navi;
+export default withRouter(Navi);
