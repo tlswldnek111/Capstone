@@ -13,6 +13,7 @@ function Logout1(){
 
   localStorage.clear();
   alert('로그아웃되었습니다.');
+  window.location.replace("/");//뒤로가기불가능
 }
 
 export default function Logout() {
@@ -30,7 +31,8 @@ export default function Logout() {
 
   return (
     <div>
-       <ListItemText primary="로그아웃" onClick={handleClickOpen} />
+    <ListItemText primary="로그아웃" onClick={handleClickOpen} />
+      
       <Dialog
         open={open}
         onClose={handleClose}
@@ -42,14 +44,16 @@ export default function Logout() {
            로그아웃 하시겠습니까?
           </DialogContentText>
         </DialogContent>
+
         <DialogActions>
-          <Button autoFocus onClick={Logout1} color="primary" href="/">
+          <Button  onClick={Logout1} color="primary" >
            네
           </Button>
           <Button onClick={handleClose} color="primary" >
             아니요
           </Button>
         </DialogActions>
+        
       </Dialog>
     </div>
   );

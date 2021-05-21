@@ -80,9 +80,7 @@ export const secondaryListItems = (
   
   <div>
     
-     <ListItemText >
       <Login/>
-    </ListItemText>
 
     <ListItemText >
       <Mypage/>
