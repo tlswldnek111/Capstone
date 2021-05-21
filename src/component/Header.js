@@ -2,20 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
 import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
-import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
-import InputBase from '@material-ui/core/InputBase';
-import Divider from '@material-ui/core/Divider';
-import DirectionsIcon from '@material-ui/icons/Directions';
-import MenuIcon from '@material-ui/icons/Menu';
-
-import clsx from 'clsx';
+import { Link } from "react-router-dom";
 import CssBaseline from '@material-ui/core/CssBaseline';
+//import Link from '@material-ui/core/Link';
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
     toolbar: {
@@ -97,7 +87,6 @@ const section = [
 
 export default function Header(props) {
   const classes = useStyles();
-  const { title } = props;
 
   return (
    <div className={classes.root}>
@@ -107,14 +96,14 @@ export default function Header(props) {
             Logistics
           </Typography>
       </Toolbar>
-      <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
+      <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary} >
         {section.map((section) => (
           <Link
             color="inherit"
             noWrap
             key={section.title}
             variant="body2"
-            href={section.url}
+            to={section.url}
             className={classes.toolbarLink}
           >
             {section.title}

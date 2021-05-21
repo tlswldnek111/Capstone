@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header2() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open] = React.useState(false);
   
   const [state, setState] = React.useState({
     left: false,
@@ -125,9 +125,9 @@ export default function Header2() {
         <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
             <Toolbar className={classes.toolbar}>
           
-            {['MENU'].map((anchor) => (
+            {['〓'].map((anchor) => (
        <React.Fragment key={anchor}>
-         <Button onClick={toggleDrawer(anchor, true)}  >{anchor}</Button>
+         <Button style={{fontSize:"25px",fontWeight:"bold",color:"white"}} onClick={toggleDrawer(anchor, true)}  >{anchor}</Button>
          <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
            {list(anchor)}
          </Drawer>
