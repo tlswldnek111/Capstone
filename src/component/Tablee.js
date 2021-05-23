@@ -90,12 +90,6 @@ const useStyles =makeStyles((theme) => ({
     minWidth: 120,
   },
 }));
-const combomenu = [
-  { title: '제목' },
-  { title: '제목+내용' },
-  { title: '내용' },
-  { title: '작성자' },
-];
 export default function Tablee() {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
