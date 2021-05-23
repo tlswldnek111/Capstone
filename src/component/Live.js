@@ -1,54 +1,44 @@
 import React from 'react';
 import ReactHlsPlayer from 'react-hls-player';
 import Chat from './Chat';
-import SplitPane from 'react-split-pane/lib/SplitPane';
-import Pane from 'react-split-pane/lib/Pane'
 import Header2 from './Header2';
-class Live extends React.Component {
-    constructor(props) {
-        super(props);
-            this.state = {
-                height: 0
-            };
-        this.videoHeight = React.createRef();
-        window.onresize = (e) => {
-            this.setState({
-                height: (this.videoHeight.current ? this.videoHeight.current.clientHeight : null),
-            });
-        }
-    };
+import Grid from '@material-ui/core/Grid';
+import '../CSS/Live.css';
 
-    componentDidMount() {
-        this.setState({
-            height: this.videoHeight.current.clientHeight
-        });
-    }
+class Live extends React.Component {
 
     render(){
-        return(<div>
-            <SplitPane split="horizontal">
-                <Pane initialSize="63px">
-                    <Header2/>
-                </Pane>
-                <Pane>
-                    <SplitPane split="vertical">
-                        <Pane initialSize="80%">
-                            <div ref={this.videoHeight}>
-                                <ReactHlsPlayer
-                                src="http://121.145.133.119:8000/live/live/index.m3u8"
-                                autoPlay={false}
-                                controls={true}
-                                width="100%"
-                                height="auto"
-                                />
-                            </div>
-                        </Pane>
-                        <Pane>
-                            <Chat height={this.state.height}/>
-                        </Pane>
-                    </SplitPane>
-                </Pane>
-            </SplitPane>
+        return(
+            <div className="div2">
+                <Header2></Header2>
+                <div className="div">
+                    <div className="live_div">
+                        <Grid container spacing={1}>
+                            <Grid container item xs={12}>
+                                <Grid item xs={8}
+                                className="grid">
+                                    <div>
+                                        <ReactHlsPlayer
+                                        id="video_grid"
+                                        src="http://121.145.133.119:8000/live/live/index.m3u8"
+                                        autoPlay={false}
+                                        controls={true}
+                                        width="100%"
+                                        height="auto"
+                                        />
+                                    </div>
+                                </Grid>
+                                <Grid item xs={4}
+                                    className="grid"
+                                >
+                                    <Chat></Chat>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </div>
+                </div>
+                
+
             </div>
             )
     }
