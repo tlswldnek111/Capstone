@@ -1,5 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Header2 from './Header2';
 
 class Vod extends React.Component {
 
@@ -15,10 +18,14 @@ class Vod extends React.Component {
         console.log(this.state.VOD);
         var url = `http://localhost:3001/vod/thumbnail?name=${this.state.VOD[i].TITLE}`
         return(
-        <div>
-            <img src={url} style={{width: "30%", height: "30%"}}></img>
-            <p>{this.state.VOD[i].TITLE}</p>
-        </div>);
+        <Card
+        style={{width: 350, height: 250, marginTop: 25, backgroundColor: "#E8E8E8"}}
+        variant="outlined">
+            <CardContent>
+                <img src={url} style={{width: "90%", height: "90%"}}></img>
+                <p>{this.state.VOD[i].TITLE}</p>
+            </CardContent>
+        </Card>);
     }
 
     componentDidMount() {
@@ -58,12 +65,14 @@ class Vod extends React.Component {
     render() {
         return(
             <div>
+                <Header2></Header2>
+                <div style={{marginTop: 64}}></div>
+                <div hidden={(localStorage.getItem('id') !== 'admin')}>
+                    <Link to="/Vod_upload">
+                        <button>업로드</button>
+                    </Link>
+                </div>
                 <center>
-                    <div hidden={(localStorage.getItem('id') !== 'admin')}>
-                        <Link to="/Vod_upload">
-                            <button>업로드</button>
-                        </Link>
-                    </div>
                     {this.state.INFO.map((unit, idx) => {
                         return unit;
                     })}
