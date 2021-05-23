@@ -17,7 +17,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-
+import { Link } from "react-router-dom";
 
 const columns = [
   { id: '번호', label: '번호', minWidth: 15 },
@@ -30,35 +30,42 @@ const columns = [
     format: (value) => value.toLocaleString('en-US'),
   },
   {
+    id: '조회수',
+    label: '조회수',
+    minWidth: 10,
+    align: 'right',
+    format: (value) => value.toLocaleString('en-US'),
+  },
+  {
     id: '작성일',
     label: '작성일',
-    minWidth: 15,
+    minWidth: 10,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   },
   
 ];
 
-function createData(번호, 제목, 작성자, 작성일) {
-  return { 번호, 제목, 작성자, 작성일};
+function createData(번호, 제목, 작성자, 조회수, 작성일) {
+  return { 번호, 제목, 작성자, 조회수, 작성일};
 }
 
 const rows = [
-  createData('15', 'IN', 123, 3287263),
-  createData('14', 'CN', 456, 9596961),
-  createData('13', 'IT', 973, 301340),
-  createData('12', 'US',67434, 9833520),
-  createData('11', 'CA', 13, 9984670),
-  createData('10', 'AU',400, 7692024),
-  createData('9', 'DE', 8200, 357578),
-  createData('8', 'IE', 40, 70273),
-  createData('7', 'MX', 1291, 1972550),
-  createData('6', 'JP', 1200, 377973),
-  createData('5', 'FR', 10, 640679),
-  createData('4', 'GB', 657, 242495),
-  createData('3', 'RU', 44, 17098246),
-  createData('2', 'NG', 217, 923768),
-  createData('1', 'BR', 25, 8515767),
+  createData('15', 'IN', 123, 0,3287263),
+  createData('14', 'CN', 456, 0,9596961),
+  createData('13', 'IT', 973, 0,301340),
+  createData('12', 'US',67434, 0,9833520),
+  createData('11', 'CA', 13, 0,9984670),
+  createData('10', 'AU',400, 0,7692024),
+  createData('9', 'DE', 8200,0, 357578),
+  createData('8', 'IE', 40, 0,70273),
+  createData('7', 'MX', 1291, 0,1972550),
+  createData('6', 'JP', 1200, 0,377973),
+  createData('5', 'FR', 10, 0,640679),
+  createData('4', 'GB', 657, 0,242495),
+  createData('3', 'RU', 44, 0,17098246),
+  createData('2', 'NG', 217, 0,923768),
+  createData('1', 'BR', 25, 0,8515767),
 ];
 
 const useStyles =makeStyles((theme) => ({
@@ -90,10 +97,11 @@ const useStyles =makeStyles((theme) => ({
     minWidth: 120,
   },
 }));
+
 export default function Tablee() {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [program, setprogram] = React.useState('');
   const [open, setOpen] = React.useState(false);
 
@@ -136,7 +144,7 @@ export default function Tablee() {
           onChange={handleChange}
         >
          
-          <MenuItem value={"신서유기"}>신서유기</MenuItem>
+          <MenuItem value={"신서유기"} >신서유기</MenuItem>
           <MenuItem value={"런닝맨"}>런닝맨</MenuItem>
           <MenuItem value={"킹덤"}>킹덤</MenuItem>
           <MenuItem value={"코미디빅리그"}>코미디빅리그</MenuItem>
@@ -153,15 +161,15 @@ export default function Tablee() {
           </div>
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
-        <Table stickyHeader aria-label="sticky table">
+        <Table stickyHeader aria-label="sticky table"  >
           <TableHead>
-            <TableRow>
+            <TableRow  >
               {columns.map((column) => (
-                <TableCell
+                <TableCell 
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
-                >
+                 >
                   {column.label}
                 </TableCell>
               ))}
@@ -174,8 +182,10 @@ export default function Tablee() {
                   {columns.map((column) => {
                     const value = row[column.id];
                     return (
-                      <TableCell key={column.id} align={column.align}>
+                      <TableCell key={column.id} align={column.align} component={Link} to={`noticeboard/${program}/${ row.번호}-${ row.작성자}`} style={{textDecoration:"none", color:"black"}}>
+                        
                         {column.format && typeof value === 'number' ? column.format(value) : value}
+                     
                       </TableCell>
                     );
                   })}
@@ -184,7 +194,7 @@ export default function Tablee() {
             })}
           </TableBody>
         </Table>
-      </TableContainer>
+      </TableContainer> 
          
       <InputBase 
        className={classes.input}
@@ -196,7 +206,7 @@ export default function Tablee() {
      </IconButton>
 
       <TablePagination
-        rowsPerPageOptions={[10, 15, 20]}
+        rowsPerPageOptions={[5, 10, 15]}
         component="div"
         count={rows.length}
         rowsPerPage={rowsPerPage}
