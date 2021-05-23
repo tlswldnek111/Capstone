@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -85,7 +84,7 @@ class Login extends React.Component {
                     localStorage.setItem('id',`${this.state.id}`);
                     localStorage.setItem('password',`${this.state.password}`);
                     localStorage.setItem('phone',`${this.state.phone}`);
-                    window.location.href = "/";//확인 누르면 홈으로 이동
+                    this.props.history.push('/');//확인 누르면 홈으로 이동
                     alert( `환영합니다 ${this.state.username} 님`);
                   }
                 })
