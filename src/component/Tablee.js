@@ -12,13 +12,7 @@ import InputBase from '@material-ui/core/InputBase';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import AppBar from '@material-ui/core/AppBar';
-import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import { SyncDisabled } from '@material-ui/icons';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -96,12 +90,6 @@ const useStyles =makeStyles((theme) => ({
     minWidth: 120,
   },
 }));
-const combomenu = [
-  { title: '제목' },
-  { title: '제목+내용' },
-  { title: '내용' },
-  { title: '작성자' },
-];
 export default function Tablee() {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);

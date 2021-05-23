@@ -1,9 +1,8 @@
-
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
+import { Link } from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -14,7 +13,7 @@ import Container from '@material-ui/core/Container';
 //alignItems="center" "static"
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" >
+    <Typography variant="body2" color="textSecondary" align="center" >
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/" >
         Logistics
@@ -85,7 +84,7 @@ class Login extends React.Component {
                     localStorage.setItem('id',`${this.state.id}`);
                     localStorage.setItem('password',`${this.state.password}`);
                     localStorage.setItem('phone',`${this.state.phone}`);
-                    window.location.href = "/";//확인 누르면 홈으로 이동
+                    this.props.history.push('/');//확인 누르면 홈으로 이동
                     alert( `환영합니다 ${this.state.username} 님`);
                   }
                 })
@@ -140,26 +139,23 @@ class Login extends React.Component {
             로그인
           </Button>
          
-          <p>
-          {this.state.username ? `Hello ${this.state.username}` : '로그인되는지테스트하기위한문장'}
-          </p>
 
           <Grid container>
           <Grid item xs>
-        <Link href="FindID" variant="body1">
+        <Link to="FindID" style={{textDecoration:"none", color:"black"}} variant="body1">
          아이디 찾기
         </Link>
 /
-        <Link href="FindPW" variant="body1">
+        <Link to="FindPW" style={{textDecoration:"none", color:"black"}} variant="body1">
             비밀번호 찾기
         </Link>
           </Grid>
           <Grid item>
-          <Link href="/" variant="body1">
+          <Link to="/" style={{textDecoration:"none", color:"black"}} variant="body1">
             메인화면으로
         </Link>
         /
-         <Link href="Register" variant="body1">
+         <Link to="Register" style={{textDecoration:"none", color:"black"}} variant="body1">
           회원가입
         </Link>
     </Grid>
