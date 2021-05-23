@@ -5,7 +5,8 @@ var dbConfig = require('../config/dbConfig');
 mybatisMapper.createMapper([ './server/SQL/vod.xml' ]);
 oracledb.autoCommit = true;
 var common = require('../common');
-const mkdirp = require('mkdirp');
+var mkdirp = require('mkdirp');
+var fs = require('fs');
 
 const makedir = (dir) => {
     mkdirp(dir, (err) => {
@@ -81,6 +82,12 @@ router.post('/select', function(req, res, next) {
         connection.close();
       });
     })
+  });
+
+router.get('/thumbnail', function(req, res, next) {
+  if (req.query.name != null) {
+    res.sendFile('c:\\vod\\' + req.query.name + "\\Thumbnail.jpg");
+  }
   });
   
 module.exports = router;

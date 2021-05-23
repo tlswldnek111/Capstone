@@ -12,32 +12,41 @@ class Live extends React.Component {
             };
         this.videoHeight = React.createRef();
         window.onresize = (e) => {
-            this.setState({height: this.videoHeight.current.clientHeight});
+            this.setState({
+                height: (this.videoHeight.current ? this.videoHeight.current.clientHeight : null),
+            });
         }
     };
 
     componentDidMount() {
-        this.setState({height: this.videoHeight.current.clientHeight});
+        this.setState({
+            height: this.videoHeight.current.clientHeight
+        });
     }
 
     render(){
         return(<div>
-            <Header2/>
-
-            <SplitPane split="vertical">
-                <Pane initialSize="80%">
-                    <div ref={this.videoHeight}>
-                        <ReactHlsPlayer
-                        src="http://121.145.133.119:8000/live/live/index.m3u8"
-                        autoPlay={false}
-                        controls={true}
-                        width="100%"
-                        height="auto"
-                        />
-                    </div>
+            <SplitPane split="horizontal">
+                <Pane initialSize="63px">
+                    <Header2/>
                 </Pane>
                 <Pane>
-                    <Chat height={this.state.height}/>
+                    <SplitPane split="vertical">
+                        <Pane initialSize="80%">
+                            <div ref={this.videoHeight}>
+                                <ReactHlsPlayer
+                                src="http://121.145.133.119:8000/live/live/index.m3u8"
+                                autoPlay={false}
+                                controls={true}
+                                width="100%"
+                                height="auto"
+                                />
+                            </div>
+                        </Pane>
+                        <Pane>
+                            <Chat height={this.state.height}/>
+                        </Pane>
+                    </SplitPane>
                 </Pane>
             </SplitPane>
             </div>
