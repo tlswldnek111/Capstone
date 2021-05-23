@@ -60,7 +60,7 @@ class Chat extends React.Component {
         <tr className="tr">
           <td>
             <div
-            id="MessageBox">
+            id="MessageBox" className="div">
               {messages}
             </div>
           </td>

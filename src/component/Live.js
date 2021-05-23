@@ -9,29 +9,36 @@ class Live extends React.Component {
 
     render(){
         return(
-            <div>
+            <div className="div2">
                 <Header2></Header2>
-                <div style={{marginTop: 64}}>
-                    <Grid container spacing={1}>
-                        <Grid container item xs={12}>
-                            <Grid item xs={8}>
-                                <div>
-                                    <ReactHlsPlayer
-                                    id="video_grid"
-                                    src="http://121.145.133.119:8000/live/live/index.m3u8"
-                                    autoPlay={false}
-                                    controls={true}
-                                    width="100%"
-                                    height="auto"
-                                    />
-                                </div>
-                            </Grid>
-                            <Grid item xs={4}>
-                                <Chat></Chat>
+                <div className="div">
+                    <div className="live_div">
+                        <Grid container spacing={1}>
+                            <Grid container item xs={12}>
+                                <Grid item xs={8}
+                                className="grid">
+                                    <div>
+                                        <ReactHlsPlayer
+                                        id="video_grid"
+                                        src="http://121.145.133.119:8000/live/live/index.m3u8"
+                                        autoPlay={false}
+                                        controls={true}
+                                        width="100%"
+                                        height="auto"
+                                        />
+                                    </div>
+                                </Grid>
+                                <Grid item xs={4}
+                                    className="grid"
+                                >
+                                    <Chat></Chat>
+                                </Grid>
                             </Grid>
                         </Grid>
-                    </Grid>
+                    </div>
                 </div>
+                
+
             </div>
             )
     }

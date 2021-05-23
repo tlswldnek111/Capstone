@@ -1,9 +1,9 @@
 .table {
+    height: 100%;
     width: 100%;
-    height: 30%;
 }
 .tr {
-    height: 25%;
+    height: 75%;
 }
 .tr2 {
     height: 25%;

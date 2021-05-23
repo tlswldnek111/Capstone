@@ -1,3 +1,23 @@
 .div {
-    height: 100vh;
+    height: 98%;
+    width: 100%;
 }
+
+.div2 {
+    height: 100%;
+    width: 100%;
+}
+::-webkit-scrollbar{ display:none; }
+
+
+.live_div{
+    margin-top: 64px;
+    width: 99.1%;
+    
+}
+
+.grid{
+    height: 100%;
+    
+}
+
