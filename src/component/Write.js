@@ -1,7 +1,11 @@
 import React from 'react'
+import { Typography } from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
+import Input from '@material-ui/core/Input';
+import { SwapCalls } from '@material-ui/icons';
+import Write2 from './Write2';
 
 class Write extends React.Component {
     handleSubmit(e) {
@@ -27,25 +31,32 @@ class Write extends React.Component {
                     }
                     })
     }
+
     render() {
         return (
             <div>
                 <center>
                     <form onSubmit={this.handleSubmit}>
-                        <p><TextField id = "TITLE" style = {{width: 700}} label="제목" variant="outlined"></TextField></p>
+                        <Typography variant="h6">
+                            글쓰기
+                        </Typography>
+                        <p><Input id = "TITLE" style = {{width: 700}} placeholder="제목을 입력하세요." inputProps={{ 'aria-label': 'description' }} /></p>
                         <p><TextField id = "CONTENT" style = {{width: 700}} label="내용" variant="outlined" multiline rows={25}></TextField></p>
+                        <Write2></Write2>
                         <Button
-                        style={{marginRight: "500px", maxWidth: '100px', maxHeight: '60px', minWidth: '100px', minHeight: '60px'}}
-                        variant="contained" color="primary" type="submit">
-                            작성
+                            style={{marginRight: "500px", maxWidth: '100px'}}
+                            variant="contained" type="submit">
+                            등록
+                        </Button>
+                        <Button 
+                            style={{marginRight: "10px", maxWidth: '100px'}}
+                            variant="contained">
+                             취소 
                         </Button>
                         <Link to="/noticeboard">
-                            <Button
-                            style={{maxWidth: '100px', maxHeight: '60px', minWidth: '100px', minHeight: '60px'}}
-                            variant="contained" color="primary">
-                                목록
-                            </Button>
+                            <Button variant="contained"> 목록 </Button>
                         </Link>
+                        <p> </p>
                     </form>
                 </center>
             </div>
