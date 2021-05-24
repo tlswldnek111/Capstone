@@ -48,21 +48,21 @@ function createData(번호, 제목, 작성자, 조회수, 작성일,프로그램
 }
 
 const rows_origin = [
-  createData('15', 'IN', 123, 0,3287263,'신서유기'),
-  createData('14', 'CN', 456, 0,9596961,'신서유기'),
-  createData('13', 'IT', 973, 0,301340,'런닝맨'),
-  createData('12', 'US',67434, 0,9833520,'킹덤'),
-  createData('11', 'CA', 13, 0,9984670,'런닝맨'),
-  createData('10', 'AU',400, 0,7692024,'런닝맨'),
-  createData('9', 'DE', 8200,0, 357578,'런닝맨'),
-  createData('8', 'IE', 40, 0,70273,'런닝맨'),
-  createData('7', 'MX', 1291, 0,1972550,'런닝맨'),
-  createData('6', 'JP', 1200, 0,377973,'킹덤'),
-  createData('5', 'FR', 10, 0,640679,'신서유기'),
-  createData('4', 'GB', 657, 0,242495,'신서유기'),
-  createData('3', 'RU', 44, 0,17098246,'신서유기'),
-  createData('2', 'NG', 217, 0,923768,'신서유기'),
-  createData('1', 'BR', 25, 0,8515767,'신서유기'),
+  createData('15', 'IN', '123', 0,3287263,'신서유기'),
+  createData('14', 'CN', '456', 0,9596961,'신서유기'),
+  createData('13', 'IT', '973', 0,301340,'런닝맨'),
+  createData('12', 'US','67434', 0,9833520,'킹덤'),
+  createData('11', 'CA', '13', 0,9984670,'런닝맨'),
+  createData('10', 'AU','400', 0,7692024,'런닝맨'),
+  createData('9', 'DE', '8200',0, 357578,'런닝맨'),
+  createData('8', 'IE', '40', 0,70273,'런닝맨'),
+  createData('7', 'MX', '1291', 0,1972550,'런닝맨'),
+  createData('6', 'JP', '1200', 0,377973,'킹덤'),
+  createData('5', 'FR', '10', 0,640679,'신서유기'),
+  createData('4', 'GB', '657', 0,242495,'신서유기'),
+  createData('3', 'RU', '44', 0,17098246,'신서유기'),
+  createData('2', 'NG', '217', 0,923768,'신서유기'),
+  createData('1', 'BR', '25', 0,8515767,'신서유기'),
 ];
 
 const useStyles =makeStyles((theme) => ({
@@ -72,14 +72,6 @@ const useStyles =makeStyles((theme) => ({
   },
   container: {
     maxHeight: '100%',
-  },
-  input: {
-    marginLeft: 10,
-    padding: 5,
-    margin: theme.spacing(0),
-  },
-  iconButton: {
-    padding: 5,
   },
   divider: {
     height: 28,
@@ -99,14 +91,16 @@ export default function Tablee(props) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [open, setOpen] = React.useState(false);
   const [rows, setRows] = React.useState([]);
+  
 
   useEffect(() => {
     const temp = [];
-    if (props.programs !== '') {
+    
+    if (props.programs !== ''|| props.searchs !=='') {
       for (let i = 0; i < rows_origin.length; i++) {
-        if (rows_origin[i].프로그램 === props.programs) {
+        if (rows_origin[i].프로그램 === props.programs && rows_origin[i].제목.includes(props.searchs) || rows_origin[i].작성자.includes(props.searchs) ) 
+        {
           temp.push(rows_origin[i]);
         }
       }
@@ -114,7 +108,7 @@ export default function Tablee(props) {
     } else {
       setRows(rows_origin);
     }
-  }, [props.programs])
+  }, [props.programs], [props.searchs])
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
