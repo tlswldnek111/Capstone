@@ -5,12 +5,17 @@
         INSERT INTO VOD
         VALUES(#{TITLE}
               ,#{CATEGORY}
-              ,#{CONTENT}
-              ,#{IMAGEPATH})
+              ,#{CONTENT})
     </insert>
     
     <select id="select_vod">
         SELECT *
           FROM VOD
+    </select>
+
+    <select id="select_one_vod">
+        SELECT *
+          FROM VOD
+         WHERE TITLE = #{TITLE}
     </select>
 </mapper>

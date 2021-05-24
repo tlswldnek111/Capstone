@@ -34,7 +34,6 @@ router.post('/upload', function(req, res, next) {
         TITLE: req.body.TITLE,
         CATEGORY: req.body.CATEGORY,
         CONTENT: req.body.CONTENT,
-        IMAGEPATH: req.body.IMAGEPATH,
       };
   
       let format = {language: 'sql', indent: ' '};
@@ -47,7 +46,7 @@ router.post('/upload', function(req, res, next) {
           res.json({success: 0});
         } else {
           res.json({success: 1});
-          makedir('c:\\vod\\' + req.body.TITLE + '\\EPISODE');
+          makedir('server\\vod\\' + req.body.TITLE + '\\EPISODE');
         }
         connection.close();
       });
@@ -84,9 +83,52 @@ router.post('/select', function(req, res, next) {
     })
   });
 
+router.post('/select_one', function(req, res, next) {
+  oracledb.getConnection({
+    user : dbConfig.user,
+    password : dbConfig.password,
+    connectString : dbConfig.connectString
+  },
+  function(err, connection) {
+    if (err) {
+      console.error(err.message);
+      return;
+    }
+    
+    var param = {
+      TITLE: req.body.TITLE
+    };
+
+    let format = {language: 'sql', indent: ' '};
+    let query = mybatisMapper.getStatement('vod', 'select_one_vod', param, format);
+    console.log(query);
+
+    connection.execute(query, [], function(err, result) {
+      if (err) {
+        console.error(err.message);
+      } else {
+        res.json(common.Update_data(result)[0]);
+      }
+      connection.close();
+    });
+  })
+});
+
+router.post('/select_episode', function(req, res, next) {
+  fs.readdir('server/vod/' + req.body.TITLE + '/EPISODE', (error, filelist) => {
+    if (error) {
+      res.send(error);
+    } else {
+      res.send(filelist);
+    }
+  })
+});
+
 router.get('/thumbnail', function(req, res, next) {
   if (req.query.name != null) {
-    res.sendFile('c:\\vod\\' + req.query.name + "\\Thumbnail.jpg");
+    res.sendFile('Thumbnail.jpg', {
+      root: 'server\\vod\\' + req.query.name
+    });
   }
   });
   
