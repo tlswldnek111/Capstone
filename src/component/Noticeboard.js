@@ -15,6 +15,7 @@ import Select from '@material-ui/core/Select';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+import TextField from '@material-ui/core/TextField';
 function Copyright() {
     return (
       <Typography variant="body2" color="textSecondary" align="center">
@@ -50,9 +51,9 @@ function Copyright() {
       height: 'auto',
     },
     input: {
-      marginLeft: 10,
+      marginLeft: 1,
       padding: 5,
-      margin: theme.spacing(0),
+      margin: theme.spacing(4),
     },
     iconButton: {
       padding: 5,
@@ -63,11 +64,17 @@ function Copyright() {
     }, 
     button: {
       display: 'block',
-      marginTop: theme.spacing(2),
+      float:'right',
+      margin: theme.spacing(2),
+      
     },
     formControl: {
-      margin: theme.spacing(1),
+      margin: theme.spacing(3),
       minWidth: 120,
+    },
+    title:{
+      fontSize:22,
+      marginTop: theme.spacing(3),
     },
   }));
  
@@ -77,7 +84,6 @@ function Copyright() {
     const [open, setOpen] = React.useState(false);
     const [program, setprogram] = React.useState('');
     const [sch,setsch]=React.useState('');
-  
     const handleChange = (event) => {
       setprogram(event.target.value);
     };
@@ -87,7 +93,7 @@ function Copyright() {
     const handleClose = () => {
       setOpen(false);
     };
-  
+    
     const handleOpen = () => {
       setOpen(true);
     };
@@ -102,8 +108,8 @@ function Copyright() {
           </Typography>
   
       <FormControl className={classes.formControl}  >
-        <InputLabel id="inputlabel" >프로그램 명</InputLabel>
-        <Select
+        <InputLabel id="inputlabel">프로그램 명</InputLabel>
+         <Select
           labelId="select"
           id="select"
           open={open}
@@ -112,7 +118,6 @@ function Copyright() {
           value={program}
           onChange={handleChange}
         >
-         
           <MenuItem value={"신서유기"} >신서유기</MenuItem>
           <MenuItem value={"런닝맨"}>런닝맨</MenuItem>
           <MenuItem value={"킹덤"}>킹덤</MenuItem>
@@ -130,20 +135,19 @@ function Copyright() {
        <SearchIcon />
      </IconButton>
 
-     <div style={{float: 'right'}}>
           <Button 
             type="check"
             variant="contained"
-            color="white"
+            className={classes.button}
+            variant="contained"
+             color="primary"
           >
            글 작성
           </Button>
-      </div>
-
-
-
+    
               <Paper className={fixedHeightPaper}>
               <Tablee programs={program} searchs={sch}/>
+              
               </Paper>
         </Box>
 
