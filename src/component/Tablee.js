@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -9,7 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import { Link } from "react-router-dom";
-import { useTable, useFilters } from 'react-table' 
+
 const columns = [
   { id: '번호', label: '번호', minWidth: 15 },
   { id: '제목', label: '제목', minWidth: 150 },
@@ -42,11 +42,12 @@ const columns = [
     format: (value) => value.toLocaleString('en-US'),
   },
 ];
+
 function createData(번호, 제목, 작성자, 조회수, 작성일,프로그램) {
-  return { 번호, 제목, 작성자, 조회수, 작성일,프로그램};
+  return { 번호, 제목, 작성자, 조회수, 작성일, 프로그램 };
 }
 
-const rows = [
+const rows_origin = [
   createData('15', 'IN', 123, 0,3287263,'신서유기'),
   createData('14', 'CN', 456, 0,9596961,'신서유기'),
   createData('13', 'IT', 973, 0,301340,'런닝맨'),
@@ -99,6 +100,22 @@ export default function Tablee(props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [open, setOpen] = React.useState(false);
+  const [rows, setRows] = React.useState([]);
+
+  useEffect(() => {
+    const temp = [];
+    if (props.programs !== '') {
+      for (let i = 0; i < rows_origin.length; i++) {
+        if (rows_origin[i].프로그램 === props.programs) {
+          temp.push(rows_origin[i]);
+        }
+      }
+      setRows(temp);
+    } else {
+      setRows(rows_origin);
+    }
+  }, [props.programs])
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -106,14 +123,6 @@ export default function Tablee(props) {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleOpen = () => {
-    setOpen(true);
   };
 
   return (
@@ -179,40 +188,3 @@ export default function Tablee(props) {
 
   );
 }
-/*
-  <TableContainer className={classes.container}>
-        <Table stickyHeader aria-label="sticky table"  >
-          <TableHead>
-            <TableRow  >
-              {columns.map((column) => (
-                <TableCell 
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                 >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-              return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                  {columns.map((column) => {
-                    const value = row[column.id];
-                    return (
-                      <TableCell key={column.id} align={column.align} component={Link} to={`noticeboard/${program}/${ row.번호}-${ row.프로그램}`} style={{textDecoration:"none", color:"black"}}>
-        
-                      {(column.format && typeof value === 'number') ? column.format(value) : value}
-                   
-                    </TableCell>
-                    );
-                  })}
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer> 
-*/

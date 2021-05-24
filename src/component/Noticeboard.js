@@ -92,14 +92,12 @@ function Copyright() {
       setOpen(true);
     };
     return(
-     <div className={classes.root}>
-         <Header2/>
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-      
-        <Box width="100%" >
-
-        <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title} align="center">
+      <div className={classes.root}>
+        <Header2/>
+        <main className={classes.content}>
+          <div className={classes.appBarSpacer} />
+          <Box width="100%" >
+          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title} align="center">
            {program} 시청자 게시판
           </Typography>
   
@@ -140,7 +138,7 @@ function Copyright() {
           >
            글 작성
           </Button>
-          </div>
+      </div>
 
 
 
@@ -153,7 +151,7 @@ function Copyright() {
         <Copyright />
       </Box>
           
-    </main>
+      </main>
     </div>
 
 
