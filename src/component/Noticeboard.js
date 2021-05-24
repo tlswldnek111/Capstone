@@ -7,7 +7,14 @@ import Paper from '@material-ui/core/Paper';
 import Header2 from './Header2';
 import Tablee from './Tablee';
 import { Link } from "react-router-dom";
-
+import Button from '@material-ui/core/Button';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputBase from '@material-ui/core/InputBase';
+import IconButton from '@material-ui/core/IconButton';
+import SearchIcon from '@material-ui/icons/Search';
 function Copyright() {
     return (
       <Typography variant="body2" color="textSecondary" align="center">
@@ -42,12 +49,48 @@ function Copyright() {
     fixedHeight: {//페이지 길이.. 드디어..
       height: 'auto',
     },
+    input: {
+      marginLeft: 10,
+      padding: 5,
+      margin: theme.spacing(0),
+    },
+    iconButton: {
+      padding: 5,
+    },
+    divider: {
+      height: 28,
+      margin: 4,
+    }, 
+    button: {
+      display: 'block',
+      marginTop: theme.spacing(2),
+    },
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+    },
   }));
  
   export default function Noticeboard(){
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+    const [open, setOpen] = React.useState(false);
+    const [program, setprogram] = React.useState('');
+    const [sch,setsch]=React.useState('');
   
+    const handleChange = (event) => {
+      setprogram(event.target.value);
+    };
+    const handleChange2 = (event) => {
+      setsch(event.target.value);
+    };
+    const handleClose = () => {
+      setOpen(false);
+    };
+  
+    const handleOpen = () => {
+      setOpen(true);
+    };
     return(
      <div className={classes.root}>
          <Header2/>
@@ -55,8 +98,54 @@ function Copyright() {
         <div className={classes.appBarSpacer} />
       
         <Box width="100%" >
+
+        <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title} align="center">
+           {program} 시청자 게시판
+          </Typography>
+  
+      <FormControl className={classes.formControl}  >
+        <InputLabel id="inputlabel" >프로그램 명</InputLabel>
+        <Select
+          labelId="select"
+          id="select"
+          open={open}
+          onClose={handleClose}
+          onOpen={handleOpen}
+          value={program}
+          onChange={handleChange}
+        >
+         
+          <MenuItem value={"신서유기"} >신서유기</MenuItem>
+          <MenuItem value={"런닝맨"}>런닝맨</MenuItem>
+          <MenuItem value={"킹덤"}>킹덤</MenuItem>
+          <MenuItem value={"코미디빅리그"}>코미디빅리그</MenuItem>
+        </Select>
+      </FormControl>
+
+      <InputBase 
+       className={classes.input}
+       placeholder='검색'
+       inputProps={{ 'aria-label': 'search' }}
+       onChange={handleChange2}
+       />
+      <IconButton type="submit" className={classes.iconButton} aria-label="search">
+       <SearchIcon />
+     </IconButton>
+
+     <div style={{float: 'right'}}>
+          <Button 
+            type="check"
+            variant="contained"
+            color="white"
+          >
+           글 작성
+          </Button>
+          </div>
+
+
+
               <Paper className={fixedHeightPaper}>
-              <Tablee/>
+              <Tablee programs={program} searchs={sch}/>
               </Paper>
         </Box>
 
