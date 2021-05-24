@@ -83,7 +83,7 @@ class Vod extends React.Component {
                     </Link>
                 </div>
                 <center>
-                    {this.state.INFO.map((unit, idx) => {
+                    {this.state.INFO.map((unit) => {
                         return unit;
                     })}
                 </center>

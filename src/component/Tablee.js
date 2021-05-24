@@ -97,9 +97,9 @@ export default function Tablee(props) {
   useEffect(() => {
     const temp = [];
     
-    if (props.programs !== ''|| props.searchs !=='') {
+    if (props.programs !== ''|| props.searchs !== '') {
       for (let i = 0; i < rows_origin.length; i++) {
-        if (rows_origin[i].프로그램 === props.programs && rows_origin[i].제목.includes(props.searchs) || rows_origin[i].작성자.includes(props.searchs) ) 
+        if (rows_origin[i].프로그램 === props.programs && (rows_origin[i].제목.includes(props.searchs) || rows_origin[i].작성자.includes(props.searchs)) ) 
         {
           temp.push(rows_origin[i]);
         }
@@ -108,7 +108,7 @@ export default function Tablee(props) {
     } else {
       setRows(rows_origin);
     }
-  }, [props.programs], [props.searchs])
+  }, [props.programs, props.searchs])
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
