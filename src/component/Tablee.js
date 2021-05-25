@@ -11,32 +11,32 @@ import TableRow from '@material-ui/core/TableRow';
 import { Link } from "react-router-dom";
 
 const columns = [
-  { id: '제목', label: '제목', minWidth: 150 },
+  { id: 'title', label: 'title', minWidth: 150 },
   {
-    id: '작성자',
-    label: '작성자',
+    id: 'editor',
+    label: 'editor',
     minWidth: 15,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
-    id: '조회수',
-    label: '조회수',
+    id: 'count',
+    label: 'count',
     minWidth: 10,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
-    id: '작성일',
-    label: '작성일',
+    id: 'date',
+    label: 'date',
     minWidth: 10,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   },
 ];
 
-function createData(번호, 제목, 작성자, 조회수, 작성일,프로그램) {
-  return { 번호, 제목, 작성자, 조회수, 작성일, 프로그램 };
+function createData(number, title, editor, count, date,program) {
+  return { number, title, editor, count, date, program };
 }
 
 const rows_origin = [
@@ -91,16 +91,17 @@ export default function Tablee(props) {
   useEffect(() => {
     const temp = [];
     
-    
+    if(props.address === 'board'){//noticeboard에서 테이블 사용할때
+
     if (props.programs !== ''|| props.searchs !== '') {
       for (let i = 0; i < rows_origin.length; i++) {//관리자 글을 맨 위로
-        if (rows_origin[i].프로그램 === props.programs && rows_origin[i].작성자==='admin' && (rows_origin[i].제목.includes(props.searchs) || rows_origin[i].작성자.includes(props.searchs)) ) 
+        if (rows_origin[i].program === props.programs && rows_origin[i].editor==='admin' && (rows_origin[i].title.includes(props.searchs) || rows_origin[i].editor.includes(props.searchs)) ) 
         {
           temp.push(rows_origin[i]);
         }
       }
       for (let i = 0; i < rows_origin.length; i++) {
-        if (rows_origin[i].프로그램 === props.programs && rows_origin[i].작성자!=='admin' && (rows_origin[i].제목.includes(props.searchs) || rows_origin[i].작성자.includes(props.searchs)) ) 
+        if (rows_origin[i].program === props.programs && rows_origin[i].editor!=='admin' && (rows_origin[i].title.includes(props.searchs) || rows_origin[i].editor.includes(props.searchs)) ) 
         {
           temp.push(rows_origin[i]);
         }
@@ -109,6 +110,25 @@ export default function Tablee(props) {
     } else {
       //setRows(rows_origin);
     }
+  }else if(props.address === 'mywrite'){//내가작성한글만보기
+ if (props.programs !== ''|| props.searchs !== '') {
+     
+      for (let i = 0; i < rows_origin.length; i++) {
+        if (rows_origin[i].program === props.programs && rows_origin[i].editor===localStorage.getItem('username') && rows_origin[i].title.includes(props.searchs) ) 
+        {
+          temp.push(rows_origin[i]);
+        }
+      }
+      setRows(temp);
+    } else {
+      //setRows(rows_origin);
+    }
+  }
+
+
+
+
+
   }, [props.programs, props.searchs])
 
   const handleChangePage = (event, newPage) => {
@@ -149,7 +169,7 @@ export default function Tablee(props) {
                   {columns.map((column) => {
                     const value = row[column.id];
                     return (
-                      <TableCell key={column.id} align={column.align} component={Link} to={`/${ row.번호}-${ row.프로그램}`} style={{textDecoration:"none", color:"black"}}>
+                      <TableCell key={column.id} align={column.align} component={Link} to={`/${ row.number}-${ row.program}`} style={{textDecoration:"none", color:"black"}}>
         
                       {(column.format && typeof value === 'number') ? column.format(value) : value}
                    

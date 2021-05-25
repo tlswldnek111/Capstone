@@ -77,7 +77,7 @@ function Copyright() {
     },
   }));
  
-  export default function Noticeboard(){
+  export default function MyWrite(){
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
     const [open, setOpen] = React.useState(false);
@@ -103,7 +103,7 @@ function Copyright() {
           <div className={classes.appBarSpacer} />
           <Box width="100%" >
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title} align="center">
-           {program} 시청자 게시판
+           작성 글 관리
           </Typography>
   
       <FormControl className={classes.formControl}  >
@@ -134,18 +134,9 @@ function Copyright() {
        <SearchIcon />
      </IconButton>
 
-          <Button 
-            type="check"
-            variant="contained"
-            className={classes.button}
-            variant="contained"
-             color="primary"
-          >
-           글 작성
-          </Button>
     
               <Paper className={fixedHeightPaper}>
-              <Tablee programs={program} searchs={sch}  address='board'/>
+              <Tablee programs={program} searchs={sch} address='mywrite'/>
               
               </Paper>
         </Box>

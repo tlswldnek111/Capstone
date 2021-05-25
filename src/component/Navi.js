@@ -15,7 +15,7 @@ import Vod from './Vod';
 import Vod_upload from './Vod_upload';
 import board_detail from './board_detail';
 import Vod_detail from './Vod_detail';
-
+import MyWrite from './MyWrite';
 class Page404 extends React.Component {
     render() {
         return(
@@ -55,6 +55,7 @@ class Navi extends React.Component {
                     <Route exact path="/vod_upload" component={Vod_upload} />
                     <Route exact path="/board_detail" component={board_detail} />
                     <Route exact path="/vod_detail" component={Vod_detail} />
+                    <Route exact path="/my_write" component={MyWrite} />
                 </Switch>
                 </AppBar>
                
