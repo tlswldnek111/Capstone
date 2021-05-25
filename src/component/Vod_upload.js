@@ -8,7 +8,6 @@ class Vod_upload extends React.Component {
         const TITLE = event.target.TITLE.value;
         const CATEGORY = event.target.CATEGORY.value;
         const CONTENT = event.target.CONTENT.value;
-        const IMAGEPATH = 'c:\\vod\\' + TITLE + '\\' + 'Thumbnail.jpg'
 
         fetch('http://localhost:3001/vod/upload', {
           method: 'POST',
@@ -19,7 +18,6 @@ class Vod_upload extends React.Component {
             TITLE: TITLE,
             CATEGORY: CATEGORY,
             CONTENT: CONTENT,
-            IMAGEPATH: IMAGEPATH,
           })
         })
         .then(res=>res.json())

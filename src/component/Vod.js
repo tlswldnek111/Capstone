@@ -10,22 +10,31 @@ class Vod extends React.Component {
         super(props);
         this.state = {
             VOD: [],
-            INFO: []
+            INFO: [],
         };
+        this.Card_Click = this.Card_Click.bind(this);
     }
 
     show_vod(i) {
-        console.log(this.state.VOD);
         var url = `http://localhost:3001/vod/thumbnail?name=${this.state.VOD[i].TITLE}`
         return(
         <Card
+        id={"card" + i}
         style={{width: 350, height: 250, marginTop: 25, backgroundColor: "#E8E8E8"}}
-        variant="outlined">
+        variant="outlined"
+        onClick={()=>{
+            this.Card_Click(i);
+        }}>
             <CardContent>
                 <img src={url} style={{width: "90%", height: "90%"}}></img>
                 <p>{this.state.VOD[i].TITLE}</p>
             </CardContent>
         </Card>);
+    }
+
+    Card_Click(i) {
+        this.props.history.push('vod_detail?title=' +
+        this.state.VOD[i].TITLE);
     }
 
     componentDidMount() {
@@ -67,13 +76,14 @@ class Vod extends React.Component {
             <div>
                 <Header2></Header2>
                 <div style={{marginTop: 64}}></div>
-                <div hidden={(localStorage.getItem('id') !== 'admin')}>
+                <div
+                hidden={(localStorage.getItem('id') !== 'admin')}>
                     <Link to="/Vod_upload">
                         <button>업로드</button>
                     </Link>
                 </div>
                 <center>
-                    {this.state.INFO.map((unit, idx) => {
+                    {this.state.INFO.map((unit) => {
                         return unit;
                     })}
                 </center>
