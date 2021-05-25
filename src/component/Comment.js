@@ -30,7 +30,7 @@ function Comment() {
             />
             <br />
             <button style={{ width: '20%', height: '52px' }} onClick={onsubmit}>
-                Submit
+                등록
             </button>
             </form>
       </div>

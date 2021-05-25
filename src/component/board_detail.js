@@ -16,8 +16,9 @@ class board_detail extends React.Component {
     render() {
         return (
             <div>
+                <Header2></Header2>
                 <center>
-                    <Card style={{width: 800, marginTop: 25}} variant="outlined">
+                    <Card style={{width: 800, marginTop: 90}} variant="outlined">
                         <CardContent>
                             <p><Input style = {{width: 700}} defaultValue="제목 들어갈 곳" inputProps={{ 'aria-label': 'description' }} /></p>
                             <Grid>
@@ -27,7 +28,6 @@ class board_detail extends React.Component {
                                 <Grid item>
                                 </Grid>
                             </Grid>
-                            
                             <TextField style = {{width: 700}}
                                 id="outlined-multiline-flexible"
                                 label="내용"
@@ -37,7 +37,7 @@ class board_detail extends React.Component {
                             />
                         </CardContent>
                     </Card>
-                    <Card style={{width: 800, marginTop: 25}} variant="outlined">
+                    <Card style={{width: 800, marginTop: 13}} variant="outlined">
                         <CardContent>
                             <p> </p>
                             <Typography variant="h7" style={{marginRight: "650px", maxWidth: '100px'}}>
