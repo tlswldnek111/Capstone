@@ -18,18 +18,20 @@ class Vod extends React.Component {
     show_vod(i) {
         var url = `http://localhost:3001/vod/thumbnail?name=${this.state.VOD[i].TITLE}`
         return(
-        <Card
-        id={"card" + i}
-        style={{width: 350, height: 250, marginTop: 25, backgroundColor: "#E8E8E8"}}
-        variant="outlined"
-        onClick={()=>{
-            this.Card_Click(i);
-        }}>
-            <CardContent>
-                <img src={url} style={{width: "90%", height: "90%"}}></img>
-                <p>{this.state.VOD[i].TITLE}</p>
-            </CardContent>
-        </Card>);
+        <div style={{float:"left"}}>
+            <Card
+            id={"card" + i}
+            style={{width: "185px", height: "280px", marginTop: 25, backgroundColor: "#E8E8E8"}}
+            variant="outlined"
+            onClick={()=>{
+                this.Card_Click(i);
+            }}>
+                <CardContent>
+                    <img src={url} style={{width: "100%", height: "100%"}}></img>
+                    <p>{this.state.VOD[i].TITLE}</p>
+                </CardContent>
+            </Card>
+        </div>);
     }
 
     Card_Click(i) {
