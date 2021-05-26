@@ -27,7 +27,18 @@
     </insert>
 
     <select id="select_board">
-        SELECT *
+        SELECT IDX
+              ,ID
+              ,TITLE
+              ,CONTENT
+              ,TO_CHAR(POST_DATE, 'YYYY-MM-DD HH24:MI') as POST_DATE
+              ,VIEW_COUNT
+              ,POST_LOCK
+              ,PROGRAM
           FROM BOARD
+         WHERE 1=1
+        <if test="IDX != null">
+           AND IDX = #{IDX}
+        </if>
     </select>
 </mapper>

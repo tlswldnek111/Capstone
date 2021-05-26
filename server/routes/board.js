@@ -89,9 +89,15 @@ router.post('/select', function(req, res, next) {
       console.error(err.message);
       return;
     }
-    
+
     var param = {
     };
+    
+    if (req.body.IDX != null) {
+      param = {
+        IDX: req.body.IDX,
+      };
+    }
 
     let format = {language: 'sql', indent: ' '};
     let query = mybatisMapper.getStatement('board', 'select_board', param, format);

@@ -92,10 +92,12 @@ function Copyright() {
       .then(res=>res.json())
       .then(res=>{
         const temp = []
+        temp.push(<MenuItem value={'전체'}>전체</MenuItem>)
         for (let i = 0; i < res.length; i++) {
           temp.push(<MenuItem value={res[i].TITLE}>{res[i].TITLE}</MenuItem>)
         }
         setMenu(temp);
+        setprogram('전체');
       })
     }, [])
   
