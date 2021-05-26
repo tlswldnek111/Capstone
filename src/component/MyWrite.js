@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -15,6 +15,7 @@ import Select from '@material-ui/core/Select';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+
 function Copyright() {
     return (
       <Typography variant="body2" color="textSecondary" align="center">
@@ -50,9 +51,9 @@ function Copyright() {
       height: 'auto',
     },
     input: {
-      marginLeft: 1,
+      marginLeft: 10,
       padding: 5,
-      margin: theme.spacing(4),
+      margin: theme.spacing(3),
     },
     iconButton: {
       padding: 5,
@@ -63,17 +64,20 @@ function Copyright() {
     }, 
     button: {
       display: 'block',
-      float:'right',
-      margin: theme.spacing(2),
-      
+      marginTop: theme.spacing(2),
     },
     formControl: {
-      margin: theme.spacing(3),
+      margin: theme.spacing(1),
       minWidth: 120,
     },
     title:{
       fontSize:22,
       marginTop: theme.spacing(3),
+    },
+    menu:{
+      marginLeft: 10,
+      padding: 5,
+      margin: theme.spacing(0),
     },
   }));
  
@@ -83,6 +87,29 @@ function Copyright() {
     const [open, setOpen] = React.useState(false);
     const [program, setprogram] = React.useState('');
     const [sch,setsch]=React.useState('');
+    const [menu, setMenu]=React.useState([]);
+
+    useEffect(()=>{
+      fetch('http://localhost:3001/vod/title', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+        })
+      })
+      .then(res=>res.json())
+      .then(res=>{
+        const temp = []
+        temp.push(<MenuItem value={'전체'}>전체</MenuItem>)
+        for (let i = 0; i < res.length; i++) {
+          temp.push(<MenuItem value={res[i].TITLE}>{res[i].TITLE}</MenuItem>)
+        }
+        setMenu(temp);
+        setprogram('전체');
+      })
+    }, [])
+  
     const handleChange = (event) => {
       setprogram(event.target.value);
     };
@@ -92,7 +119,7 @@ function Copyright() {
     const handleClose = () => {
       setOpen(false);
     };
-    
+  
     const handleOpen = () => {
       setOpen(true);
     };
@@ -103,12 +130,12 @@ function Copyright() {
           <div className={classes.appBarSpacer} />
           <Box width="100%" >
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title} align="center">
-           작성 글 관리
+          {localStorage.getItem('username')} 님의 작성 글 관리
           </Typography>
   
       <FormControl className={classes.formControl}  >
-        <InputLabel id="inputlabel">프로그램 명</InputLabel>
-         <Select
+        <InputLabel  className={classes.menu} id="inputlabel" >프로그램 명</InputLabel>
+        <Select
           labelId="select"
           id="select"
           open={open}
@@ -116,11 +143,12 @@ function Copyright() {
           onOpen={handleOpen}
           value={program}
           onChange={handleChange}
+          className={classes.menu}
         >
-          <MenuItem value={"신서유기"} >신서유기</MenuItem>
-          <MenuItem value={"런닝맨"}>런닝맨</MenuItem>
-          <MenuItem value={"킹덤"}>킹덤</MenuItem>
-          <MenuItem value={"코미디빅리그"}>코미디빅리그</MenuItem>
+         
+          {menu.map((val)=>{
+            return val;
+          })}
         </Select>
       </FormControl>
 
@@ -134,10 +162,10 @@ function Copyright() {
        <SearchIcon />
      </IconButton>
 
-    
+   
+
               <Paper className={fixedHeightPaper}>
-              <Tablee programs={program} searchs={sch} address='mywrite'/>
-              
+              <Tablee programs={program} searchs={sch} sel={'2'}/>
               </Paper>
         </Box>
 

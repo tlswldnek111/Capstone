@@ -11,40 +11,32 @@ import TableRow from '@material-ui/core/TableRow';
 import { Link } from "react-router-dom";
 
 const columns = [
-  { id: '번호', label: '번호', minWidth: 15 },
-  { id: '제목', label: '제목', minWidth: 150 },
+  { number: 'titles', label: '제목', minWnumberth: 150 },
   {
-    id: '작성자',
+    number: 'editor',
     label: '작성자',
-    minWidth: 15,
+    minWnumberth: 15,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
-    id: '조회수',
+    number: 'count',
     label: '조회수',
-    minWidth: 10,
+    minWnumberth: 10,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
-    id: '작성일',
-    label: '작성일',
-    minWidth: 10,
-    align: 'right',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: '프로그램',
-    label: '',
-    minWidth: 0,
+    number: 'date',
+    label: '날짜',
+    minWnumberth: 10,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   },
 ];
 
-function createData(번호, 제목, 작성자, 조회수, 작성일,프로그램) {
-  return { 번호, 제목, 작성자, 조회수, 작성일, 프로그램 };
+function createData(number, titles, editor, count, date,program) {
+  return { number, titles, editor, count, date, program };
 }
 
 const rows_origin = [];
@@ -53,12 +45,12 @@ var count = 0;
 const useStyles =makeStyles((theme) => ({
   root: { 
     flexGrow: 1,
-    width: '100%',
+    wnumberth: '100%',
   },
   container: {
     maxHeight: '100%',
   },
-  divider: {
+  divnumberer: {
     height: 28,
     margin: 4,
   }, 
@@ -68,7 +60,7 @@ const useStyles =makeStyles((theme) => ({
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    minWnumberth: 120,
   },
 }));
 
@@ -108,23 +100,54 @@ export default function Tablee(props) {
       })
     } else {
       const temp = [];
+      if(props.sel==='1'){//noticeboard
+        if (props.programs !== ''|| props.searchs !== '') {
+          for (let i = 0; i < rows_origin.length; i++) {
+            if (props.programs == '' &&
+            (rows_origin[i].titles.includes(props.searchs) ||
+            rows_origin[i].editor.includes(props.searchs)) ) {
+              temp.push(rows_origin[i]);
+            } else if (rows_origin[i].program === props.programs &&
+              (rows_origin[i].titles.includes(props.searchs) ||
+              rows_origin[i].editor.includes(props.searchs)) ) {
+              temp.push(rows_origin[i]);
+            }
+          }
+          setRows(temp);
+        } else {
+          //setRows(rows_origin);
+        }
+    }else if(props.sel==='2'){//mywrite 내가 작성한 글만 보기
       if (props.programs !== '전체'|| props.searchs !== '') {
         for (let i = 0; i < rows_origin.length; i++) {
           if (props.programs == '전체' &&
-          (rows_origin[i].제목.includes(props.searchs) ||
-          rows_origin[i].작성자.includes(props.searchs)) ) {
+          (rows_origin[i].titles.includes(props.searchs) ||
+          rows_origin[i].editor.includes(props.searchs)) && 
+          localStorage.getItem('username')===rows_origin[i].editor ) {
             temp.push(rows_origin[i]);
-          } else if (rows_origin[i].프로그램 === props.programs &&
-            (rows_origin[i].제목.includes(props.searchs) ||
-            rows_origin[i].작성자.includes(props.searchs)) ) {
+          } else if (rows_origin[i].program === props.programs &&
+            (rows_origin[i].titles.includes(props.searchs) ||
+            rows_origin[i].editor.includes(props.searchs)) && 
+            localStorage.getItem('username')===rows_origin[i].editor) {
             temp.push(rows_origin[i]);
           }
         }
         setRows(temp);
       } else {
-        setRows(rows_origin);
+        for (let i = 0; i < rows_origin.length; i++) {
+          if (props.programs == '전체' &&
+          (rows_origin[i].titles.includes(props.searchs) ||
+          rows_origin[i].editor.includes(props.searchs)) && 
+          localStorage.getItem('username')===rows_origin[i].editor ) {
+            temp.push(rows_origin[i]);
+          } 
+        }
+        //setRows(rows_origin);//전체일때
+        setRows(temp);
       }
+
     }
+  }
   }, [props.programs, props.searchs])
 
   const handleChangePage = (event, newPage) => {
@@ -148,9 +171,9 @@ export default function Tablee(props) {
             <TableRow  >
               {columns.map((column) => (
                 <TableCell 
-                  key={column.id}
+                  key={column.number}
                   align={column.align}
-                  style={{ minWidth: column.minWidth }}
+                  style={{ minWnumberth: column.minWnumberth }}
                  >
                   {column.label}
                 </TableCell>
@@ -163,13 +186,13 @@ export default function Tablee(props) {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                   {columns.map((column) => {
-                    const value = row[column.id];
+                    const value = row[column.number];
                     return (
                       <TableCell
-                      key={column.id}
+                      key={column.number}
                       align={column.align}
                       component={Link}
-                      to={`board_detail?idx=${row.번호}`}
+                      to={`board_detail?numberx=${row.number}`}
                       style={{textDecoration:"none", color:"black"}}>
         
                       {(column.format && typeof value === 'number') ? column.format(value) : value}
@@ -184,8 +207,6 @@ export default function Tablee(props) {
         </Table>
       </TableContainer> 
 
-      {props.programs}{props.searchs}
-     
 
       <TablePagination
         rowsPerPageOptions={[5, 10, 15]}

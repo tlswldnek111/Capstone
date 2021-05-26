@@ -44,6 +44,7 @@ class Write extends React.Component {
         .then(res=>{console.log(res);
             if (res.success === 1) {
                         alert("성공");
+                        window.location.href='/noticeboard';
                     } else{
                         alert("실패");
                     }
@@ -68,7 +69,6 @@ class Write extends React.Component {
             this.setState({PROGRAMS: temp});
         })
     }
-
     handleClose = () => {
         this.setState({OPEN: false});
     };
@@ -149,16 +149,14 @@ class Write extends React.Component {
                                 } }
                             /> */}
                             <div style={{width: "700px"}}>
+                            
                                 <Button
                                     style={{float:'left', width:'100px'}}
-                                    variant="contained" type="submit">
-                                    등록
+                                    variant="contained" type="submit"
+                                   >
+                                  입력
                                 </Button>
-                                <Button 
-                                    style={{width:'100px'}}
-                                    variant="contained">
-                                    취소 
-                                </Button>
+
                                 <Link to="/noticeboard">
                                     <Button 
                                     style={{float:'right', width:'100px'}}

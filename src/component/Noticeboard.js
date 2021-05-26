@@ -53,7 +53,7 @@ function Copyright() {
     input: {
       marginLeft: 10,
       padding: 5,
-      margin: theme.spacing(0),
+      margin: theme.spacing(3),
     },
     iconButton: {
       padding: 5,
@@ -69,6 +69,15 @@ function Copyright() {
     formControl: {
       margin: theme.spacing(1),
       minWidth: 120,
+    },
+    title:{
+      fontSize:22,
+      marginTop: theme.spacing(3),
+    },
+    menu:{
+      marginLeft: 10,
+      padding: 5,
+      margin: theme.spacing(0),
     },
   }));
  
@@ -92,12 +101,12 @@ function Copyright() {
       .then(res=>res.json())
       .then(res=>{
         const temp = []
-        temp.push(<MenuItem value={'전체'}>전체</MenuItem>)
+        //temp.push(<MenuItem value={'전체'}>전체</MenuItem>)
         for (let i = 0; i < res.length; i++) {
           temp.push(<MenuItem value={res[i].TITLE}>{res[i].TITLE}</MenuItem>)
         }
         setMenu(temp);
-        setprogram('전체');
+        //setprogram('전체');
       })
     }, [])
   
@@ -125,7 +134,7 @@ function Copyright() {
           </Typography>
   
       <FormControl className={classes.formControl}  >
-        <InputLabel id="inputlabel" >프로그램 명</InputLabel>
+        <InputLabel  className={classes.menu} id="inputlabel" >프로그램 명</InputLabel>
         <Select
           labelId="select"
           id="select"
@@ -134,6 +143,7 @@ function Copyright() {
           onOpen={handleOpen}
           value={program}
           onChange={handleChange}
+          className={classes.menu}
         >
          
           {menu.map((val)=>{
@@ -153,11 +163,11 @@ function Copyright() {
      </IconButton>
 
      <div style={{float: 'right'}}>
-          <Link to="write">
+          <Link to="write"  style={{textDecoration:"none", color:"black"}} >
             <Button 
               type="check"
               variant="contained"
-              color="white"
+              color="primary"
             >
             글 작성
             </Button>
@@ -167,7 +177,7 @@ function Copyright() {
 
 
               <Paper className={fixedHeightPaper}>
-              <Tablee programs={program} searchs={sch}/>
+              <Tablee programs={program} searchs={sch} sel={'1'}/>
               </Paper>
         </Box>
 
