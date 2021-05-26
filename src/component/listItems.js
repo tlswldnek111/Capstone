@@ -50,8 +50,10 @@ function Manage(){
   if(localStorage.getItem('username')!=null) //로그인 되있는 상태일때
   {//localStorage.clear() 
    return(
-   
-    <ListItemText primary="작성한 글 관리" />
+    <Link to='/my_write' style={{textDecoration:"none", color:"black"}}>
+      <ListItemText primary="작성한 글 관리" />
+      </Link>
+
      
    );
  }
