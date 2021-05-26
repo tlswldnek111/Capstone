@@ -45,13 +45,16 @@ class Vod_upload extends React.Component {
         })
         .then(()=>{
             var formData = new FormData();
-            formData.append('file', FILE);
+            const NewFile = new File([FILE]
+                , TITLE + '.' + String(FILE.name).split('.')[1]
+                , {type: FILE.type});
+            formData.append('file', NewFile);
             let reader = new FileReader();
             reader.readAsDataURL(FILE);
             reader.onloadend = () => {
                 this.setState({
                     image: reader.result
-                })
+                });
             }
             fetch('http://localhost:3001/vod/upload_image', {
             method: 'POST',
