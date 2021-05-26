@@ -101,7 +101,7 @@ function Copyright() {
       .then(res=>res.json())
       .then(res=>{
         const temp = []
-        //temp.push(<MenuItem value={'전체'}>전체</MenuItem>)
+        temp.push(<MenuItem value={'전체'}>전체</MenuItem>)
         for (let i = 0; i < res.length; i++) {
           temp.push(<MenuItem value={res[i].TITLE}>{res[i].TITLE}</MenuItem>)
         }
@@ -163,7 +163,7 @@ function Copyright() {
      </IconButton>
 
      <div style={{float: 'right'}}>
-          <Link to="write"  style={{textDecoration:"none", color:"black"}} >
+          <Link to="write"  style={{textDecoration:"none", color:"black" ,margin:20}} >
             <Button 
               type="check"
               variant="contained"

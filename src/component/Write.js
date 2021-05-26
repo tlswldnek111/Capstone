@@ -24,7 +24,8 @@ class Write extends React.Component {
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-
+   
+   
     handleSubmit(e) {
         e.preventDefault();
         fetch('http://localhost:3001/board/write', {
@@ -83,12 +84,12 @@ class Write extends React.Component {
 
     render() {
         return (
-            <div className="fullHeight">
+            <div className="fullHeight" >
                 <Header2></Header2>
-                <div style={{marginTop:"80px"}}>
-                    <center>
+                <div style={{marginTop:"100px"}}  >
+                    <center >
                         <form onSubmit={this.handleSubmit}>
-                            <Typography variant="h4">
+                        <Typography component="h1" variant="h4" color="inherit" align="center">
                                 글쓰기
                             </Typography>
                             <div style={{width:"700px"}}>
@@ -125,7 +126,7 @@ class Write extends React.Component {
                             id="CONTENT"
                             style = {{width: "700px"}}
                             multiline
-                            rows = {25}
+                            rows = {16}
                             variant="outlined"/>
                             {/* <CKEditor
                                 editor={ ClassicEditor }
@@ -148,19 +149,27 @@ class Write extends React.Component {
                                     this.setState({CONTENT: editor.getData()});
                                 } }
                             /> */}
-                            <div style={{width: "700px"}}>
-                            
+                            <div style={{width: "700px" }}>
                                 <Button
-                                    style={{float:'left', width:'100px'}}
-                                    variant="contained" type="submit"
+                                    style={{float:'left', width:'100px',margin:10}}
+                                    variant="contained" 
+                                    type="submit"
+                                    variant="contained" 
+                                    color="primary"
                                    >
                                   입력
                                 </Button>
 
                                 <Link to="/noticeboard">
                                     <Button 
-                                    style={{float:'right', width:'100px'}}
-                                    variant="contained"> 목록 </Button>
+                                    style={{float:'right', width:'100px',margin:10 }}
+                                    variant="contained"
+                                    variant="contained" 
+                                    color="primary"
+
+                                    > 
+                                    목록 
+                                    </Button>
                                 </Link>
                             </div>
                             <p> </p>
@@ -172,4 +181,4 @@ class Write extends React.Component {
     }
 }
 
-export default Write
+export default Write;
