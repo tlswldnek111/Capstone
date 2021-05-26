@@ -12,7 +12,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import Header2 from './Header2';
-
 class Write extends React.Component {
 
     constructor(props) {
@@ -160,13 +159,14 @@ class Write extends React.Component {
                                   입력
                                 </Button>
 
+
+                             
                                 <Link to="/noticeboard">
                                     <Button 
                                     style={{float:'right', width:'100px',margin:10 }}
                                     variant="contained"
                                     variant="contained" 
                                     color="primary"
-
                                     > 
                                     목록 
                                     </Button>
