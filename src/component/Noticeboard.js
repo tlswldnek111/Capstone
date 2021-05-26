@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -15,6 +15,7 @@ import Select from '@material-ui/core/Select';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+
 function Copyright() {
     return (
       <Typography variant="body2" color="textSecondary" align="center">
@@ -77,6 +78,26 @@ function Copyright() {
     const [open, setOpen] = React.useState(false);
     const [program, setprogram] = React.useState('');
     const [sch,setsch]=React.useState('');
+    const [menu, setMenu]=React.useState([]);
+
+    useEffect(()=>{
+      fetch('http://localhost:3001/vod/title', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+        })
+      })
+      .then(res=>res.json())
+      .then(res=>{
+        const temp = []
+        for (let i = 0; i < res.length; i++) {
+          temp.push(<MenuItem value={res[i].TITLE}>{res[i].TITLE}</MenuItem>)
+        }
+        setMenu(temp);
+      })
+    }, [])
   
     const handleChange = (event) => {
       setprogram(event.target.value);
@@ -113,10 +134,9 @@ function Copyright() {
           onChange={handleChange}
         >
          
-          <MenuItem value={"신서유기"} >신서유기</MenuItem>
-          <MenuItem value={"런닝맨"}>런닝맨</MenuItem>
-          <MenuItem value={"킹덤"}>킹덤</MenuItem>
-          <MenuItem value={"코미디빅리그"}>코미디빅리그</MenuItem>
+          {menu.map((val)=>{
+            return val;
+          })}
         </Select>
       </FormControl>
 
@@ -131,13 +151,15 @@ function Copyright() {
      </IconButton>
 
      <div style={{float: 'right'}}>
-          <Button 
-            type="check"
-            variant="contained"
-            color="white"
-          >
-           글 작성
-          </Button>
+          <Link to="write">
+            <Button 
+              type="check"
+              variant="contained"
+              color="white"
+            >
+            글 작성
+            </Button>
+          </Link>
       </div>
 
 

@@ -4,16 +4,23 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import Input from '@material-ui/core/Input';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import { CKEditor } from '@ckeditor/ckeditor5-react';
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import '../CSS/Write.css'
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import Header2 from './Header2';
 
 class Write extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            CONTENT: ''
+            PROGRAMS: [],
+            PROGRAM: '',
+            OPEN: false,
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -28,8 +35,9 @@ class Write extends React.Component {
             body: JSON.stringify({
             ID: localStorage.getItem('id'),
             TITLE: e.target.TITLE.value,
-            CONTENT: this.state.CONTENT,
-            LOCK: 0 
+            CONTENT: e.target.CONTENT.value,
+            LOCK: 0,
+            PROGRAM: this.state.PROGRAM,
             })
         })
         .then(res=>res.json())
@@ -42,52 +50,125 @@ class Write extends React.Component {
                     })
     }
 
+    componentDidMount() {
+        fetch('http://localhost:3001/vod/title', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+        })
+        })
+        .then(res=>res.json())
+        .then(res=>{
+            const temp = [];
+            for (let i = 0; i < res.length; i++) {
+            temp.push(<MenuItem value={res[i].TITLE}>{res[i].TITLE}</MenuItem>)
+            }
+            this.setState({PROGRAMS: temp});
+        })
+    }
+
+    handleClose = () => {
+        this.setState({OPEN: false});
+    };
+    
+    handleOpen = () => {
+        this.setState({OPEN: true});
+    };
+
+    handleChange = (e) => {
+        this.setState({PROGRAM: e.target.value});
+    };
+
     render() {
         return (
-            <div>
-                <center>
-                    <form onSubmit={this.handleSubmit}>
-                        <Typography variant="h6">
-                            글쓰기
-                        </Typography>
-                        <p><Input id = "TITLE" style = {{width: 700}} placeholder="제목을 입력하세요." inputProps={{ 'aria-label': 'description' }} /></p>
-                        <CKEditor
-                            editor={ ClassicEditor }
-                            data=""
-                            onReady={ editor => {
-                                // You can store the "editor" and use when it is needed.
-                                console.log( 'Editor is ready to use!', editor );
-                            } }
-                            onChange={ ( event, editor ) => {
-                                const data = editor.getData();
-                                console.log( { event, editor, data } );
-                            } }
-                            onBlur={ ( event, editor ) => {
-                                console.log( 'Blur.', editor );
-                            } }
-                            onFocus={ ( event, editor ) => {
-                                console.log( 'Focus.', editor );
-                            } }
-                            onChange={ (event, editor) => {
-                                this.setState({CONTENT: editor.getData()});
-                            } }
-                        />
-                        <Button
-                            style={{marginRight: "500px", maxWidth: '100px'}}
-                            variant="contained" type="submit">
-                            등록
-                        </Button>
-                        <Button 
-                            style={{marginRight: "10px", maxWidth: '100px'}}
-                            variant="contained">
-                             취소 
-                        </Button>
-                        <Link to="/noticeboard">
-                            <Button variant="contained"> 목록 </Button>
-                        </Link>
-                        <p> </p>
-                    </form>
-                </center>
+            <div className="fullHeight">
+                <Header2></Header2>
+                <div style={{marginTop:"80px"}}>
+                    <center>
+                        <form onSubmit={this.handleSubmit}>
+                            <Typography variant="h4">
+                                글쓰기
+                            </Typography>
+                            <div style={{width:"700px"}}>
+                                <FormControl style={{width: "120px", float: "left"}}>
+                                    <InputLabel id="inputlabel" >프로그램 명</InputLabel>
+                                    <Select
+                                    labelId="select"
+                                    id="select"
+                                    open={this.state.OPEN}
+                                    onClose={this.handleClose}
+                                    onOpen={this.handleOpen}
+                                    value={this.state.PROGRAM}
+                                    onChange={this.handleChange}
+                                    >
+                                    
+                                    {this.state.PROGRAMS.map((val)=>{
+                                        return val;
+                                    })}
+                                    </Select>
+                                </FormControl>
+                            </div>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <Input
+                            id="TITLE"
+                            style={{width: "700px"}}
+                            placeholder="제목을 입력하세요."
+                            inputProps={{ 'aria-label': 'description' }}
+                            />
+                            <br></br>
+                            <br></br>
+                            <TextField
+                            id="CONTENT"
+                            style = {{width: "700px"}}
+                            multiline
+                            rows = {25}
+                            variant="outlined"/>
+                            {/* <CKEditor
+                                editor={ ClassicEditor }
+                                data=""
+                                onReady={ editor => {
+                                    // You can store the "editor" and use when it is needed.
+                                    console.log( 'Editor is ready to use!', editor );
+                                } }
+                                onChange={ ( event, editor ) => {
+                                    const data = editor.getData();
+                                    console.log( { event, editor, data } );
+                                } }
+                                onBlur={ ( event, editor ) => {
+                                    console.log( 'Blur.', editor );
+                                } }
+                                onFocus={ ( event, editor ) => {
+                                    console.log( 'Focus.', editor );
+                                } }
+                                onChange={ (event, editor) => {
+                                    this.setState({CONTENT: editor.getData()});
+                                } }
+                            /> */}
+                            <div style={{width: "700px"}}>
+                                <Button
+                                    style={{float:'left', width:'100px'}}
+                                    variant="contained" type="submit">
+                                    등록
+                                </Button>
+                                <Button 
+                                    style={{width:'100px'}}
+                                    variant="contained">
+                                    취소 
+                                </Button>
+                                <Link to="/noticeboard">
+                                    <Button 
+                                    style={{float:'right', width:'100px'}}
+                                    variant="contained"> 목록 </Button>
+                                </Link>
+                            </div>
+                            <p> </p>
+                        </form>
+                    </center>
+                </div>
             </div>
         )
     }

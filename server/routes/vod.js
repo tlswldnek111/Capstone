@@ -114,6 +114,36 @@ router.post('/select_one', function(req, res, next) {
   })
 });
 
+router.post('/title', function(req, res, next) {
+  oracledb.getConnection({
+    user : dbConfig.user,
+    password : dbConfig.password,
+    connectString : dbConfig.connectString
+  },
+  function(err, connection) {
+    if (err) {
+      console.error(err.message);
+      return;
+    }
+    
+    var param = {
+    };
+
+    let format = {language: 'sql', indent: ' '};
+    let query = mybatisMapper.getStatement('vod', 'select_title', param, format);
+    console.log(query);
+
+    connection.execute(query, [], function(err, result) {
+      if (err) {
+        console.error(err.message);
+      } else {
+        res.json(common.Update_data(result));
+      }
+      connection.close();
+    });
+  })
+});
+
 router.post('/select_episode', function(req, res, next) {
   fs.readdir('server/vod/' + req.body.TITLE + '/EPISODE', (error, filelist) => {
     if (error) {

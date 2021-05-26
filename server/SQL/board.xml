@@ -11,6 +11,7 @@
                ,SYSDATE
                ,0
                ,#{LOCK}
+               ,#{PROGRAM}
         )
     </insert>
 
@@ -24,4 +25,9 @@
                ,SYSDATE
         )
     </insert>
+
+    <select id="select_board">
+        SELECT *
+          FROM BOARD
+    </select>
 </mapper>

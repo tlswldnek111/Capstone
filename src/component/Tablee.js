@@ -47,23 +47,8 @@ function createData(번호, 제목, 작성자, 조회수, 작성일,프로그램
   return { 번호, 제목, 작성자, 조회수, 작성일, 프로그램 };
 }
 
-const rows_origin = [
-  createData('15', 'IN', '123', 0,3287263,'신서유기'),
-  createData('14', 'CN', '456', 0,9596961,'신서유기'),
-  createData('13', 'IT', '973', 0,301340,'런닝맨'),
-  createData('12', 'US','67434', 0,9833520,'킹덤'),
-  createData('11', 'CA', '13', 0,9984670,'런닝맨'),
-  createData('10', 'AU','400', 0,7692024,'런닝맨'),
-  createData('9', 'DE', '8200',0, 357578,'런닝맨'),
-  createData('8', 'IE', '40', 0,70273,'런닝맨'),
-  createData('7', 'MX', '1291', 0,1972550,'런닝맨'),
-  createData('6', 'JP', '1200', 0,377973,'킹덤'),
-  createData('5', 'FR', '10', 0,640679,'신서유기'),
-  createData('4', 'GB', '657', 0,242495,'신서유기'),
-  createData('3', 'RU', '44', 0,17098246,'신서유기'),
-  createData('2', 'NG', '217', 0,923768,'신서유기'),
-  createData('1', 'BR', '25', 0,8515767,'신서유기'),
-];
+const rows_origin = [];
+var count = 0;
 
 const useStyles =makeStyles((theme) => ({
   root: { 
@@ -95,18 +80,57 @@ export default function Tablee(props) {
   
 
   useEffect(() => {
-    const temp = [];
-    
-    if (props.programs !== ''|| props.searchs !== '') {
-      for (let i = 0; i < rows_origin.length; i++) {
-        if (rows_origin[i].프로그램 === props.programs && (rows_origin[i].제목.includes(props.searchs) || rows_origin[i].작성자.includes(props.searchs)) ) 
-        {
-          temp.push(rows_origin[i]);
+    if (count === 0) {
+      fetch('http://localhost:3001/board/select', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+        })
+      })
+      .then(res=>res.json())
+      .then(res=>{
+        count++;
+        for (let i = 0; i < res.length; i++) {
+          rows_origin.push(createData(
+            res[i].IDX,
+            res[i].TITLE,
+            res[i].ID,
+            res[i].VIEW_COUNT,
+            res[i].POST_DATE,
+            res[i].PROGRAM
+          ));
         }
-      }
-      setRows(temp);
+      })
+      .then(()=>{
+        console.log('카운트: ' + count);
+        const temp = [];
+        if (props.programs !== ''|| props.searchs !== '') {
+          for (let i = 0; i < rows_origin.length; i++) {
+            if (rows_origin[i].프로그램 === props.programs && (rows_origin[i].제목.includes(props.searchs) || rows_origin[i].작성자.includes(props.searchs)) ) 
+            {
+              temp.push(rows_origin[i]);
+            }
+          }
+          setRows(temp);
+        } else {
+          setRows(rows_origin);
+        }
+      })
     } else {
-      setRows(rows_origin);
+      const temp = [];
+      if (props.programs !== ''|| props.searchs !== '') {
+        for (let i = 0; i < rows_origin.length; i++) {
+          if (rows_origin[i].프로그램 === props.programs && (rows_origin[i].제목.includes(props.searchs) || rows_origin[i].작성자.includes(props.searchs)) ) 
+          {
+            temp.push(rows_origin[i]);
+          }
+        }
+        setRows(temp);
+      } else {
+        setRows(rows_origin);
+      }
     }
   }, [props.programs, props.searchs])
 
