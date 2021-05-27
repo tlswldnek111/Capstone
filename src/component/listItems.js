@@ -50,7 +50,7 @@ function Manage(){
   if(localStorage.getItem('username')!=null) //로그인 되있는 상태일때
   {//localStorage.clear() 
    return(
-    <Link to='/my_write' style={{textDecoration:"none", color:"black"}}>
+    <Link to='/my_posts' style={{textDecoration:"none", color:"black"}}>
       <ListItemText primary="작성한 글 관리" />
       </Link>
 
@@ -64,25 +64,23 @@ function Manage(){
 
 export const mainListItems = (
   <div>
-     <ListSubheader> </ListSubheader>
+    <ListSubheader> </ListSubheader>
     <p></p>
     <Link to='/live' style={{textDecoration:"none", color:"black"}}>
-    <ListItem button component="a">
-      <ListItemText primary="LIVE"/>
-    </ListItem>
-</Link>
+      <ListItem button component="a">
+        <ListItemText primary="LIVE"/>
+      </ListItem>
+    </Link>
 
     <Link to='/vod' style={{textDecoration:"none", color:"black"}}>
-    <ListItem button component="a">
-      <ListItemText primary="VOD"/>
-    </ListItem>
-</Link>
+      <ListItem button component="a">
+        <ListItemText primary="VOD"/>
+      </ListItem>
+    </Link>
 
-    <Link to='/noticeboard' style={{textDecoration:"none", color:"black"}}>
-    <ListItem button component="a" >
+    <ListItem button component="a" href="/noticeboard">
       <ListItemText primary="시청자 게시판" />
     </ListItem>
-</Link>
   </div>
 );
 

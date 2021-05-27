@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Header2 from './Header2';
-import Tablee from './Tablee';
+import BoardTable from './BoardTable';
 import { Link } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -85,7 +85,7 @@ function Copyright() {
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
     const [open, setOpen] = React.useState(false);
-    const [program, setprogram] = React.useState('');
+    const [program, setprogram] = React.useState('전체');
     const [sch,setsch]=React.useState('');
     const [menu, setMenu]=React.useState([]);
 
@@ -177,7 +177,7 @@ function Copyright() {
 
 
               <Paper className={fixedHeightPaper}>
-              <Tablee programs={program} searchs={sch} sel={'1'}/>
+              <BoardTable programs={program} searchs={sch}/>
               </Paper>
         </Box>
 

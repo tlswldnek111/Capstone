@@ -9,6 +9,24 @@ class Vod_upload extends React.Component {
             image : null
         };
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.showImage = this.showImage.bind(this);
+    }
+
+    showImage() {
+        try {
+            const FILE = document.getElementById('upload-photo').files[0];
+            let reader = new FileReader();
+            reader.readAsDataURL(FILE);
+            reader.onloadend = () => {
+            this.setState({
+                image: reader.result
+            });
+            }
+        } catch {
+            this.setState({
+                image: null
+            })
+        }
     }
 
     handleSubmit(event) {
@@ -18,49 +36,41 @@ class Vod_upload extends React.Component {
         const CATEGORY = event.target.CATEGORY.value;
         const CONTENT = event.target.CONTENT.value;
 
-        console.log('파일' + FILE)
-        console.log('제목' + TITLE)
-        console.log('장르' + CATEGORY)
-        console.log('내용' + CONTENT)
-
-        fetch('http://localhost:3001/vod/upload', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            TITLE: TITLE,
-            CATEGORY: CATEGORY,
-            CONTENT: CONTENT
-          })
-        })
-        .then(res=>res.json())
-        .then(res=>{
-            if (res.success === 1) {
-                alert('성공');
-            }
-            else {
-                alert('실패');
-            }
-        })
-        .then(()=>{
-            var formData = new FormData();
-            const NewFile = new File([FILE]
-                , TITLE + '.' + String(FILE.name).split('.')[1]
-                , {type: FILE.type});
-            formData.append('file', NewFile);
-            let reader = new FileReader();
-            reader.readAsDataURL(FILE);
-            reader.onloadend = () => {
-                this.setState({
-                    image: reader.result
-                });
-            }
-            fetch('http://localhost:3001/vod/upload_image', {
+        if(FILE === undefined) {
+            alert('이미지를 선택해주세요.');
+        } else {
+            fetch('http://localhost:3001/vod/upload', {
             method: 'POST',
-            body: formData,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                TITLE: TITLE,
+                CATEGORY: CATEGORY,
+                CONTENT: CONTENT
             })
-        })
+            })
+            .then(res=>res.json())
+            .then(res=>{
+                if (res.success === 1) {
+                    alert('성공');
+                }
+                else {
+                    alert('실패');
+                }
+            })
+            .then(()=>{
+                var formData = new FormData();
+                const NewFile = new File([FILE]
+                    , TITLE + '.' + String(FILE.name).split('.')[1]
+                    , {type: FILE.type});
+                formData.append('file', NewFile);
+                fetch('http://localhost:3001/vod/upload_image', {
+                method: 'POST',
+                body: formData,
+                })
+            })
+        }
       }
 
     render() {
@@ -68,7 +78,6 @@ class Vod_upload extends React.Component {
             <div hidden={(localStorage.getItem('id') !== 'admin')}>
                 <center>
                     <form onSubmit={this.handleSubmit}>
-                        <p>시발</p>
                         <img src={this.state.image}></img>
                         <br></br>
                         <TextField
@@ -102,13 +111,13 @@ class Vod_upload extends React.Component {
                             style={{ display: 'none' }}
                             id="upload-photo"
                             name="upload-photo"
-                            type="file"/>
+                            type="file"
+                            onChange={this.showImage}/>
 
                         <Button
                         color="primary"
                         variant="contained"
-                        component="span"
-                        required>
+                        component="span">
                             이미지 선택
                         </Button>
                         </label>

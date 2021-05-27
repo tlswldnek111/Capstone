@@ -64,12 +64,11 @@ const useStyles =makeStyles((theme) => ({
   },
 }));
 
-export default function Tablee(props) {
+export default function BoardTable(props) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setRows] = React.useState([]);
-  
 
   useEffect(() => {
     if (count === 0) {
@@ -96,14 +95,25 @@ export default function Tablee(props) {
         }
       })
       .then(()=>{
-        setRows(rows_origin);
+        if(props.sel==='my_posts') {
+          const temp = [];
+          for (let i = 0; i < rows_origin.length; i++) {
+            if (rows_origin[i].editor.includes(localStorage.getItem('id'))) {
+              temp.push(rows_origin[i]);
+            }
+          }
+          setRows(temp);
+        } else {
+          setRows(rows_origin);
+        }
       })
     } else {
-      const temp = [];
-      if(props.sel==='1'){//noticeboard
-        if (props.programs !== ''|| props.searchs !== '') {
+        const temp = [];
+        if (props.programs === '전체' && props.searchs === '') {
+          setRows(rows_origin);
+        } else if (props.programs !== '전체'|| props.searchs !== '') {
           for (let i = 0; i < rows_origin.length; i++) {
-            if (props.programs == '' &&
+            if (props.programs == '전체' &&
             (rows_origin[i].titles.includes(props.searchs) ||
             rows_origin[i].editor.includes(props.searchs)) ) {
               temp.push(rows_origin[i]);
@@ -114,40 +124,8 @@ export default function Tablee(props) {
             }
           }
           setRows(temp);
-        } else {
-          //setRows(rows_origin);
         }
-    }else if(props.sel==='2'){//mywrite 내가 작성한 글만 보기
-      if (props.programs !== '전체'|| props.searchs !== '') {
-        for (let i = 0; i < rows_origin.length; i++) {
-          if (props.programs == '전체' &&
-          (rows_origin[i].titles.includes(props.searchs) ||
-          rows_origin[i].editor.includes(props.searchs)) && 
-          localStorage.getItem('username')===rows_origin[i].editor ) {
-            temp.push(rows_origin[i]);
-          } else if (rows_origin[i].program === props.programs &&
-            (rows_origin[i].titles.includes(props.searchs) ||
-            rows_origin[i].editor.includes(props.searchs)) && 
-            localStorage.getItem('username')===rows_origin[i].editor) {
-            temp.push(rows_origin[i]);
-          }
-        }
-        setRows(temp);
-      } else {
-        for (let i = 0; i < rows_origin.length; i++) {
-          if (props.programs == '전체' &&
-          (rows_origin[i].titles.includes(props.searchs) ||
-          rows_origin[i].editor.includes(props.searchs)) && 
-          localStorage.getItem('username')===rows_origin[i].editor ) {
-            temp.push(rows_origin[i]);
-          } 
-        }
-        //setRows(rows_origin);//전체일때
-        setRows(temp);
-      }
-
     }
-  }
   }, [props.programs, props.searchs])
 
   const handleChangePage = (event, newPage) => {
@@ -161,8 +139,6 @@ export default function Tablee(props) {
 
   return (
     <div >
-      
-
     <Paper className={classes.root}>
      
     <TableContainer className={classes.container} >
@@ -207,7 +183,6 @@ export default function Tablee(props) {
         </Table>
       </TableContainer> 
 
-
       <TablePagination
         rowsPerPageOptions={[5, 10, 15]}
         component="div"
@@ -218,10 +193,6 @@ export default function Tablee(props) {
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
     </Paper>
-
- 
     </div>
-
-
   );
 }

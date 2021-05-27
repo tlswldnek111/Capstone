@@ -1,6 +1,6 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter} from 'react-router-dom';
 import Testgrid from './Testgrid';
 import Register from './Register';
 import FindID from './FindID';
@@ -15,7 +15,7 @@ import Vod from './Vod';
 import Vod_upload from './Vod_upload';
 import board_detail from './board_detail';
 import Vod_detail from './Vod_detail';
-import MyWrite from './MyWrite';
+import MyPosts from './MyPosts';
 class Page404 extends React.Component {
     render() {
         return(
@@ -55,7 +55,7 @@ class Navi extends React.Component {
                     <Route exact path="/vod_upload" component={Vod_upload} />
                     <Route exact path="/board_detail" component={board_detail} />
                     <Route exact path="/vod_detail" component={Vod_detail} />
-                    <Route exact path="/my_write" component={MyWrite} />
+                    <Route exact path="/my_posts" component={MyPosts} />
                 </Switch>
                 </AppBar>
                
