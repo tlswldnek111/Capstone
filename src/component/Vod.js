@@ -3,6 +3,23 @@ import { Link } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Header2 from './Header2';
+import { withStyles } from "@material-ui/core/styles";
+import clsx from 'clsx';
+const styles = theme => ({
+    root: {
+      backgroundColor: "red"
+    },
+    appBarSpacer: theme.mixins.toolbar,//앱바 밑으로
+    paper: {
+        padding: theme.spacing(2),
+        display: 'flex',
+        overflow: 'auto',
+        flexDirection: 'column',
+      },
+      fixedHeight: {
+        height: '100vh',
+      },
+  });
 
 class Vod extends React.Component {
 
@@ -74,8 +91,11 @@ class Vod extends React.Component {
     }
 
     render() {
+        
+        const { classes } = this.props;
+        const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
         return(
-            <div>
+            <div className={fixedHeightPaper}>
                 <Header2></Header2>
                 <div style={{marginTop: 64}}></div>
                 <div
@@ -94,4 +114,4 @@ class Vod extends React.Component {
     }
 }
 
-export default Vod;
+export default withStyles(styles, { withTheme: true })(Vod);

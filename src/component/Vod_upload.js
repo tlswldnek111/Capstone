@@ -1,6 +1,24 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { Link } from "react-router-dom";
+import { withStyles } from "@material-ui/core/styles";
+import clsx from 'clsx';
+const styles = theme => ({
+    root: {
+      backgroundColor: "red"
+    },
+    appBarSpacer: theme.mixins.toolbar,//앱바 밑으로
+    paper: {
+        padding: theme.spacing(2),
+        display: 'flex',
+        overflow: 'auto',
+        flexDirection: 'column',
+      },
+      fixedHeight: {
+        height: '100vh',
+      },
+  });
 
 class Vod_upload extends React.Component {
     constructor(props) {
@@ -54,6 +72,7 @@ class Vod_upload extends React.Component {
             .then(res=>{
                 if (res.success === 1) {
                     alert('성공');
+                    window.location.replace("/vod");
                 }
                 else {
                     alert('실패');
@@ -74,7 +93,10 @@ class Vod_upload extends React.Component {
       }
 
     render() {
+        const { classes } = this.props;
+        const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
         return(
+            <div className={fixedHeightPaper} >
             <div hidden={(localStorage.getItem('id') !== 'admin')}>
                 <center>
                     <form onSubmit={this.handleSubmit}>
@@ -115,17 +137,27 @@ class Vod_upload extends React.Component {
                             onChange={this.showImage}/>
 
                         <Button
+                         style={{marginTop:"10px"}}
                         color="primary"
                         variant="contained"
                         component="span">
                             이미지 선택
                         </Button>
                         </label>
+                      
+                        <br></br>
+              <Link to="/vod" style={{textDecoration:"none", color:"black"}} variant="body2">
+               <Button>
+               뒤로가기
+               </Button>
+              </Link>
                     </form>
+                    
                 </center>
+            </div>
             </div>
         );
     }
 }
 
-export default Vod_upload;
+export default  withStyles(styles, { withTheme: true })(Vod_upload);

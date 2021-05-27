@@ -2,7 +2,6 @@ import React from 'react'
 import { Typography } from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
 import Input from '@material-ui/core/Input';
 // import { CKEditor } from '@ckeditor/ckeditor5-react';
 // import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -12,6 +11,24 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import Header2 from './Header2';
+import { withStyles } from "@material-ui/core/styles";
+import clsx from 'clsx';
+const styles = theme => ({
+    root: {
+      backgroundColor: "red"
+    },
+    appBarSpacer: theme.mixins.toolbar,//앱바 밑으로
+    paper: {
+        padding: theme.spacing(2),
+        display: 'flex',
+        overflow: 'auto',
+        flexDirection: 'column',
+      },
+      fixedHeight: {
+        height: '100vh',
+      },
+  });
+
 class Write extends React.Component {
 
     constructor(props) {
@@ -82,10 +99,12 @@ class Write extends React.Component {
     };
 
     render() {
+        const { classes } = this.props;
+        const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
         return (
-            <div className="fullHeight" >
+            <div className={fixedHeightPaper} >
                 <Header2></Header2>
-                <div style={{marginTop:"100px"}}  >
+                <div className={classes.appBarSpacer} />
                     <center >
                         <form onSubmit={this.handleSubmit}>
                         <Typography component="h1" variant="h4" color="inherit" align="center">
@@ -151,10 +170,10 @@ class Write extends React.Component {
                             <p> </p>
                         </form>
                     </center>
-                </div>
+               
             </div>
         )
     }
 }
 
-export default Write;
+export default  withStyles(styles, { withTheme: true })(Write);
