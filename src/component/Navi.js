@@ -16,6 +16,8 @@ import Vod_upload from './Vod_upload';
 import board_detail from './board_detail';
 import Vod_detail from './Vod_detail';
 import MyPosts from './MyPosts';
+import Episode_upload from './Episode_upload';
+
 class Page404 extends React.Component {
     render() {
         return(
@@ -56,6 +58,7 @@ class Navi extends React.Component {
                     <Route exact path="/board_detail" component={board_detail} />
                     <Route exact path="/vod_detail" component={Vod_detail} />
                     <Route exact path="/my_posts" component={MyPosts} />
+                    <Route exact path="/episode_upload" component={Episode_upload} />
                 </Switch>
                 </AppBar>
                

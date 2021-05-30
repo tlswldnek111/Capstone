@@ -3,6 +3,7 @@ import Header2 from './Header2';
 
 import { withStyles } from "@material-ui/core/styles";
 import clsx from 'clsx';
+import { Button, Grid } from '@material-ui/core';
 const styles = theme => ({
     root: {
       backgroundColor: "red"
@@ -75,25 +76,36 @@ class Vod_detail extends React.Component {
         return (
             <div  className={fixedHeightPaper}>
                 <Header2/>
-                <div style={{marginTop: '64px'}}>
-                    <center>
-                        <img src={url} style={{width: "50%", height: "50%"}}></img>
-                        <p>
-                            제목 : {this.state.TITLE}
-                        </p>
-                        <p>
-                            장르 : {this.state.CATEGORY}
-                        </p>
-                        <p>
-                            내용 : {this.state.CONTENT}
-                        </p>
+                <div style={{marginTop: '64px', width: "100%", height: "100%"}}>
+                    <Grid container spacing={1}>
+                        <Grid container item xs={12}>
+                            <Grid item xs={3}>
+                                <center>
+                                    <img src={url} style={{width: "184px", height: "263px"}}></img>
+                                </center>
+                            </Grid>
+                            <Grid item xs={9}>
+                                <p>
+                                    제목 : {this.state.TITLE}
+                                </p>
+                                <p>
+                                    장르 : {this.state.CATEGORY}
+                                </p>
+                                <p>
+                                    내용 : {this.state.CONTENT}
+                                </p>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <div>
+                        <Button variant="contained" color="primary"> 업로드 </Button>
                         <p>
                             에피소드 : {this.state.EPISODE.map((val)=>{
                                 val = val + ' '
                                 return val;
                             })}
                         </p>
-                    </center>
+                    </div>
                 </div>
             </div>
         )

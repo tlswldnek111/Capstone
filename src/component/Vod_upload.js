@@ -5,20 +5,16 @@ import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import clsx from 'clsx';
 const styles = theme => ({
-    root: {
-      backgroundColor: "red"
-    },
-    appBarSpacer: theme.mixins.toolbar,//앱바 밑으로
     paper: {
         padding: theme.spacing(2),
         display: 'flex',
-        overflow: 'auto',
+        overflow: 'scroll',
         flexDirection: 'column',
       },
-      fixedHeight: {
+    fixedHeight: {
         height: '100vh',
-      },
-  });
+    },
+});
 
 class Vod_upload extends React.Component {
     constructor(props) {
@@ -96,8 +92,7 @@ class Vod_upload extends React.Component {
         const { classes } = this.props;
         const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
         return(
-            <div className={fixedHeightPaper} >
-            <div hidden={(localStorage.getItem('id') !== 'admin')}>
+            <div className={fixedHeightPaper} hidden={(localStorage.getItem('id') !== 'admin')}>
                 <center>
                     <form onSubmit={this.handleSubmit}>
                         <img src={this.state.image}></img>
@@ -146,15 +141,14 @@ class Vod_upload extends React.Component {
                         </label>
                       
                         <br></br>
-              <Link to="/vod" style={{textDecoration:"none", color:"black"}} variant="body2">
-               <Button>
-               뒤로가기
-               </Button>
-              </Link>
+                        <Link to="/vod" style={{textDecoration:"none", color:"black"}}>
+                            <Button>
+                                뒤로가기
+                            </Button>
+                        </Link>
                     </form>
                     
                 </center>
-            </div>
             </div>
         );
     }

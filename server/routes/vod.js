@@ -8,19 +8,29 @@ var common = require('../common');
 var mkdirp = require('mkdirp');
 var fs = require('fs');
 var multer = require('multer');
-const { resolve } = require('path');
 
-const storage = multer.diskStorage({
+const image_storage = multer.diskStorage({
   destination: (req, file, cb)=>{
-    console.log(file.originalname);
-    cb(null, 'server/vod/' + String(file.originalname).split('.')[0]);
+    console.log("파일이름: " + file.originalname);
+    cb(null, 'server/vod/' + file.originalname.split('.')[0]);
   },
   filename: (req, file, cb)=>{
-    cb(null, 'Thumbnail.jpg');
+    cb(null, 'Thumbnail.' + file.originalname.split('.')[1]);
   }
 });
 
-const upload = multer({storage: storage});
+const video_storage = multer.diskStorage({
+  destination: (req, file, cb)=>{
+    console.log(file.originalname);
+    cb(null, 'server/vod/' + file.originalname.split('/')[0] + '/EPISODE');
+  },
+  filename: (req, file, cb)=>{
+    cb(null, file.originalname);
+  }
+});
+
+const upload_image = multer({storage: image_storage});
+const upload_video = multer({storage: video_storage});
 
 const makedir = (dir) => {
     mkdirp(dir, (err) => {
@@ -67,7 +77,11 @@ router.post('/upload', function(req, res, next) {
   })
 });
 
-router.post('/upload_image', upload.single('file'), function(req, res, next) {
+router.post('/upload_image', upload_image.single('file'), function(req, res, next) {
+  res.json({success: 1});
+});
+
+router.post('/upload_video', upload_video.single('file'), function(req, res, next) {
   res.json({success: 1});
 });
 
@@ -173,7 +187,7 @@ router.post('/select_episode', function(req, res, next) {
 });
 
 router.get('/thumbnail', function(req, res, next) {
-  var filename = 'ㄴㅁㅇㄻㄴㅇㄹ';
+  var filename = '';
 
   const promise = ()=>{
     return new Promise((resolve, reject)=>{
