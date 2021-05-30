@@ -31,7 +31,7 @@
               ,ID
               ,TITLE
               ,CONTENT
-              ,TO_CHAR(POST_DATE, 'YYYY-MM-DD HH24:MI') as POST_DATE
+              ,TO_CHAR(POST_DATE, 'YYYY-MM-DD HH24:MI') AS POST_DATE
               ,VIEW_COUNT
               ,POST_LOCK
               ,PROGRAM
@@ -40,5 +40,15 @@
         <if test="IDX != null">
            AND IDX = #{IDX}
         </if>
+    </select>
+
+    <select id="select_reply">
+        SELECT IDX
+              ,B_IDX
+              ,ID
+              ,CONTENT
+              ,TO_CHAR(REP_DATE, 'YYYY-MM-DD HH24:MI') AS REP_DATE
+          FROM REPLY
+         WHERE B_IDX=#{B_IDX}
     </select>
 </mapper>

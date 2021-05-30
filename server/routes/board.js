@@ -115,4 +115,36 @@ router.post('/select', function(req, res, next) {
   })
 });
 
+router.post('/select_reply', function(req, res, next) {
+  oracledb.getConnection({
+    user : dbConfig.user,
+    password : dbConfig.password,
+    connectString : dbConfig.connectString
+  },
+  function(err, connection) {
+    if (err) {
+      console.error(err.message);
+      return;
+    }
+
+    var param = {
+      B_IDX: req.body.B_IDX
+    };
+
+    let format = {language: 'sql', indent: ' '};
+    let query = mybatisMapper.getStatement('board', 'select_reply', param, format);
+    console.log(query);
+
+    connection.execute(query, [], function(err, result) {
+      if (err) {
+        console.error(err.message);
+        res.json({success: 0});
+      } else {
+        res.json(common.Update_data(result));
+      }
+      connection.close();
+    });
+  })
+});
+
   module.exports = router;

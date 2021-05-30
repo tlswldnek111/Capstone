@@ -168,7 +168,7 @@ export default function BoardTable(props) {
                       key={column.number}
                       align={column.align}
                       component={Link}
-                      to={`board_detail?numberx=${row.number}`}
+                      to={`Board_detail?idx=${row.number}`}
                       style={{textDecoration:"none", color:"black"}}>
         
                       {(column.format && typeof value === 'number') ? column.format(value) : value}

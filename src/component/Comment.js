@@ -1,17 +1,35 @@
 import React, {useState} from 'react'
 
-function Comment() {
-
+function Comment(props) {
     const [commentValue, setcommentValue] = useState('');
-
 
     const handleChange = (event) => {
         setcommentValue(event.currentTarget.value);
-      };
+    };
 
-      const onsubmit = (event) => {  // Sumit에서 화면 리프레쉬 안하게
-        event.preventDefault();
-        };
+    const onsubmit = (event) => {  // Sumit에서 화면 리프레쉬 안하게
+      event.preventDefault();
+      fetch('http://localhost:3001/board/write_reply', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          B_IDX: props.B_IDX,
+          ID: localStorage.getItem('id'),
+          CONTENT: commentValue
+        })
+      })
+      .then(res=>res.json())
+      .then(res=>{
+        if(res.success === 1) {
+          alert('성공');
+          window.location.reload();
+        } else {
+          alert('실패');
+        }
+      })
+    };
 
     return (
       <div>
