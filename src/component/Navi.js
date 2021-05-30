@@ -13,7 +13,7 @@ import Noticeboard from './Noticeboard';
 import Write from './Write';
 import Vod from './Vod';
 import Vod_upload from './Vod_upload';
-import Board_detail from './Board_detail';
+import Board_detail from './Board_detail1234';
 import Vod_detail from './Vod_detail';
 import MyPosts from './MyPosts';
 import Episode_upload from './Episode_upload';
