@@ -29,6 +29,7 @@ class Vod_detail extends React.Component {
             CONTENT: '',
             EPISODE: []
         }
+        this.onClick = this.onClick.bind(this);
     }
 
     componentDidMount() {
@@ -68,8 +69,13 @@ class Vod_detail extends React.Component {
         })
     }
 
+    onClick() {
+        this.props.history.push('episode_upload' + String(decodeURI(this.props.location.search)))
+    }
+
     render() {
         var url = `http://localhost:3001/vod/thumbnail?name=${this.state.TITLE}`
+        var video = 'http://localhost:3001/vod/video';
         
         const { classes } = this.props;
         const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
@@ -98,13 +104,16 @@ class Vod_detail extends React.Component {
                         </Grid>
                     </Grid>
                     <div>
-                        <Button variant="contained" color="primary"> 업로드 </Button>
+                        <Button variant="contained" color="primary" onClick={this.onClick}> 업로드 </Button>
                         <p>
                             에피소드 : {this.state.EPISODE.map((val)=>{
                                 val = val + ' '
                                 return val;
                             })}
                         </p>
+                        <video width="75%" height="auto" controls>
+                            <source src={video} type="video/mp4"/>
+                        </video>
                     </div>
                 </div>
             </div>

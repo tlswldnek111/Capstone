@@ -21,11 +21,11 @@ const image_storage = multer.diskStorage({
 
 const video_storage = multer.diskStorage({
   destination: (req, file, cb)=>{
-    console.log(file.originalname);
-    cb(null, 'server/vod/' + file.originalname.split('/')[0] + '/EPISODE');
+    console.log('파일이름: ' + file.originalname);
+    cb(null, 'server/vod/' + file.originalname.split('@')[0] + '/EPISODE');
   },
   filename: (req, file, cb)=>{
-    cb(null, file.originalname);
+    cb(null, file.originalname.split('@')[1]);
   }
 });
 
@@ -213,6 +213,27 @@ router.get('/thumbnail', function(req, res, next) {
       });
     }
   })
+});
+
+router.get('/video', function(req, res, next) {
+  var stream = fs.createReadStream(decodeURI(encodeURI('/server/vod/테스트/EPISODE/1.mp4')));
+  var count = 0;
+
+  stream.on('data', function(data) {
+    count = count + 1;
+    console.log('data count='+count);
+    res.write(data);
+  });
+
+  stream.on('end', function () {
+    console.log('end streaming');
+    res.end();
+  });
+
+  stream.on('error', function(err) {
+    console.log(err);
+    res.end('500 Internal Server ' + err);
+  });
 });
   
 module.exports = router;

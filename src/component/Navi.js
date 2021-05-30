@@ -56,7 +56,7 @@ class Navi extends React.Component {
                     <Route exact path="/grid" component={Testgrid} />
                     <Route exact path="/vod_upload" component={Vod_upload} />
                     <Route exact path="/board_detail" component={board_detail} />
-                    <Route exact path="/vod_detail" component={Vod_detail} />
+                    <Route exact path="/vod_detail" component={Vod_detail} history={this.props.history} />
                     <Route exact path="/my_posts" component={MyPosts} />
                     <Route exact path="/episode_upload" component={Episode_upload} />
                 </Switch>
