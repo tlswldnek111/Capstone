@@ -7,9 +7,8 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
+import { withStyles } from "@material-ui/core/styles";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -23,9 +22,10 @@ function Copyright() {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
+
+const styles = theme => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -41,8 +41,7 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-}));
-
+});
 class Register extends React.Component{
 
   constructor(props) {
@@ -108,22 +107,20 @@ handleChange(e){
   }
   doAction(){alert("회원가입 완료 되었습니다.");}
   render() {
-
+    const { classes } = this.props;
     return (
       
-      <Container component="main" >
-      <div className={useStyles.paper}>
-      <Grid>
-           ㅤㅤㅤㅤ 
-          
-           </Grid>
-        <Avatar className={useStyles.avatar}>
+      <Container component="main" maxWidth="xs">
+      <div className={classes.paper}>
+           <center>
+        <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h6">
           회원가입
         </Typography>
-        <form className={useStyles.form} noValidate  onSubmit={this.handleSubmit}  >
+        </center>
+        <form className={classes.form} noValidate  onSubmit={this.handleSubmit}  >
           <Grid container spacing={2}>
            
             <Grid item xs={18} sm={6}>
@@ -139,6 +136,7 @@ handleChange(e){
                 disabled={(this.state.check===null)}//중복체크확인되면 아이디 못바꿈
               />
             </Grid>
+           
             <Button 
            //아이디 중복체크 확인되면 disabled로 변환
             type="check"
@@ -146,10 +144,11 @@ handleChange(e){
             color="white"
             onClick={this.handleCheck}
             disabled={(this.state.check===null)}
-            
+            className={classes.submit}
           >
             아이디 중복체크
           </Button>
+         
           <Grid>
            ㅤㅤㅤㅤ 
            </Grid>
@@ -199,7 +198,7 @@ handleChange(e){
             fullWidth
             variant="contained"
             color="primary"
-            className={useStyles.submit}
+            className={classes.submit}
             
           >
             회원가입
@@ -227,4 +226,4 @@ handleChange(e){
   }
 }
 
-export default Register;
+export default  withStyles(styles, { withTheme: true })(Register);

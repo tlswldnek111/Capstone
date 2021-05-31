@@ -7,9 +7,9 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
+import { withStyles } from "@material-ui/core/styles";
+import clsx from 'clsx';
 //alignItems="center" "static"
 function Copyright() {
   return (
@@ -23,26 +23,29 @@ function Copyright() {
     </Typography>
   );
 }
-
-const useStyles = makeStyles((theme) => ({
+const styles = theme => ({
   paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    //alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+      padding: theme.spacing(2),
+      display: 'flex',
+      overflow: 'auto',
+      flexDirection: 'column',
+    },
+    fixedHeight: {
+      height: '100vh',
+    },
+    avatar: {
+      margin: theme.spacing(1),
+      backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+      width: '100%', // Fix IE 11 issue.
+      marginTop: theme.spacing(1),
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+    },
+});
+
 
 
 class Login extends React.Component {
@@ -90,23 +93,27 @@ class Login extends React.Component {
                 })
     }
     render(){
+      const { classes } = this.props;
+      const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
      return (
      
-      <Container component="main">
+        <div className={fixedHeightPaper}  >
+      <Container component="main" maxWidth="xs">
         
-        <div className={useStyles.paper} >  
+        <div className={classes.paper} >  
+         
         <Grid>
-           ㅤㅤㅤㅤ 
-          
            </Grid>
-          <Avatar className={useStyles.avatar} >
+           <center >
+          <Avatar className={classes.avatar} >
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h6">
+          <Typography component="h1" variant="h6" align="center">
             로그인 화면
           </Typography>
-
-          <form className={useStyles.form} noValidate onSubmit={this.handleSubmit}>
+          </center>
+          
+          <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -134,7 +141,7 @@ class Login extends React.Component {
             fullWidth
             variant="contained"
             color="primary"
-            className={useStyles.submit}
+            className={classes.submit}
           >
             로그인
           </Button>
@@ -143,7 +150,7 @@ class Login extends React.Component {
           <Grid container>
           <Grid item xs>
         <Link to="FindID" style={{textDecoration:"none", color:"black"}} variant="body1">
-         아이디 찾기
+         아이디
         </Link>
 /
         <Link to="FindPW" style={{textDecoration:"none", color:"black"}} variant="body1">
@@ -152,7 +159,7 @@ class Login extends React.Component {
           </Grid>
           <Grid item>
           <Link to="/" style={{textDecoration:"none", color:"black"}} variant="body1">
-            메인화면으로
+            메인화면
         </Link>
         /
          <Link to="Register" style={{textDecoration:"none", color:"black"}} variant="body1">
@@ -162,14 +169,16 @@ class Login extends React.Component {
     </Grid>
 
           </form>
-        </div>
+          </div>
+       
         <Box mt={8}>
           <Copyright />
         </Box>
+       
       </Container>
-      
+      </div>
     );
     }
 }
 
-export default Login;
+export default withStyles(styles, { withTheme: true })(Login);

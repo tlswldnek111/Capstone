@@ -85,18 +85,20 @@ handleSubmit(event) {
 
     return (
       
-      <Container component="main" >
+      <Container component="main" maxWidth="xs">
       <div className={useStyles.paper}>
       <Grid>
            ㅤㅤㅤㅤ 
           
            </Grid>
+           <center>
         <Avatar className={useStyles.avatar}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h6">
           아이디 찾기
         </Typography>
+        </center>
         <form className={useStyles.form} noValidate  onSubmit={this.handleSubmit}  >
           <Grid container spacing={2}>
             <Grid item xs={12} >
@@ -150,7 +152,7 @@ handleSubmit(event) {
         <Grid container justify="flex-end">
             <Grid item>
               
-              <Link to="/Login" >
+              <Link to="/Login" style={{textDecoration:"none", color:"black"}}>
                 <Button>
                로그인하러 가기 
                </Button>
