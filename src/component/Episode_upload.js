@@ -12,14 +12,14 @@ class Episode_upload extends React.Component {
         e.preventDefault();
         const FILE = document.getElementById('upload-video').files[0];
         const EPISODE = e.target.EPISODE.value;
-        const TITLE = decodeURI(String(this.props.location.search).replace('?title=', ''));
+        const IDX = String(this.props.location.search).replace('?idx=', '');
         
         if(FILE === undefined) {
             alert('동영상을 선택해주세요.');
         } else {
             var formData = new FormData();
             const NewFile = new File([FILE]
-                , TITLE + '@' + EPISODE + String(FILE.name).slice(String(FILE.name).lastIndexOf('.'))
+                , IDX + '@' + EPISODE + String(FILE.name).slice(String(FILE.name).lastIndexOf('.'))
                 , {type: FILE.type});
             console.log('파일 테스트: ' + NewFile.name);
             formData.append('file', NewFile);

@@ -230,7 +230,7 @@ router.post('/title', function(req, res, next) {
 });
 
 router.post('/select_episode', function(req, res, next) {
-  fs.readdir('server/vod/' + req.body.TITLE + '/EPISODE', (error, filelist) => {
+  fs.readdir('server/vod/' + req.body.IDX + '/EPISODE', (error, filelist) => {
     if (error) {
       res.send(error);
     } else {
@@ -269,24 +269,36 @@ router.get('/thumbnail', function(req, res, next) {
 });
 
 router.get('/video', function(req, res, next) {
-  var stream = fs.createReadStream('./server/vod/20001/EPSODE/1234.mp4');
-  var count = 0;
-
-  stream.on('data', function(data) {
-    count = count + 1;
-    console.log('data count='+count);
-    res.write(data);
-  });
-
-  stream.on('end', function () {
-    console.log('end streaming');
-    res.end();
-  });
-
-  stream.on('error', function(err) {
-    console.log(err);
-    res.end('500 Internal Server ' + err);
-  });
+  const idx = req.query.idx;
+  const ep = req.query.ep;
+  const path = './server/vod/' + idx + '/EPISODE/' + ep
+  const stat = fs.statSync(path)
+  const fileSize = stat.size
+  const range = req.headers.range
+  if (range) {
+    const parts = range.replace(/bytes=/, "").split("-")
+    const start = parseInt(parts[0], 10)
+    const end = parts[1] 
+      ? parseInt(parts[1], 10)
+      : fileSize-1
+    const chunksize = (end-start)+1
+    const file = fs.createReadStream(path, {start, end})
+    const head = {
+      'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+      'Accept-Ranges': 'bytes',
+      'Content-Length': chunksize,
+      'Content-Type': 'video/mp4',
+    }
+    res.writeHead(206, head);
+    file.pipe(res);
+  } else {
+    const head = {
+      'Content-Length': fileSize,
+      'Content-Type': 'video/mp4',
+    }
+    res.writeHead(200, head)
+    fs.createReadStream(path).pipe(res)
+  }
 });
   
 module.exports = router;

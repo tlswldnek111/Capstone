@@ -1,9 +1,9 @@
 import React from 'react';
 import Header2 from './Header2';
-
 import { withStyles } from "@material-ui/core/styles";
 import clsx from 'clsx';
 import { Button, Grid } from '@material-ui/core';
+
 const styles = theme => ({
     root: {
       backgroundColor: "red"
@@ -19,6 +19,7 @@ const styles = theme => ({
         height: '100vh',
       },
   });
+
 class Vod_detail extends React.Component {
 
     constructor(props) {
@@ -28,7 +29,8 @@ class Vod_detail extends React.Component {
             TITLE: '',
             CATEGORY: '',
             CONTENT: '',
-            EPISODE: []
+            EPISODE: [],
+            URL: ''
         }
         this.onClick = this.onClick.bind(this);
     }
@@ -59,13 +61,39 @@ class Vod_detail extends React.Component {
                 'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                TITLE: this.state.TITLE
+                IDX: this.state.IDX
                 })
             })
             .then(res=>res.json())
             .then(res=>{
+                const temp = [];
+                var url = 'http://localhost:3001/vod/video';
+                const event=(ep)=>{
+                    this.setState({
+                        URL: url + '?idx=' + this.state.IDX + '&ep=' + ep
+                    })
+                    const player = document.getElementById('player');
+                    if (!(player === undefined || player === null)) {
+                        player.remove();
+                    }
+                    const div = document.getElementById('video');
+                    div.innerHTML = 
+                    `<video id="player" width="75%" height="auto" controls preload="metadata"> 
+                        <source src=${url + '?idx=' + this.state.IDX + '&ep=' + ep}/> 
+                    </video>` 
+                }
+                for (let i = 0; i < res.length; i++) {
+                    temp.push(
+                    <Button
+                    onClick={()=>{
+                        event(res[i]);
+                    }}
+                    variant="contained">
+                        {String(res[i]).slice(0, String(res[i]).lastIndexOf('.'))}
+                    </Button>)
+                }
                 this.setState({
-                    EPISODE: res
+                    EPISODE: temp
                 })
             })
         })
@@ -77,8 +105,6 @@ class Vod_detail extends React.Component {
 
     render() {
         var url = `http://localhost:3001/vod/thumbnail?idx=${this.state.IDX}`
-        var video = 'http://localhost:3001/vod/video';
-        
         const { classes } = this.props;
         const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
         return (
@@ -108,13 +134,11 @@ class Vod_detail extends React.Component {
                     <div>
                         <Button variant="contained" color="primary" onClick={this.onClick}> 업로드 </Button>
                         <p>
-                            {/* 에피소드 : {this.state.EPISODE.map((val)=>{
-                                val = val + ' '
+                            에피소드 : {this.state.EPISODE.map((val)=>{
                                 return val;
-                            })} */}
+                            })}
                         </p>
-                        <video width="75%" height="auto" controls src={video} type="video/mp4">
-                        </video>
+                        <div id="video"></div>
                     </div>
                 </div>
             </div>
