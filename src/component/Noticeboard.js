@@ -88,9 +88,10 @@ function Copyright() {
     const [program, setprogram] = React.useState('전체');
     const [sch,setsch]=React.useState('');
     const [menu, setMenu]=React.useState([]);
+    const [v_idx, setV_idx]=React.useState({});
 
     useEffect(()=>{
-      fetch('http://localhost:3001/vod/title', {
+      fetch('http://localhost:3001/vod/select', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -101,11 +102,14 @@ function Copyright() {
       .then(res=>res.json())
       .then(res=>{
         const temp = []
+        const temp2 = {}
         temp.push(<MenuItem value={'전체'}>전체</MenuItem>)
         for (let i = 0; i < res.length; i++) {
-          temp.push(<MenuItem value={res[i].TITLE}>{res[i].TITLE}</MenuItem>)
+          temp.push(<MenuItem value={res[i].TITLE}>{res[i].TITLE}</MenuItem>);
+          temp2[res[i].TITLE] = res[i].IDX;
         }
         setMenu(temp);
+        setV_idx(temp2);
         //setprogram('전체');
       })
     }, [])
@@ -173,11 +177,8 @@ function Copyright() {
             </Button>
           </Link>
       </div>
-
-
-
               <Paper className={fixedHeightPaper}>
-              <BoardTable programs={program} searchs={sch}/>
+              <BoardTable programs={program} v_idx={v_idx[program]} searchs={sch}/>
               </Paper>
         </Box>
 

@@ -25,7 +25,7 @@ router.post('/write', function(req, res, next) {
         TITLE: req.body.TITLE,
         CONTENT: req.body.CONTENT,
         LOCK: req.body.LOCK,
-        PROGRAM: req.body.PROGRAM
+        V_IDX: req.body.V_IDX
       };
   
       let format = {language: 'sql', indent: ' '};

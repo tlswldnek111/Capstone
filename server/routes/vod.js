@@ -53,8 +53,18 @@ router.post('/upload', function(req, res, next) {
       console.error(err.message);
       return;
     }
+
+    const code = {
+      예능: 10000,
+      드라마: 20000,
+      영화: 30000,
+      애니메이션: 40000
+    }
+
+    const CODE = code[req.body.CATEGORY];
     
     var param = {
+      CODE: CODE,
       TITLE: req.body.TITLE,
       CATEGORY: req.body.CATEGORY,
       CONTENT: req.body.CONTENT,
@@ -70,9 +80,38 @@ router.post('/upload', function(req, res, next) {
         res.json({success: 0});
       } else {
         res.json({success: 1});
-        makedir('server\\vod\\' + req.body.TITLE + '\\EPISODE');
       }
-      connection.close();
+      connection.close()
+      .then(()=>{
+        oracledb.getConnection({
+          user : dbConfig.user,
+          password : dbConfig.password,
+          connectString : dbConfig.connectString
+        },
+        function(err, connection) {
+          if (err) {
+            console.error(err.message);
+            return;
+          }
+          
+          var param = {
+            TITLE: req.body.TITLE
+          };
+      
+          let format = {language: 'sql', indent: ' '};
+          let query = mybatisMapper.getStatement('vod', 'select_vod', param, format);
+          console.log(query);
+      
+          connection.execute(query, [], function(err, result) {
+            if (err) {
+              console.error(err.message);
+            } else {
+              makedir('server\\vod\\' + common.Update_data(result)[0].IDX + '\\EPISODE');
+            }
+            connection.close();
+          });
+        })
+      });
     });
   })
 });
@@ -126,13 +165,27 @@ router.post('/select_one', function(req, res, next) {
       console.error(err.message);
       return;
     }
-    
+    var TITLE = null;
+    var IDX = null;
+    (req.body.TITLE === undefined) ? TITLE = req.body.TITLE : TITLE = null;
+    (req.body.IDX === undefined) ? IDX = req.body.IDX : IDX = null;
+
     var param = {
-      TITLE: req.body.TITLE
     };
 
+    if (TITLE == null) {
+      param = {
+        IDX: req.body.IDX
+      };
+    } else {
+      param = {
+        TITLE: req.body.TITLE
+      };
+    }
+    
+
     let format = {language: 'sql', indent: ' '};
-    let query = mybatisMapper.getStatement('vod', 'select_one_vod', param, format);
+    let query = mybatisMapper.getStatement('vod', 'select_vod', param, format);
     console.log(query);
 
     connection.execute(query, [], function(err, result) {
@@ -191,7 +244,7 @@ router.get('/thumbnail', function(req, res, next) {
 
   const promise = ()=>{
     return new Promise((resolve, reject)=>{
-      fs.readdir('server/vod/' + req.query.name, (error, filelist) => {
+      fs.readdir('server/vod/' + req.query.idx, (error, filelist) => {
         if (error) {
           console.log(error);
         } else {
@@ -207,16 +260,16 @@ router.get('/thumbnail', function(req, res, next) {
   }
   promise()
   .then(()=>{
-    if (req.query.name != null) {
+    if (req.query.idx != null) {
       res.sendFile(filename, {
-        root: 'server\\vod\\' + req.query.name
+        root: 'server\\vod\\' + req.query.idx
       });
     }
   })
 });
 
 router.get('/video', function(req, res, next) {
-  var stream = fs.createReadStream(decodeURI(encodeURI('/server/vod/테스트/EPISODE/1.mp4')));
+  var stream = fs.createReadStream('./server/vod/20001/EPSODE/1234.mp4');
   var count = 0;
 
   stream.on('data', function(data) {

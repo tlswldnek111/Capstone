@@ -11,7 +11,7 @@
                ,SYSDATE
                ,0
                ,#{LOCK}
-               ,#{PROGRAM}
+               ,#{V_IDX}
         )
     </insert>
 
@@ -34,7 +34,7 @@
               ,TO_CHAR(POST_DATE, 'YYYY-MM-DD HH24:MI') AS POST_DATE
               ,VIEW_COUNT
               ,POST_LOCK
-              ,PROGRAM
+              ,V_IDX
           FROM BOARD
          WHERE 1=1
         <if test="IDX != null">

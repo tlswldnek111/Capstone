@@ -2,25 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="vod">
     <insert id="insert_vod">
+    <![CDATA[
         INSERT INTO VOD
-        VALUES(#{TITLE}
-              ,#{CATEGORY}
-              ,#{CONTENT})
+            VALUES(NVL((SELECT MAX(IDX) + 1
+                          FROM VOD
+                          WHERE #{CODE} < IDX
+                            AND IDX < (#{CODE} + 10000)), #{CODE} + 1)
+                  ,#{TITLE}
+                  ,#{CATEGORY}
+                  ,#{CONTENT})
+    ]]>
     </insert>
     
     <select id="select_vod">
         SELECT *
           FROM VOD
+          WHERE 1=1
+          <if test="TITLE != null">
+            AND TITLE = #{TITLE}
+          </if>
+          <if test="IDX != null">
+            AND IDX = #{IDX}
+          </if>
     </select>
 
     <select id="select_title">
         SELECT TITLE
           FROM VOD
-    </select>
-
-    <select id="select_one_vod">
-        SELECT *
-          FROM VOD
-         WHERE TITLE = #{TITLE}
     </select>
 </mapper>

@@ -35,8 +35,8 @@ const columns = [
   },
 ];
 
-function createData(number, titles, editor, count, date,program) {
-  return { number, titles, editor, count, date, program };
+function createData(number, titles, editor, count, date, v_idx) {
+  return { number, titles, editor, count, date, v_idx };
 }
 
 const rows_origin = [];
@@ -90,7 +90,7 @@ export default function BoardTable(props) {
             res[i].ID,
             res[i].VIEW_COUNT,
             res[i].POST_DATE,
-            res[i].PROGRAM
+            res[i].V_IDX
           ));
         }
       })
@@ -117,7 +117,7 @@ export default function BoardTable(props) {
             (rows_origin[i].titles.includes(props.searchs) ||
             rows_origin[i].editor.includes(props.searchs)) ) {
               temp.push(rows_origin[i]);
-            } else if (rows_origin[i].program === props.programs &&
+            } else if (rows_origin[i].v_idx === props.v_idx &&
               (rows_origin[i].titles.includes(props.searchs) ||
               rows_origin[i].editor.includes(props.searchs)) ) {
               temp.push(rows_origin[i]);

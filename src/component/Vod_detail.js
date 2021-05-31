@@ -24,6 +24,7 @@ class Vod_detail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            IDX: 0,
             TITLE: '',
             CATEGORY: '',
             CONTENT: '',
@@ -39,12 +40,13 @@ class Vod_detail extends React.Component {
             'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-            TITLE: String(decodeURI(this.props.location.search)).replace('?title=', '')
+            IDX: String(decodeURI(this.props.location.search)).replace('?idx=', '')
             })
         })
         .then(res=>res.json())
         .then(res=>{
             this.setState({
+                IDX: res.IDX,
                 TITLE: res.TITLE,
                 CATEGORY: res.CATEGORY,
                 CONTENT: res.CONTENT,
@@ -74,7 +76,7 @@ class Vod_detail extends React.Component {
     }
 
     render() {
-        var url = `http://localhost:3001/vod/thumbnail?name=${this.state.TITLE}`
+        var url = `http://localhost:3001/vod/thumbnail?idx=${this.state.IDX}`
         var video = 'http://localhost:3001/vod/video';
         
         const { classes } = this.props;
@@ -106,13 +108,12 @@ class Vod_detail extends React.Component {
                     <div>
                         <Button variant="contained" color="primary" onClick={this.onClick}> 업로드 </Button>
                         <p>
-                            에피소드 : {this.state.EPISODE.map((val)=>{
+                            {/* 에피소드 : {this.state.EPISODE.map((val)=>{
                                 val = val + ' '
                                 return val;
-                            })}
+                            })} */}
                         </p>
-                        <video width="75%" height="auto" controls>
-                            <source src={video} type="video/mp4"/>
+                        <video width="75%" height="auto" controls src={video} type="video/mp4">
                         </video>
                     </div>
                 </div>

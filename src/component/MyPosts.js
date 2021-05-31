@@ -86,9 +86,10 @@ export default function MyPosts(){
   const [program, setprogram] = React.useState('');
   const [sch,setsch]=React.useState('');
   const [menu, setMenu]=React.useState([]);
+  const [v_idx, setV_idx]=React.useState({});
 
   useEffect(()=>{
-    fetch('http://localhost:3001/vod/title', {
+    fetch('http://localhost:3001/vod/select', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -99,12 +100,15 @@ export default function MyPosts(){
     .then(res=>res.json())
     .then(res=>{
       const temp = []
+      const temp2 = {}
       temp.push(<MenuItem value={'전체'}>전체</MenuItem>)
       for (let i = 0; i < res.length; i++) {
-        temp.push(<MenuItem value={res[i].TITLE}>{res[i].TITLE}</MenuItem>)
+        temp.push(<MenuItem value={res[i].TITLE}>{res[i].TITLE}</MenuItem>);
+        temp2[res[i].TITLE] = res[i].IDX;
       }
       setMenu(temp);
       setprogram('전체');
+      setV_idx(temp2);
     })
   }, [])
 
@@ -162,7 +166,7 @@ export default function MyPosts(){
           </IconButton>
 
           <Paper className={fixedHeightPaper}>
-            <BoardTable programs={program} searchs={sch} sel={'my_posts'}/>
+            <BoardTable programs={program} v_idx={v_idx[program]} searchs={sch} sel={'my_posts'}/>
           </Paper>
         </Box>
 

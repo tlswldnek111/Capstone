@@ -33,7 +33,7 @@ class Vod extends React.Component {
     }
 
     show_vod(i) {
-        var url = `http://localhost:3001/vod/thumbnail?name=${this.state.VOD[i].TITLE}`
+        var url = `http://localhost:3001/vod/thumbnail?idx=${this.state.VOD[i].IDX}`
         return(
         <div style={{float:"left"}}>
             <Card
@@ -52,8 +52,8 @@ class Vod extends React.Component {
     }
 
     Card_Click(i) {
-        this.props.history.push('vod_detail?title=' +
-        this.state.VOD[i].TITLE);
+        this.props.history.push('vod_detail?idx=' +
+        this.state.VOD[i].IDX);
     }
 
     componentDidMount() {
@@ -70,6 +70,7 @@ class Vod extends React.Component {
         .then(res=>{ if(res.length != 0) {
                         for (let i = 0; i < res.length; i++) {
                             VOD.push({
+                                IDX: res[i].IDX,
                                 TITLE: res[i].TITLE,
                                 CATEGORY: res[i].CATEGORY,
                                 CONTENT: res[i].CONTENT,

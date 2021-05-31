@@ -68,21 +68,35 @@ class Vod_upload extends React.Component {
             .then(res=>{
                 if (res.success === 1) {
                     alert('성공');
-                    window.location.replace("/vod");
                 }
                 else {
                     alert('실패');
                 }
             })
             .then(()=>{
-                var formData = new FormData();
-                const NewFile = new File([FILE]
-                    , TITLE + '.' + String(FILE.name).split('.')[1]
-                    , {type: FILE.type});
-                formData.append('file', NewFile);
-                fetch('http://localhost:3001/vod/upload_image', {
-                method: 'POST',
-                body: formData,
+                fetch('http://localhost:3001/vod/select_one', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        TITLE: TITLE
+                    })
+                })
+                .then(res=>res.json())
+                .then(res=>{
+                    var formData = new FormData();
+                    const NewFile = new File([FILE]
+                        , res.IDX + '.' + String(FILE.name).split('.')[1]
+                        , {type: FILE.type});
+                    formData.append('file', NewFile);
+                    fetch('http://localhost:3001/vod/upload_image', {
+                    method: 'POST',
+                    body: formData,
+                    })
+                    .then(()=>{
+                        window.location.replace("/vod");
+                    })
                 })
             })
         }
@@ -147,7 +161,6 @@ class Vod_upload extends React.Component {
                             </Button>
                         </Link>
                     </form>
-                    
                 </center>
             </div>
         );

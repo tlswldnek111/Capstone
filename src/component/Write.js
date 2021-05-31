@@ -3,8 +3,6 @@ import { Typography } from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
-// import { CKEditor } from '@ckeditor/ckeditor5-react';
-// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import '../CSS/Write.css'
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -37,6 +35,7 @@ class Write extends React.Component {
             PROGRAMS: [],
             PROGRAM: '',
             OPEN: false,
+            V_IDX: {}
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -54,7 +53,7 @@ class Write extends React.Component {
             TITLE: e.target.TITLE.value,
             CONTENT: e.target.CONTENT.value,
             LOCK: 0,
-            PROGRAM: this.state.PROGRAM,
+            V_IDX: this.state.V_IDX[this.state.PROGRAM],
             })
         })
         .then(res=>res.json())
@@ -69,21 +68,26 @@ class Write extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:3001/vod/title', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-        })
+        fetch('http://localhost:3001/vod/select', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+            })
         })
         .then(res=>res.json())
         .then(res=>{
             const temp = [];
+            const temp2 = {};
             for (let i = 0; i < res.length; i++) {
-            temp.push(<MenuItem value={res[i].TITLE}>{res[i].TITLE}</MenuItem>)
+                temp.push(<MenuItem value={res[i].TITLE}>{res[i].TITLE}</MenuItem>)
+                temp2[res[i].TITLE] = res[i].IDX;
             }
-            this.setState({PROGRAMS: temp});
+            this.setState({
+                PROGRAMS: temp,
+                V_IDX: temp2
+            });
         })
     }
     handleClose = () => {
