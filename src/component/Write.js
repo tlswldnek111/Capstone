@@ -107,7 +107,7 @@ class Write extends React.Component {
                 <div className={classes.appBarSpacer} />
                     <center >
                         <form onSubmit={this.handleSubmit}>
-                        <Typography component="h1" variant="h4" color="inherit" align="center">
+                        <Typography component="h1" variant="h6" color="inherit" align="center">
                                 글쓰기
                             </Typography>
                             <div style={{width:"700px"}}>
@@ -144,7 +144,7 @@ class Write extends React.Component {
                             id="CONTENT"
                             style = {{width: "700px"}}
                             multiline
-                            rows = {16}
+                            rows = {30}
                             variant="outlined"/>
                             <div style={{width: "700px" }}>
                                 <Button
@@ -154,7 +154,7 @@ class Write extends React.Component {
                                     variant="contained" 
                                     color="primary"
                                    >
-                                  입력
+                                  저장
                                 </Button>
                              
                                 <Button 

@@ -1,4 +1,6 @@
 import React, {useState} from 'react'
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 function Comment(props) {
     const [commentValue, setcommentValue] = useState('');
@@ -47,9 +49,9 @@ function Comment(props) {
                 placeholder="코멘트를 작성해 주세요"
             />
             <br />
-            <button style={{ width: '20%', height: '52px' }} onClick={onsubmit}>
+            <Button variant="contained" style={{ width: '20%', height: '52px' }} onClick={onsubmit}>
                 등록
-            </button>
+            </Button>
             </form>
       </div>
     );

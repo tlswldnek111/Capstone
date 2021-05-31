@@ -9,13 +9,16 @@ import Header2 from './Header2';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import '../CSS/Board_detail.css'
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 class Board_detail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             IDX: '',
-            REPLY: []
+            REPLY: [],
+            ALTER: []
         };
     }
 
@@ -34,7 +37,33 @@ class Board_detail extends React.Component {
         .then(res=>{
             document.getElementById('TITLE').value = res[0].TITLE;
             document.getElementById('ID').value = res[0].ID;
+            document.getElementById('POST_DATE').value = res[0].POST_DATE;
+            document.getElementById('VIEW_COUNT').value = res[0].VIEW_COUNT;
             document.getElementById('CONTENT').value = res[0].CONTENT;
+            const temp = []
+                let count = 0;
+                for (let i = 0; i < res.length; i++) {
+                    temp.push(
+                    <div>
+                        <br></br>
+                        <div  style={{float: "right"}}>
+                            <Button  variant="outlined" color="primary"
+                                hidden={!((localStorage.getItem('id') === res[i].ID) ||
+                                (localStorage.getItem('id') === 'admin'))}>
+                                    수정
+                            </Button>
+                            <Button  variant="outlined" color="primary"
+                                hidden={!((localStorage.getItem('id') === res[i].ID) ||
+                                (localStorage.getItem('id') === 'admin'))}>
+                                    삭제
+                            </Button>
+                            <br></br>
+                            <br></br>
+                        </div>
+                    </div>);
+                    count++;
+                }
+                this.setState({ALTER: temp});
         })
         .then(()=>{
             fetch('http://localhost:3001/board/select_reply', {
@@ -57,17 +86,24 @@ class Board_detail extends React.Component {
                         <span style={{float: "right"}}>{res[i].REP_DATE}</span>
                         <br></br>
                         <div style={{float: "left"}}>
-                            <Input
+                            <Input 
                             id={'content' + count}
                             style={{color: "black"}}
                             disabled={true}
                             disableUnderline 
                             defaultValue={res[i].CONTENT}/>
-                            <button
-                            hidden={!((localStorage.getItem('id') === res[i].ID) ||
-                            (localStorage.getItem('id') === 'admin'))}>
-                                수정
-                            </button>
+                        </div>
+                        <div  style={{float: "right"}}>
+                            <Button color="primary"
+                                hidden={!((localStorage.getItem('id') === res[i].ID) ||
+                                (localStorage.getItem('id') === 'admin'))}>
+                                    수정
+                            </Button>
+                            <Button color="primary"
+                                hidden={!((localStorage.getItem('id') === res[i].ID) ||
+                                (localStorage.getItem('id') === 'admin'))}>
+                                    삭제
+                            </Button>
                         </div>
                         <br></br>
                         <br></br>
@@ -86,31 +122,43 @@ class Board_detail extends React.Component {
                 <Header2></Header2>
                 <center>
                     <Card style={{width: "800px", marginTop: "90px"}} variant="outlined">
+                        <div>
+                            {this.state.ALTER.map((val)=>{
+                                return val;
+                            })}
+                        </div>
                         <CardContent>
                             <p>
                                 <Input
                                 id="TITLE"
                                 style={{width: "700px", color: "black"}}
-                                defaultValue="제목 들어갈 곳"
-                                disabled />
+                                defaultValue="제목 들어갈 곳" />
                             </p>
                             <Grid>
-                                <Grid item>
-                                    <AccountCircle />
-                                    <Input
+                                    <Input 
                                     id="ID"
                                     style={{color: "black"}}
                                     defaultValue="작성자"
-                                    disabled />
-                                </Grid>
-                                <Grid item>
-                                </Grid>
+                                    disabled={true}
+                                    disableUnderline />
+                                    <Input
+                                        id="POST_DATE"
+                                        style={{color: "black"}}
+                                        defaultValue="작성일"
+                                        disabled={true}
+                                        disableUnderline  />
+                                    <Input
+                                        id="VIEW_COUNT"
+                                        style={{color: "black"}}
+                                        defaultValue="조회수"
+                                        disabled={true}
+                                        disableUnderline />
                             </Grid>
                             <TextField
                             className="disibled_color"
                             id="CONTENT"
-                            multiline rows={25}
-                            rowsMax={25}
+                            multiline rows={30}
+                            rowsMax={30}
                             variant="outlined"
                             disabled
                             />
