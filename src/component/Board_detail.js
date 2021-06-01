@@ -19,8 +19,21 @@ class Board_detail extends React.Component {
         };
     }
 
+    componentWillUnmount() {
+        window.location.reload();
+    }
+
     componentDidMount() {
         this.setState({IDX: String(this.props.location.search).replace('?idx=', '')});
+        fetch('http://localhost:3001/board/update_views', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                IDX: String(this.props.location.search).replace('?idx=', '')
+            })
+        })
         fetch('http://localhost:3001/board/select', {
             method: 'POST',
             headers: {
@@ -49,31 +62,89 @@ class Board_detail extends React.Component {
             .then(res=>res.json())
             .then(res=>{
                 const temp = []
-                let count = 0;
                 for (let i = 0; i < res.length; i++) {
                     temp.push(
                     <div style={{marginTop: "30px"}}>
                         <span style={{float: "left"}}>{res[i].ID}</span>
                         <span style={{float: "right"}}>{res[i].REP_DATE}</span>
                         <br></br>
-                        <div style={{float: "left"}}>
+                        <div>
                             <Input
-                            id={'content' + count}
-                            style={{color: "black"}}
+                            id={'content' + i}
+                            style={{float: "left", color: "black"}}
                             disabled={true}
                             disableUnderline 
                             defaultValue={res[i].CONTENT}/>
-                            <button
-                            hidden={!((localStorage.getItem('id') === res[i].ID) ||
-                            (localStorage.getItem('id') === 'admin'))}>
-                                수정
-                            </button>
+                            <span style={{float: "right"}}>
+                                <button
+                                hidden={!((localStorage.getItem('id') === res[i].ID) ||
+                                (localStorage.getItem('id') === 'admin'))}
+                                onClick={(e)=>{
+                                    const input = document.getElementById('content' + i);
+                                    if (input.disabled === true) {
+                                        input.disabled = false;
+                                        input.setAttribute('style', 'color: blue;')
+                                        input.focus();
+                                        e.target.textContent = '수정완료';
+                                    } else {
+                                        input.disabled = true;
+                                        input.setAttribute('style', 'color: black;')
+                                        e.target.textContent = '수정';
+                                        fetch('http://localhost:3001/board/update_reply', {
+                                            method: 'POST',
+                                            headers: {
+                                            'Content-Type': 'application/json',
+                                            },
+                                            body: JSON.stringify({
+                                            IDX: res[i].IDX,
+                                            CONTENT: input.value
+                                            })
+                                        })
+                                        .then(res=>res.json())
+                                        .then(res=>{
+                                            if (res.success == 1) {
+                                                alert('정상적으로 수정되었습니다.');
+                                            } else {
+                                                alert('수정에 실패했습니다.');
+                                            }
+                                        })
+                                    }
+                                }}>
+                                    수정
+                                </button>
+                                <button
+                                hidden={!((localStorage.getItem('id') === res[i].ID) ||
+                                (localStorage.getItem('id') === 'admin'))}
+                                onClick={(e)=>{
+                                    if(window.confirm('삭제하시겠습니까?')) {
+                                        fetch('http://localhost:3001/board/delete_reply', {
+                                            method: 'POST',
+                                            headers: {
+                                            'Content-Type': 'application/json',
+                                            },
+                                            body: JSON.stringify({
+                                            IDX: res[i].IDX
+                                            })
+                                        })
+                                        .then(res=>res.json())
+                                        .then(res=>{
+                                            if (res.success == 1) {
+                                                alert('정상적으로 삭제되었습니다.');
+                                                window.location.reload();
+                                            } else {
+                                                alert('삭제에 실패했습니다.');
+                                            }
+                                        })
+                                    }
+                                }}>
+                                    삭제
+                                </button>
+                            </span>
                         </div>
                         <br></br>
                         <br></br>
                         <hr></hr>
                     </div>);
-                    count++;
                 }
                 this.setState({REPLY: temp});
             })

@@ -44,6 +44,71 @@ router.post('/write', function(req, res, next) {
     })
   });
 
+  router.post('/update_reply', function(req, res, next) {
+  oracledb.getConnection({
+    user : dbConfig.user,
+    password : dbConfig.password,
+    connectString : dbConfig.connectString
+  },
+  function(err, connection) {
+    if (err) {
+      console.error(err.message);
+      return;
+    }
+    
+    var param = {
+      IDX: req.body.IDX,
+      CONTENT: req.body.CONTENT,
+    };
+
+    let format = {language: 'sql', indent: ' '};
+    let query = mybatisMapper.getStatement('board', 'update_reply', param, format);
+    console.log(query);
+
+    connection.execute(query, [], function(err, result) {
+      if (err) {
+        console.error(err.message);
+        res.json({success: 0});
+      } else {
+        res.json({success: 1});
+      }
+      connection.close();
+    });
+  })
+});
+
+router.post('/update_views', function(req, res, next) {
+  oracledb.getConnection({
+    user : dbConfig.user,
+    password : dbConfig.password,
+    connectString : dbConfig.connectString
+  },
+  function(err, connection) {
+    if (err) {
+      console.error(err.message);
+      return;
+    }
+    
+    var param = {
+      IDX: req.body.IDX
+    };
+
+    let format = {language: 'sql', indent: ' '};
+    let query = mybatisMapper.getStatement('board', 'update_views', param, format);
+    console.log(query);
+
+    connection.execute(query, [], function(err, result) {
+      if (err) {
+        console.error(err.message);
+        res.json({success: 0});
+      } else {
+        res.json({success: 1});
+      }
+      connection.close();
+    });
+  })
+});
+
 router.post('/write_reply', function(req, res, next) {
   oracledb.getConnection({
     user : dbConfig.user,
@@ -64,6 +129,71 @@ router.post('/write_reply', function(req, res, next) {
 
     let format = {language: 'sql', indent: ' '};
     let query = mybatisMapper.getStatement('board', 'insert_reply', param, format);
+    console.log(query);
+
+    connection.execute(query, [], function(err, result) {
+      if (err) {
+        console.error(err.message);
+        res.json({success: 0});
+      } else {
+        res.json({success: 1});
+      }
+      connection.close();
+    });
+  })
+});
+
+router.post('/update_reply', function(req, res, next) {
+  oracledb.getConnection({
+    user : dbConfig.user,
+    password : dbConfig.password,
+    connectString : dbConfig.connectString
+  },
+  function(err, connection) {
+    if (err) {
+      console.error(err.message);
+      return;
+    }
+    
+    var param = {
+      IDX: req.body.IDX,
+      CONTENT: req.body.CONTENT,
+    };
+
+    let format = {language: 'sql', indent: ' '};
+    let query = mybatisMapper.getStatement('board', 'update_reply', param, format);
+    console.log(query);
+
+    connection.execute(query, [], function(err, result) {
+      if (err) {
+        console.error(err.message);
+        res.json({success: 0});
+      } else {
+        res.json({success: 1});
+      }
+      connection.close();
+    });
+  })
+});
+
+router.post('/delete_reply', function(req, res, next) {
+  oracledb.getConnection({
+    user : dbConfig.user,
+    password : dbConfig.password,
+    connectString : dbConfig.connectString
+  },
+  function(err, connection) {
+    if (err) {
+      console.error(err.message);
+      return;
+    }
+    
+    var param = {
+      IDX: req.body.IDX,
+    };
+
+    let format = {language: 'sql', indent: ' '};
+    let query = mybatisMapper.getStatement('board', 'delete_reply', param, format);
     console.log(query);
 
     connection.execute(query, [], function(err, result) {

@@ -113,7 +113,7 @@ export default function BoardTable(props) {
           setRows(rows_origin);
         } else if (props.programs !== '전체'|| props.searchs !== '') {
           for (let i = 0; i < rows_origin.length; i++) {
-            if (props.programs == '전체' &&
+            if (props.programs === '전체' &&
             (rows_origin[i].titles.includes(props.searchs) ||
             rows_origin[i].editor.includes(props.searchs)) ) {
               temp.push(rows_origin[i]);
@@ -173,7 +173,7 @@ export default function BoardTable(props) {
         
                       {(column.format && typeof value === 'number') ? column.format(value) : value}
                    
-                    </TableCell>
+                      </TableCell>
                     );
                   })}
                 </TableRow>
