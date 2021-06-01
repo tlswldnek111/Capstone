@@ -16,6 +16,7 @@ import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 
+import Container from '@material-ui/core/Container';
 function Copyright() {
     return (
       <Typography variant="body2" color="textSecondary" align="center">
@@ -128,6 +129,7 @@ function Copyright() {
       setOpen(true);
     };
     return(
+      <Container component="main" maxWidth="md">
       <div className={classes.root}>
         <Header2/>
         <main className={classes.content}>
@@ -188,7 +190,7 @@ function Copyright() {
           
       </main>
     </div>
-
+    </Container>
 
 
 
