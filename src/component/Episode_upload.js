@@ -13,7 +13,6 @@ class Episode_upload extends React.Component {
         const FILE = document.getElementById('upload-video').files[0];
         const EPISODE = e.target.EPISODE.value;
         const IDX = String(this.props.location.search).replace('?idx=', '');
-        
         if(FILE === undefined) {
             alert('동영상을 선택해주세요.');
         } else {
@@ -23,10 +22,21 @@ class Episode_upload extends React.Component {
                 , {type: FILE.type});
             console.log('파일 테스트: ' + NewFile.name);
             formData.append('file', NewFile);
-            fetch('http://localhost:3001/vod/upload_video', {
-            method: 'POST',
-            body: formData,
-            })
+            let request = new XMLHttpRequest();
+            request.open('POST', 'http://localhost:3001/vod/upload_video'); 
+
+            request.upload.addEventListener('progress', function(e) {
+                let percent_completed = (e.loaded / e.total)*100;
+                document.getElementById('progressBar').value = percent_completed;
+                console.log(percent_completed);
+            });
+
+            request.addEventListener('load', function(e) {
+                console.log(request.status);
+                console.log(request.response);
+            });
+
+            request.send(formData);
         }
     }
 
@@ -41,6 +51,12 @@ class Episode_upload extends React.Component {
                         label="EPISODE"
                         required/>
                         <br></br>
+                        <progress
+                        id="progressBar"
+                        value="0"
+                        max="100"
+                        style={{width:"200px", height: "50px"}}/>
+                        <br></br>
                         <Button
                         style={{marginTop:"10px"}}
                         variant="contained"
@@ -50,14 +66,14 @@ class Episode_upload extends React.Component {
                         </Button>
                         <label htmlFor="upload-video">
                         <input
-                            style={{ display: 'none' }}
-                            id="upload-video"
-                            name="upload-video"
-                            type="file"
-                            onChange={this.showImage}/>
+                        style={{ display: 'none' }}
+                        id="upload-video"
+                        name="upload-video"
+                        type="file"
+                        onChange={this.showImage}/>
 
                         <Button
-                         style={{marginTop:"10px"}}
+                        style={{marginTop:"10px"}}
                         color="primary"
                         variant="contained"
                         component="span">
@@ -66,7 +82,9 @@ class Episode_upload extends React.Component {
                         </label>
                       
                         <br></br>
-                        <Button>
+                        <Button onClick={()=>{
+                            this.props.history.goBack();
+                        }}>
                             뒤로가기
                         </Button>
                     </form>

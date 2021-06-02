@@ -57,7 +57,7 @@ class Navi extends React.Component {
                     <Route exact path="/board_detail" component={Board_detail} history={this.props.history}/>
                     <Route exact path="/vod_detail" component={Vod_detail} history={this.props.history} />
                     <Route exact path="/my_posts" component={MyPosts} />
-                    <Route exact path="/episode_upload" component={Episode_upload} />
+                    <Route exact path="/episode_upload" component={Episode_upload} history={this.props.history} />
                 </Switch>
                 </AppBar>
                
