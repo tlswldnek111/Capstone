@@ -116,6 +116,88 @@ router.post('/upload', function(req, res, next) {
   })
 });
 
+router.post('/update', function(req, res, next) {
+  oracledb.getConnection({
+    user : dbConfig.user,
+    password : dbConfig.password,
+    connectString : dbConfig.connectString
+  },
+  function(err, connection) {
+    if (err) {
+      console.error(err.message);
+      return;
+    }
+    
+    var param = {
+      IDX: req.body.IDX,
+      CONTENT: req.body.CONTENT,
+    };
+
+    let format = {language: 'sql', indent: ' '};
+    let query = mybatisMapper.getStatement('vod', 'update_vod', param, format);
+    console.log(query);
+
+    connection.execute(query, [], function(err, result) {
+      if (err) {
+        console.error(err.message);
+        res.json({success: 0});
+      } else {
+        res.json({success: 1});
+      }
+      connection.close()
+    });
+  })
+});
+
+router.post('/delete', function(req, res, next) {
+  oracledb.getConnection({
+    user : dbConfig.user,
+    password : dbConfig.password,
+    connectString : dbConfig.connectString
+  },
+  function(err, connection) {
+    if (err) {
+      console.error(err.message);
+      return;
+    }
+    
+    var param = {
+      IDX: req.body.IDX,
+    };
+
+    let format = {language: 'sql', indent: ' '};
+    let query = mybatisMapper.getStatement('vod', 'delete_vod', param, format);
+    console.log(query);
+
+    connection.execute(query, [], function(err, result) {
+      if (err) {
+        console.error(err.message);
+        res.json({success: 0});
+      } else {
+        res.json({success: 1});
+      }
+      connection.close()
+      .then(()=>{
+        const path = 'server/vod/' + req.body.IDX;
+        var deleteFolderRecursive = function(path) {
+          if (fs.existsSync(path)) {
+            fs.readdirSync(path).forEach(function(file, index){
+              var curPath = path + "/" + file;
+              if (fs.lstatSync(curPath).isDirectory()) {
+                deleteFolderRecursive(curPath);
+              } else {
+                fs.unlinkSync(curPath);
+              }
+            });
+            fs.rmdirSync(path);
+          }
+        };
+        deleteFolderRecursive(path);
+      })
+    });
+  })
+});
+
 router.post('/upload_image', upload_image.single('file'), function(req, res, next) {
   res.json({success: 1});
 });
@@ -167,19 +249,19 @@ router.post('/select_one', function(req, res, next) {
     }
     var TITLE = null;
     var IDX = null;
-    (req.body.TITLE === undefined) ? TITLE = req.body.TITLE : TITLE = null;
-    (req.body.IDX === undefined) ? IDX = req.body.IDX : IDX = null;
+    (req.body.TITLE !== undefined) ? TITLE = req.body.TITLE : TITLE = null;
+    (req.body.IDX !== undefined) ? IDX = req.body.IDX : IDX = null;
 
     var param = {
     };
 
-    if (TITLE == null) {
+    if (TITLE === null) {
       param = {
-        IDX: req.body.IDX
+        IDX: IDX
       };
     } else {
       param = {
-        TITLE: req.body.TITLE
+        TITLE: TITLE
       };
     }
     

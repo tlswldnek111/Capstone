@@ -15,6 +15,18 @@
         )
     </insert>
 
+    <update id="update_board">
+        UPDATE BOARD
+           SET TITLE = #{TITLE},
+               CONTENT = #{CONTENT}
+         WHERE IDX = #{IDX}
+    </update>
+
+    <delete id="delete_board">
+        DELETE FROM BOARD
+         WHERE IDX = #{IDX}
+    </delete>
+
     <update id="update_views">
         UPDATE BOARD
            SET VIEW_COUNT = VIEW_COUNT + 1

@@ -2,21 +2,21 @@ import React from 'react'
 import Input from '@material-ui/core/Input';
 import TextField from '@material-ui/core/TextField';
 import { Typography } from "@material-ui/core";
-import Grid from '@material-ui/core/Grid';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import Comment from './Comment';
 import Header2 from './Header2';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import '../CSS/Board_detail.css'
 
 class Board_detail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             IDX: '',
-            REPLY: []
+            REPLY: [],
+            Writer: ''
         };
+        this.handleUpdate = this.handleUpdate.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
     componentWillUnmount() {
@@ -24,6 +24,7 @@ class Board_detail extends React.Component {
     }
 
     componentDidMount() {
+        document.getElementById('CONTENT').setAttribute('style', 'color: black;');
         this.setState({IDX: String(this.props.location.search).replace('?idx=', '')});
         fetch('http://localhost:3001/board/update_views', {
             method: 'POST',
@@ -48,6 +49,7 @@ class Board_detail extends React.Component {
             document.getElementById('TITLE').value = res[0].TITLE;
             document.getElementById('ID').value = res[0].ID;
             document.getElementById('CONTENT').value = res[0].CONTENT;
+            this.setState({Writer: res[0].ID});
         })
         .then(()=>{
             fetch('http://localhost:3001/board/select_reply', {
@@ -151,6 +153,70 @@ class Board_detail extends React.Component {
         })
     }
 
+    handleUpdate(e) {
+        const input_TITLE = document.getElementById('TITLE');
+        const input_CONTENT = document.getElementById('CONTENT');
+        if (input_TITLE.disabled === true) {
+            input_TITLE.disabled = false;
+            input_TITLE.setAttribute('style', 'color: blue;')
+            input_CONTENT.disabled = false;
+            input_CONTENT.setAttribute('style', 'color: blue;')
+            input_CONTENT.focus();
+            e.target.textContent = '수정완료';
+        } else {
+            const TITLE = input_TITLE.value;
+            const CONTENT = input_CONTENT.value;
+            fetch('http://localhost:3001/board/update', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                IDX: this.state.IDX,
+                TITLE: TITLE,
+                CONTENT: CONTENT
+                })
+            })
+            .then(res=>res.json())
+            .then(res=>{
+                if (res.success === 1) {
+                    e.target.textContent = '수정';
+                    input_TITLE.disabled = true;
+                    input_TITLE.setAttribute('style', 'color: black;')
+                    input_CONTENT.disabled = true;
+                    input_CONTENT.setAttribute('style', 'color: black;')
+                    alert('수정되었습니다.');
+                } else {
+                    alert('수정에 실패했습니다.');
+                    window.location.reload();
+                }
+            })
+        }
+    }
+
+    handleDelete(e) {
+        if (window.confirm('삭제하시겠습니까?')) {
+            fetch('http://localhost:3001/board/delete', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                IDX: this.state.IDX,
+                })
+            })
+            .then(res=>res.json())
+            .then(res=>{
+                if(res.success === 1) {
+                    alert('삭제되었습니다.')
+                    this.props.history.push('noticeboard');
+                } else {
+                    alert('삭제에 실패했습니다.')
+                }
+            })
+        }
+    }
+
     render() {
         return (
             <div style={{height: "100vh", overflowY: "scroll"}}>
@@ -163,23 +229,19 @@ class Board_detail extends React.Component {
                                 id="TITLE"
                                 style={{width: "700px", color: "black"}}
                                 defaultValue="제목 들어갈 곳"
-                                disabled />
+                                disabled
+                                disableUnderline/>
                             </p>
-                            <Grid>
-                                <Grid item>
-                                    <AccountCircle />
-                                    <Input
-                                    id="ID"
-                                    style={{color: "black"}}
-                                    defaultValue="작성자"
-                                    disabled />
-                                </Grid>
-                                <Grid item>
-                                </Grid>
-                            </Grid>
+                            <hr style={{width: "700px"}}></hr>
+                            <Input
+                            id="ID"
+                            style={{width: "700px", color: "black"}}
+                            disabled
+                            disableUnderline/>
+                            <hr style={{width: "700px"}}></hr>
                             <TextField
-                            className="disibled_color"
                             id="CONTENT"
+                            style={{width: "700px"}}
                             multiline rows={25}
                             rowsMax={25}
                             variant="outlined"
@@ -187,13 +249,35 @@ class Board_detail extends React.Component {
                             />
                         </CardContent>
                     </Card>
-                    <Card style={{width: 800, marginTop: 13}} variant="outlined">
+                    <div style={{width: "800px", textAlign: "right"}}>
+                        <button
+                        hidden={!((localStorage.getItem('id') === 
+                        this.state.Writer) ||
+                        (localStorage.getItem('id') === 'admin'))}
+                        onClick={this.handleUpdate}>
+                            수정
+                        </button>
+                        <button
+                        hidden={!((localStorage.getItem('id') === 
+                        this.state.Writer) ||
+                        (localStorage.getItem('id') === 'admin'))}
+                        onClick={this.handleDelete}>
+                            삭제
+                        </button>
+                        <button
+                        onClick={()=>{
+                            this.props.history.push('noticeboard');
+                        }}>
+                            목록
+                        </button>
+                    </div>
+                    <Card style={{width: "800px", marginTop: 13}} variant="outlined">
                         <CardContent>
                             <p> </p>
-                            <Typography variant="h7" style={{marginRight: "650px", maxWidth: '100px'}}>
+                            <Typography variant="h7" style={{float: 'left'}}>
                                 댓글
                             </Typography>
-                            <Comment B_IDX={this.state.IDX}></Comment>
+                            <Comment B_IDX={this.state.IDX} history={this.props.history}></Comment>
                             {this.state.REPLY.map((val)=>{
                                 return val;
                             })}

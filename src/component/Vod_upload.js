@@ -4,6 +4,9 @@ import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import clsx from 'clsx';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+
 const styles = theme => ({
     paper: {
         padding: theme.spacing(2),
@@ -24,6 +27,7 @@ class Vod_upload extends React.Component {
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.showImage = this.showImage.bind(this);
+        this.style = {width: "400px", marginBottom: "10px"};
     }
 
     showImage() {
@@ -47,7 +51,7 @@ class Vod_upload extends React.Component {
         event.preventDefault();
         const FILE = document.getElementById('upload-photo').files[0];
         const TITLE = event.target.TITLE.value;
-        const CATEGORY = event.target.CATEGORY.value;
+        const CATEGORY = document.getElementById('CATEGORY').innerText;
         const CONTENT = event.target.CONTENT.value;
 
         if(FILE === undefined) {
@@ -113,17 +117,24 @@ class Vod_upload extends React.Component {
                         <br></br>
                         <TextField
                         id="TITLE"
+                        style={this.style}
                         label="타이틀"
                         required/>
                         <br></br>
-                        <TextField 
+                        <Select
                         id="CATEGORY"
-                        label="장르"
-                        required/>
+                        style={this.style}
+                        defaultValue={10000}
+                        required>
+                        <MenuItem value={10000}>예능</MenuItem>
+                        <MenuItem value={20000}>드라마</MenuItem>
+                        <MenuItem value={30000}>영화</MenuItem>
+                        <MenuItem value={40000}>애니메이션</MenuItem>
+                        </Select>
                         <br></br>
                         <TextField
                         id="CONTENT"
-                        style={{marginTop:"10px"}}
+                        style={this.style}
                         variant="outlined"
                         multiline
                         rows={15}

@@ -1,7 +1,7 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import { Route, Switch, withRouter} from 'react-router-dom';
-import Testgrid from './Testgrid';
+import Carousel from './Carousel';
 import Register from './Register';
 import FindID from './FindID';
 import FindPW from './FindPW';
@@ -43,7 +43,7 @@ class Navi extends React.Component {
             <div>
                 <AppBar  value="true" color="white">  
                 <Switch>
-                    <Route exact path="/" component={Dashboard} />
+                    <Route exact path="/" component={Dashboard} history={this.props.history}/>
                     <Route exact path="/noticeboard" component={Noticeboard} />
                     <Route exact path="/login" component={Login} history={this.props.history} />
                     <Route exact path="/register" component={Register} history={this.props.history}/> 
@@ -53,9 +53,8 @@ class Navi extends React.Component {
                     <Route exact path="/mypage" component={Mypage} history={this.props.history}/>
                     <Route exact path="/write" component={Write} />
                     <Route exact path="/vod" component={Vod} history={this.props.history}/>
-                    <Route exact path="/grid" component={Testgrid} />
                     <Route exact path="/vod_upload" component={Vod_upload} />
-                    <Route exact path="/board_detail" component={Board_detail} />
+                    <Route exact path="/board_detail" component={Board_detail} history={this.props.history}/>
                     <Route exact path="/vod_detail" component={Vod_detail} history={this.props.history} />
                     <Route exact path="/my_posts" component={MyPosts} />
                     <Route exact path="/episode_upload" component={Episode_upload} />

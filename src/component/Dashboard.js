@@ -1,14 +1,14 @@
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import Header2 from './Header2';
-import Testgrid from './Testgrid';
+import Carousel from './Carousel';
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -91,38 +91,34 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dashboard() {
+export default function Dashboard(props) {
   const classes = useStyles();
   
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const fixedHeightPaper2 = clsx(classes.paper, classes.content);
   return (
     <div className={fixedHeightPaper} >
-    <Container maxWidth="lg" style={{width:"900px" }}>
-      <Header2/>
-    <div className={classes.root} >
-      
+      <Container maxWidth="lg" style={{width:"900px" }}>
+        <Header2/>
+        <div className={classes.root} >
           <Container  className={classes.container}>
-          <Paper className={fixedHeightPaper2} >
-           <Grid className={classes.picture} >
-             </Grid>
+            <Paper className={fixedHeightPaper2} >
+              <Grid className={classes.picture} >
+              </Grid>
             </Paper>
-            </Container>
+          </Container>
+        </div>
+
+        <div className={classes.root}>
+          <Container  className={classes.container2}>
+            <Typography className={classes.title} component="h1" variant="h6" color="textSecondary">
+              Logistics에서 추천하는 프로그램
+            </Typography>
+            <Carousel history={props.history}/>
+          </Container>
+        </div>
+      </Container>
     </div>
-
-    <div className={classes.root}>
-      <Container  className={classes.container2}>
-      <Typography className={classes.title} component="h1" variant="h6" color="textSecondary">
-        Logistics에서 추천하는 프로그램
-    </Typography>
-       <Testgrid />
-
-       
-      
-        </Container>
-</div>
-</Container>
-</div>
 
   );
 }

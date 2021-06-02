@@ -82,7 +82,7 @@ function Copyright() {
     },
   }));
  
-  export default function Noticeboard(){
+  export default function Noticeboard(props){
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
     const [open, setOpen] = React.useState(false);
@@ -124,75 +124,76 @@ function Copyright() {
     const handleClose = () => {
       setOpen(false);
     };
-  
     const handleOpen = () => {
       setOpen(true);
     };
+    const handleWrite = () => {
+      if (localStorage.getItem('id') === null) {
+        props.history.push('login');
+      } else {
+        props.history.push('write');
+      }
+    }
+
     return(
       <Container component="main" maxWidth="md">
-      <div className={classes.root}>
-        <Header2/>
-        <main className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <Box width="100%" >
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title} align="center">
-           {program} 시청자 게시판
-          </Typography>
-  
-      <FormControl className={classes.formControl}  >
-        <InputLabel  className={classes.menu} id="inputlabel" >프로그램 명</InputLabel>
-        <Select
-          labelId="select"
-          id="select"
-          open={open}
-          onClose={handleClose}
-          onOpen={handleOpen}
-          value={program}
-          onChange={handleChange}
-          className={classes.menu}
-        >
-         
-          {menu.map((val)=>{
-            return val;
-          })}
-        </Select>
-      </FormControl>
+        <div className={classes.root}>
+          <Header2/>
+          <main className={classes.content}>
+            <div className={classes.appBarSpacer} />
+            <Box width="100%" >
+              <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title} align="center">
+                {program} 시청자 게시판
+              </Typography>
+      
+              <FormControl className={classes.formControl}>
+                <InputLabel  className={classes.menu} id="inputlabel" >프로그램 명</InputLabel>
+                <Select
+                  labelId="select"
+                  id="select"
+                  open={open}
+                  onClose={handleClose}
+                  onOpen={handleOpen}
+                  value={program}
+                  onChange={handleChange}
+                  className={classes.menu}
+                >
+                  {menu.map((val)=>{
+                    return val;
+                  })}
+                </Select>
+              </FormControl>
 
-      <InputBase 
-       className={classes.input}
-       placeholder='검색'
-       inputProps={{ 'aria-label': 'search' }}
-       onChange={handleChange2}
-       />
-      <IconButton type="submit" className={classes.iconButton} aria-label="search">
-       <SearchIcon />
-     </IconButton>
+              <InputBase 
+              className={classes.input}
+              placeholder='검색'
+              inputProps={{ 'aria-label': 'search' }}
+              onChange={handleChange2}
+              />
+              <IconButton type="submit" className={classes.iconButton} aria-label="search">
+                <SearchIcon />
+              </IconButton>
 
-     <div style={{float: 'right'}}>
-          <Link to="write"  style={{textDecoration:"none", color:"black" ,margin:20}} >
-            <Button 
-              type="check"
-              variant="contained"
-              color="primary"
-            >
-            글 작성
-            </Button>
-          </Link>
-      </div>
+              <div style={{float: 'right', textDecoration:"none", color:"black" ,margin:20}}>
+                <Button 
+                  type="check"
+                  variant="contained"
+                  color="primary"
+                  onClick={handleWrite}
+                >
+                글 작성
+                </Button>
+              </div>
               <Paper className={fixedHeightPaper}>
-              <BoardTable programs={program} v_idx={v_idx[program]} searchs={sch}/>
+                <BoardTable programs={program} v_idx={v_idx[program]} searchs={sch}/>
               </Paper>
-        </Box>
+            </Box>
 
-        <Box mt={5}>
-        <Copyright />
-      </Box>
-          
-      </main>
-    </div>
-    </Container>
-
-
-
+            <Box mt={5}>
+              <Copyright />
+            </Box>
+          </main>
+        </div>
+      </Container>
     );
   }
