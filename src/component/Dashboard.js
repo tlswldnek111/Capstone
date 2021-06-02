@@ -51,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    paddingTop: theme.spacing(3),
   },
     width: theme.spacing(0),
     [theme.breakpoints.up('sm')]: {
@@ -111,12 +112,13 @@ export default function Dashboard() {
 
     <div className={classes.root}>
       <Container  className={classes.container2}>
-        Logistics
-      <Paper >
-       <Grid item  className={classes.picture}>
-         <button>안녕</button>
-        </Grid>
-        </Paper>
+      <Typography className={classes.title} component="h1" variant="h6" color="textSecondary">
+        Logistics에서 추천하는 프로그램
+    </Typography>
+       <Testgrid />
+
+       
+      
         </Container>
 </div>
 </Container>
