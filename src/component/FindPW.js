@@ -77,7 +77,7 @@ handleSubmit(event) {
                  }else//값이 있을때....
                 {
                   alert("현재 비밀번호 : "+res.PASSWORD); //아이디 검색에 성공한경우
-                  window.location.href = "/";//확인 누르면 홈으로 이동
+                  this.props.history.push('/');//확인 누르면 홈으로 이동
                 }
 
 })
@@ -86,18 +86,20 @@ handleSubmit(event) {
 
     return (
       
-      <Container component="main" >
+      <Container component="main" maxWidth="xs">
       <div className={useStyles.paper}>
       <Grid>
            ㅤㅤㅤㅤ 
           
            </Grid>
+           <center>
         <Avatar className={useStyles.avatar}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h6">
           비밀번호 찾기
         </Typography>
+        </center>
         <form className={useStyles.form} noValidate  onSubmit={this.handleSubmit}  >
           <Grid container spacing={2}>
             <Grid item xs={12} >
@@ -149,7 +151,7 @@ handleSubmit(event) {
         
           <Grid container justify="flex-end">
             <Grid item>
-            <Link to="/Login" >
+            <Link to="/Login" style={{textDecoration:"none", color:"black"}} >
                 <Button>
                로그인하러 가기 
                </Button>

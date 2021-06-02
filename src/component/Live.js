@@ -1,45 +1,37 @@
 import React from 'react';
 import ReactHlsPlayer from 'react-hls-player';
 import Chat from './Chat';
-import SplitPane from 'react-split-pane/lib/SplitPane';
-import Pane from 'react-split-pane/lib/Pane'
 import Header2 from './Header2';
-class Live extends React.Component {
-    constructor(props) {
-        super(props);
-            this.state = {
-                height: 0
-            };
-        this.videoHeight = React.createRef();
-        window.onresize = (e) => {
-            this.setState({height: this.videoHeight.current.clientHeight});
-        }
-    };
+import Grid from '@material-ui/core/Grid';
+import '../CSS/Live.css';
 
-    componentDidMount() {
-        this.setState({height: this.videoHeight.current.clientHeight});
-    }
+class Live extends React.Component {
 
     render(){
-        return(<div>
-            <Header2/>
-
-            <SplitPane split="vertical">
-                <Pane initialSize="80%">
-                    <div ref={this.videoHeight}>
-                        <ReactHlsPlayer
-                        src="http://121.145.133.119:8000/live/live/index.m3u8"
-                        autoPlay={false}
-                        controls={true}
-                        width="100%"
-                        height="auto"
-                        />
-                    </div>
-                </Pane>
-                <Pane>
-                    <Chat height={this.state.height}/>
-                </Pane>
-            </SplitPane>
+        return(
+            <div className="div_master">
+                <Header2></Header2>
+                <div className="div_live">
+                    <Grid container spacing={1}>
+                        <Grid container item xs={12}>
+                            <Grid item xs={8}>
+                                <div>
+                                    <ReactHlsPlayer
+                                    id="video_grid"
+                                    src="http://121.145.133.119:8000/live/live/index.m3u8"
+                                    autoPlay={false}
+                                    controls={true}
+                                    width="100%"
+                                    height="auto"
+                                    />
+                                </div>
+                            </Grid>
+                            <Grid item xs={4}>
+                                <Chat></Chat>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </div>
             </div>
             )
     }

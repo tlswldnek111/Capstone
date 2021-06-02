@@ -1,7 +1,8 @@
 import React from 'react';
 import io from "socket.io-client";
-import SplitPane from 'react-split-pane/lib/SplitPane';
-import Pane from 'react-split-pane/lib/Pane'
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import '../CSS/Chat.css';
 
 var socket = null;
 
@@ -12,7 +13,6 @@ class Chat extends React.Component {
       id: '',
       message: '',
       logs: [],
-      height: 0
     }
     this.send = this.send.bind(this);
     this.scrollToBottom = this.scrollToBottom.bind(this);
@@ -29,9 +29,9 @@ class Chat extends React.Component {
 
   send(e) {
     e.preventDefault();
-    console.log('아이디 ' + e.target.id.value + '메세지 ' + e.target.message);
+    console.log('아이디 ' + localStorage.getItem('id') + '메세지 ' + e.target.message);
     socket.emit('chat-msg', {
-      id: e.target.id.value,
+      id: localStorage.getItem('id'),
       message: e.target.message.value
     });
     this.setState({message: ''});
@@ -39,18 +39,7 @@ class Chat extends React.Component {
     message.value = '';
   }
 
-  componentDidMount() {
-    this.setState({
-      height: this.props.height
-    });
-  }
-
   componentDidUpdate = (prevProps, prevState) => {
-    if (this.props.height !== prevProps.height) {
-      this.setState({
-        height: this.props.height
-      });
-    }
     this.scrollToBottom();
   };
 
@@ -67,29 +56,34 @@ class Chat extends React.Component {
       </div>
     ));
     return(
-      <SplitPane split="horizontal">
-        <Pane initialSize='90%'>
-          <div 
-          id="MessageBox"
-          style={{overflowY:'scroll', height: this.state.height * 0.9}}>
-            {messages}
-          </div>
-        </Pane>
-        <Pane>
-          <div>
+      <table className="table">
+        <tr className="tr">
+          <td>
+            <div
+            id="MessageBox" className="div">
+              {messages}
+            </div>
+          </td>
+        </tr>
+        <tr className="tr">
+          <td>
             <form onSubmit={this.send}>
-              <input 
-              id="id"
-              value={localStorage.getItem('id')}
-              disabled
-              >
-              </input>
-              <input id="message"></input>
-              <button type="submit"> 보내기 </button>
+              <TextField
+                  fullWidth="true"
+                  id="message"
+                  variant="outlined">
+              </TextField>
+              <Button
+                fullWidth="true"
+                type="submit"
+                color="primary"
+                variant="contained"> 
+                보내기 
+              </Button>
             </form>
-          </div>
-        </Pane>
-      </SplitPane>
+          </td>
+        </tr>
+      </table>
     );
   }
 }

@@ -3,14 +3,17 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Logout from './Logout';
+import { Link } from "react-router-dom";
 function Login(){
   
   if(localStorage.getItem('username')==null) //로그인 해야하는상황일때
    {return(
-    <ListItem button component="a" href="Login">
+   <Link to='/Login' style={{textDecoration:"none", color:"black"}}>
+    <ListItem button component="a">
     <ListItemText primary="로그인" />
-
+    
   </ListItem>
+  </Link>
         );
 }
   else{//localStorage.clear() 
@@ -30,11 +33,11 @@ function Mypage(){
   if(localStorage.getItem('username')!=null) //로그인 되있는 상태일때
   {//localStorage.clear() 
    return(
-   
-     <ListItem button component="a" href="/mypage" >
+    <Link to='/mypage' style={{textDecoration:"none", color:"black"}}>
+     <ListItem button component="a">
      <ListItemText primary="회원정보수정" />
    </ListItem>
-     
+     </Link>
    );
  }
  else{
@@ -47,8 +50,10 @@ function Manage(){
   if(localStorage.getItem('username')!=null) //로그인 되있는 상태일때
   {//localStorage.clear() 
    return(
-   
-    <ListItemText primary="작성한 글 관리" />
+    <Link to='/my_posts' style={{textDecoration:"none", color:"black"}}>
+      <ListItemText primary="작성한 글 관리" />
+      </Link>
+
      
    );
  }
@@ -59,20 +64,23 @@ function Manage(){
 
 export const mainListItems = (
   <div>
-     <ListSubheader> </ListSubheader>
+    <ListSubheader> </ListSubheader>
     <p></p>
-    <ListItem button component="a" href="live">
-      <ListItemText primary="LIVE"/>
-    </ListItem>
+    <Link to='/live' style={{textDecoration:"none", color:"black"}}>
+      <ListItem button component="a">
+        <ListItemText primary="LIVE"/>
+      </ListItem>
+    </Link>
 
-    <ListItem button component="a" href="vod">
-      <ListItemText primary="VOD"/>
-    </ListItem>
+    <Link to='/vod' style={{textDecoration:"none", color:"black"}}>
+      <ListItem button component="a">
+        <ListItemText primary="VOD"/>
+      </ListItem>
+    </Link>
 
-    <ListItem button component="a" href="noticeboard">
+    <ListItem button component="a" href="/noticeboard">
       <ListItemText primary="시청자 게시판" />
     </ListItem>
-
   </div>
 );
 

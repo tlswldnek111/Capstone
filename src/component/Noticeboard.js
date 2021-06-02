@@ -1,39 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
 import Box from '@material-ui/core/Box';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
-import { mainListItems, secondaryListItems } from './listItems';
-import Header from './Header';
-import Tablee from './Tablee';
+import Header2 from './Header2';
+import BoardTable from './BoardTable';
+import { Link } from "react-router-dom";
 import Button from '@material-ui/core/Button';
-const drawerWidth = 240;
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputBase from '@material-ui/core/InputBase';
+import IconButton from '@material-ui/core/IconButton';
+import SearchIcon from '@material-ui/icons/Search';
 
-const sections = [
-    { title: '드라마', url: '#' },
-    { title: '예능', url: '#' },
-    { title: '시사교양', url: '#' },
-    { title: '연예', url: '#' },
-    { title: '스포츠', url: '#' },
-    { title: '라이프', url: '#' },
-    { title: '뉴스', url: '#' },
-  ];
-
-
+import Container from '@material-ui/core/Container';
 function Copyright() {
     return (
       <Typography variant="body2" color="textSecondary" align="center">
         {'Copyright © '}
         <Link color="inherit" href="https://material-ui.com/">
-          Your Website
+          Logistics
         </Link>{' '}
         {new Date().getFullYear()}
         {'.'}
@@ -43,53 +32,14 @@ function Copyright() {
 
 
   const useStyles = makeStyles((theme) => ({
-    
     root: {
       display: 'flex',
-    },
-    toolbar: {
-      paddingRight: 24, // keep right padding when drawer closed
-    },
-    toolbarIcon: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'flex-end',
-      padding: '0 8px',
-      ...theme.mixins.toolbar,
-    },
-    appBar: {
-      zIndex: theme.zIndex.drawer + 1,
-      transition: theme.transitions.create(['width', 'margin'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-    },
-    appBarShift: {
-      marginLeft: drawerWidth,
-      width: `calc(100% - ${drawerWidth}px)`,
-      transition: theme.transitions.create(['width', 'margin'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    },
-    menuButton: {
-      marginRight: 36,
-    },
-    menuButtonHidden: {
-      display: 'none',
-    },
-    title: {
-      flexGrow: 1,
     },
     appBarSpacer: theme.mixins.toolbar,
     content: {
       flexGrow: 1,
       height: '100vh',
       overflow: 'auto',
-    },
-    container: {
-      paddingTop: theme.spacing(4),
-      paddingBottom: theme.spacing(4),
     },
     paper: {
       padding: theme.spacing(2),
@@ -101,93 +51,149 @@ function Copyright() {
     fixedHeight: {//페이지 길이.. 드디어..
       height: 'auto',
     },
-    mainGrid: {
-        marginTop: theme.spacing(3),
-      },
-      list: {
-        width: 250,
-      },
-      fullList: {
-        width: 'auto',
-      },
-    
+    input: {
+      marginLeft: 10,
+      padding: 5,
+      margin: theme.spacing(3),
+    },
+    iconButton: {
+      padding: 5,
+    },
+    divider: {
+      height: 28,
+      margin: 4,
+    }, 
+    button: {
+      display: 'block',
+      marginTop: theme.spacing(2),
+    },
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+    },
+    title:{
+      fontSize:22,
+      marginTop: theme.spacing(3),
+    },
+    menu:{
+      marginLeft: 10,
+      padding: 5,
+      margin: theme.spacing(0),
+    },
   }));
  
-  export default function Noticeboard(){
+  export default function Noticeboard(props){
     const classes = useStyles();
+    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
     const [open, setOpen] = React.useState(false);
-    const handleDrawerOpen = () => {
-      setOpen(true);
+    const [program, setprogram] = React.useState('전체');
+    const [sch,setsch]=React.useState('');
+    const [menu, setMenu]=React.useState([]);
+    const [v_idx, setV_idx]=React.useState({});
+
+    useEffect(()=>{
+      fetch('http://localhost:3001/vod/select', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+        })
+      })
+      .then(res=>res.json())
+      .then(res=>{
+        const temp = []
+        const temp2 = {}
+        temp.push(<MenuItem value={'전체'}>전체</MenuItem>)
+        for (let i = 0; i < res.length; i++) {
+          temp.push(<MenuItem value={res[i].TITLE}>{res[i].TITLE}</MenuItem>);
+          temp2[res[i].TITLE] = res[i].IDX;
+        }
+        setMenu(temp);
+        setV_idx(temp2);
+        //setprogram('전체');
+      })
+    }, [])
+  
+    const handleChange = (event) => {
+      setprogram(event.target.value);
     };
-    const handleDrawerClose = () => {
+    const handleChange2 = (event) => {
+      setsch(event.target.value);
+    };
+    const handleClose = () => {
       setOpen(false);
     };
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-    const [state, setState] = React.useState({
-      left: false,
-    });
-    const toggleDrawer = (anchor, open) => (event) => {
-      if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-        return;
-      }
-  
-      setState({ ...state, [anchor]: open });
+    const handleOpen = () => {
+      setOpen(true);
     };
-  
-    const list = (anchor) => (
-      <div
-        className={clsx(classes.list, {
-          [classes.fullList]: anchor === 'top' || anchor === 'bottom',
-        })}
-        role="presentation"
-        onClick={toggleDrawer(anchor, false)}
-        onKeyDown={toggleDrawer(anchor, false)}
-      >
-        
-        <Divider />
-          <List>{mainListItems}</List>
-          <Divider />
-          <List>{secondaryListItems}</List>
-       
-        
-      </div>
-    );
+    const handleWrite = () => {
+      if (localStorage.getItem('id') === null) {
+        props.history.push('login');
+      } else {
+        props.history.push('write');
+      }
+    }
+
     return(
-     <div className={classes.root}>
-         <CssBaseline />
-         <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-             <Toolbar className={classes.toolbar}>
-           
-             {['MENU'].map((anchor) => (
-        <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
-          <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
-            {list(anchor)}
-          </Drawer>
-        </React.Fragment>
-      ))}
-
-           <Header title="Logistics"  />
-             </Toolbar>
-         </AppBar>
-  
-             
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
+      <Container component="main" maxWidth="md">
+        <div className={classes.root}>
+          <Header2/>
+          <main className={classes.content}>
+            <div className={classes.appBarSpacer} />
+            <Box width="100%" >
+              <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title} align="center">
+                {program} 시청자 게시판
+              </Typography>
       
-        <Box width="100%" >
+              <FormControl className={classes.formControl}>
+                <InputLabel  className={classes.menu} id="inputlabel" >프로그램 명</InputLabel>
+                <Select
+                  labelId="select"
+                  id="select"
+                  open={open}
+                  onClose={handleClose}
+                  onOpen={handleOpen}
+                  value={program}
+                  onChange={handleChange}
+                  className={classes.menu}
+                >
+                  {menu.map((val)=>{
+                    return val;
+                  })}
+                </Select>
+              </FormControl>
+
+              <InputBase 
+              className={classes.input}
+              placeholder='검색'
+              inputProps={{ 'aria-label': 'search' }}
+              onChange={handleChange2}
+              />
+              <IconButton type="submit" className={classes.iconButton} aria-label="search">
+                <SearchIcon />
+              </IconButton>
+
+              <div style={{float: 'right', textDecoration:"none", color:"black" ,margin:20}}>
+                <Button 
+                  type="check"
+                  variant="contained"
+                  color="primary"
+                  onClick={handleWrite}
+                >
+                글 작성
+                </Button>
+              </div>
               <Paper className={fixedHeightPaper}>
-              <Tablee/>
+                <BoardTable programs={program} v_idx={v_idx[program]} searchs={sch}/>
               </Paper>
-        </Box>
+            </Box>
 
-           
-          
-    </main>
-    </div>
-
-
-
-
+            <Box mt={5}>
+              <Copyright />
+            </Box>
+          </main>
+        </div>
+      </Container>
     );
   }

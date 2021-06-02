@@ -2,7 +2,7 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
+import { Link } from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
+import { withStyles } from "@material-ui/core/styles";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -23,9 +24,9 @@ function Copyright() {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
+const styles = theme => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -41,10 +42,9 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-}));
+});
 
-
-class Register extends React.Component{
+class Mypage extends React.Component{
 
   constructor(props) {
     super(props);
@@ -100,28 +100,118 @@ handleSubmit(event) {
       })
       .then(res=>res.json())
       .then(res=>{   alert("정상적으로 수정되었습니다!");})
-             window.location.href = "/";//확인 누르면 홈으로 이동
+      this.props.history.push('/');//확인 누르면 홈으로 이동
   }
 }
   render() {
 
+    const { classes } = this.props;
     return (
       
-      <Container component="main" >
-      <div className={useStyles.paper}>
+      <Container component="main" maxWidth="xs" >
+      <div className={classes.paper}>
       <Grid>
            ㅤㅤㅤㅤ 
           
            </Grid>
-        <Avatar className={useStyles.avatar}>
+        <Avatar className={classes.avatar}>
           <LockOutlinedIcon /> 
         </Avatar>
         <Typography component="h1" variant="h6">
           {this.state.message}
         </Typography>
 
-        <form className={useStyles.form} noValidate  onSubmit={this.handleSubmit}  >
+        <form className={classes.form} noValidate  onSubmit={this.handleSubmit}  >
+        <Grid container spacing={2}>
+          <Grid item xs={12} >
+           <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="ID"
+                label="ID"
+                name="ID"
+                autoComplete="ID"
+                disabled//아이디는 고정되어있음.
+                value={localStorage.getItem('id')}
+              />
+              </Grid>
+              <Grid item xs={12} >
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="PASSWORD"
+                label="PASSWORD"
+                name="PASSWORD"
+                autoComplete="PASSWORD"
+               
+              />
+            </Grid>
+            </Grid>
+           { this.state.text==='수정' ?  
           <Grid container spacing={2}>
+              <Grid item xs={12} >
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="NAME"
+                      label="NAME"
+                      name="NAME"
+                      autoComplete="NAME"
+                    />
+                   </Grid>
+                   <Grid item xs={12} >
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="PHONE"
+                      label="PHONE"
+                      name="PHONE"
+                      autoComplete="PHONE"
+                    />
+                    </Grid>
+                   </Grid>
+                  : <div></div>}
+              
+                  
+            <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+           {this.state.text}
+          </Button>
+
+          <p> </p>
+         
+          <Grid container justify="flex-end">
+            <Grid item>
+              <Link to="/" style={{textDecoration:"none", color:"black"}} variant="body2">
+               뒤로가기
+              </Link>
+            </Grid>
+          </Grid>
+        </form>
+
+      </div>
+      <Box mt={5}>
+        <Copyright />
+      </Box>
+    </Container>
+  );
+  }
+}
+
+export default withStyles(styles, { withTheme: true })(Mypage);
+
+/*
+
+<Grid container spacing={2}>
           <Grid item xs={12} >
            <TextField
                 variant="outlined"
@@ -186,7 +276,7 @@ handleSubmit(event) {
             fullWidth
             variant="contained"
             color="primary"
-            className={useStyles.submit}
+            className={classes.submit}
           >
            {this.state.text}
           </Button>
@@ -196,20 +286,10 @@ handleSubmit(event) {
          
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="/" variant="body2">
+              <Link to="/" style={{textDecoration:"none", color:"black"}} variant="body2">
                뒤로가기
               </Link>
             </Grid>
           </Grid>
-        </form>
 
-      </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
-    </Container>
-  );
-  }
-}
-
-export default Register;
+*/

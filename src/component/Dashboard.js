@@ -1,13 +1,13 @@
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import Header2 from './Header2';
+import Carousel from './Carousel';
 
 function Copyright() {
   return (
@@ -27,16 +27,6 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-  },
-  toolbar: {
-    paddingRight: 24, // keep right padding when drawer closed
-  },
-  toolbarIcon: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-    ...theme.mixins.toolbar,
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -61,36 +51,23 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    paddingTop: theme.spacing(3),
   },
-  drawerPaper: {
-    position: 'relative',
-    whiteSpace: 'nowrap',
-    width : drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerPaperClose: {
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
     width: theme.spacing(0),
     [theme.breakpoints.up('sm')]: {
       width: theme.spacing(0),
     },
-  },
-  appBarSpacer: theme.mixins.toolbar,
+  appBarSpacer: theme.mixins.toolbar,//앱바 밑으로
   content: {
-    flexGrow: 1,
-    height: '100vh',
-    overflow: 'auto',
+    height: '50vh',
   },
   container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
+    paddingTop: theme.spacing(12),
+    paddingBottom: theme.spacing(1),
+  },
+  container2: {
+    paddingTop: theme.spacing(0),
+    paddingBottom: theme.spacing(1),
   },
   paper: {
     padding: theme.spacing(2),
@@ -99,40 +76,76 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   fixedHeight: {
-    height: 240,
+    height: '100vh',
+  },
+  picture:{
+    height: '50vh',
+    position: 'relative',
+    backgroundColor: theme.palette.grey[800],
+    color: theme.palette.common.white,
+    marginBottom: theme.spacing(0),
+    backgroundImage: 'url(https://source.unsplash.com/random)',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
   },
 }));
 
-export default function Dashboard() {
+export default function Dashboard(props) {
   const classes = useStyles();
   
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
+  const fixedHeightPaper2 = clsx(classes.paper, classes.content);
   return (
-    <div className={classes.root}>
-      <Header2/>
+    <div className={fixedHeightPaper} >
+      <Container maxWidth="lg" style={{width:"900px" }}>
+        <Header2/>
+        <div className={classes.root} >
+          <Container  className={classes.container}>
+            <Paper className={fixedHeightPaper2} >
+              <Grid className={classes.picture} >
+              </Grid>
+            </Paper>
+          </Container>
+        </div>
 
-        <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={2}> 
+        <div className={classes.root}>
+          <Container  className={classes.container2}>
+            <Typography className={classes.title} component="h1" variant="h6" color="textSecondary">
+              Logistics에서 추천하는 프로그램
+            </Typography>
+            <Carousel history={props.history}/>
+          </Container>
+        </div>
+      </Container>
+    </div>
+
+  );
+}
+/*
+
+ <div className={classes.appBarSpacer} />
+        <Container  className={classes.container}>
+          <Grid container spacing={5}> 
+          <Paper className={fixedHeightPaper}>
+
          
+            <Grid className={classes.picture}  />
+            </Paper>   
+           
             <Grid item xs={12} md={4} lg={9}>
              <button>안녕</button>
             </Grid>
-           
+
             <Grid item xs={12} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
-              테스트2
+            
               </Paper>
             </Grid>
-            
           </Grid>
           <Box pt={4}>
             <Copyright />
           </Box>
         </Container>
-      </main>
     </div>
-  );
-}
+*/

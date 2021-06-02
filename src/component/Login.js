@@ -2,18 +2,18 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
+import { Link } from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
+import { withStyles } from "@material-ui/core/styles";
+import clsx from 'clsx';
 //alignItems="center" "static"
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" >
+    <Typography variant="body2" color="textSecondary" align="center" >
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/" >
         Logistics
@@ -23,26 +23,29 @@ function Copyright() {
     </Typography>
   );
 }
-
-const useStyles = makeStyles((theme) => ({
+const styles = theme => ({
   paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    //alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+      padding: theme.spacing(2),
+      display: 'flex',
+      overflow: 'auto',
+      flexDirection: 'column',
+    },
+    fixedHeight: {
+      height: '100vh',
+    },
+    avatar: {
+      margin: theme.spacing(1),
+      backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+      width: '100%', // Fix IE 11 issue.
+      marginTop: theme.spacing(1),
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+    },
+});
+
 
 
 class Login extends React.Component {
@@ -84,29 +87,33 @@ class Login extends React.Component {
                     localStorage.setItem('id',`${this.state.id}`);
                     localStorage.setItem('password',`${this.state.password}`);
                     localStorage.setItem('phone',`${this.state.phone}`);
-                    this.props.history.push('/');//확인 누르면 홈으로 이동
                     alert( `환영합니다 ${this.state.username} 님`);
+                    this.props.history.goBack();
                   }
                 })
     }
     render(){
+      const { classes } = this.props;
+      const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
      return (
      
-      <Container component="main">
+        <div className={fixedHeightPaper}  >
+      <Container component="main" maxWidth="xs">
         
-        <div className={useStyles.paper} >  
+        <div className={classes.paper} >  
+         
         <Grid>
-           ㅤㅤㅤㅤ 
-          
            </Grid>
-          <Avatar className={useStyles.avatar} >
+           <center >
+          <Avatar className={classes.avatar} >
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h6">
+          <Typography component="h1" variant="h6" align="center">
             로그인 화면
           </Typography>
-
-          <form className={useStyles.form} noValidate onSubmit={this.handleSubmit}>
+          </center>
+          
+          <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -134,45 +141,44 @@ class Login extends React.Component {
             fullWidth
             variant="contained"
             color="primary"
-            className={useStyles.submit}
+            className={classes.submit}
           >
             로그인
           </Button>
          
-          <p>
-          {this.state.username ? `Hello ${this.state.username}` : '로그인되는지테스트하기위한문장'}
-          </p>
 
           <Grid container>
           <Grid item xs>
-        <Link href="FindID" variant="body1">
-         아이디 찾기
+        <Link to="FindID" style={{textDecoration:"none", color:"black"}} variant="body1">
+         아이디
         </Link>
 /
-        <Link href="FindPW" variant="body1">
+        <Link to="FindPW" style={{textDecoration:"none", color:"black"}} variant="body1">
             비밀번호 찾기
         </Link>
           </Grid>
           <Grid item>
-          <Link href="/" variant="body1">
-            메인화면으로
+          <Link to="/" style={{textDecoration:"none", color:"black"}} variant="body1">
+            메인화면
         </Link>
         /
-         <Link href="Register" variant="body1">
+         <Link to="Register" style={{textDecoration:"none", color:"black"}} variant="body1">
           회원가입
         </Link>
     </Grid>
     </Grid>
 
           </form>
-        </div>
+          </div>
+       
         <Box mt={8}>
           <Copyright />
         </Box>
+       
       </Container>
-      
+      </div>
     );
     }
 }
 
-export default Login;
+export default withStyles(styles, { withTheme: true })(Login);

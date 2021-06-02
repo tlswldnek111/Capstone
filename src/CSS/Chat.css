@@ -1,0 +1,10 @@
+.table {
+    height: 100%;
+    width: 100%;
+}
+.tr {
+    height: 80%;
+}
+.div {
+    overflow-y: scroll;
+}

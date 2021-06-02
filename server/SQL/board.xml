@@ -11,6 +11,73 @@
                ,SYSDATE
                ,0
                ,#{LOCK}
+               ,#{V_IDX}
         )
     </insert>
+
+    <update id="update_board">
+        UPDATE BOARD
+           SET TITLE = #{TITLE},
+               CONTENT = #{CONTENT}
+         WHERE IDX = #{IDX}
+    </update>
+
+    <delete id="delete_board">
+        DELETE FROM BOARD
+         WHERE IDX = #{IDX}
+    </delete>
+
+    <update id="update_views">
+        UPDATE BOARD
+           SET VIEW_COUNT = VIEW_COUNT + 1
+         WHERE IDX = #{IDX}
+    </update>
+
+    <insert id="insert_reply">
+        INSERT INTO REPLY
+        VALUES (NVL((SELECT MAX(IDX) + 1
+                       FROM REPLY), 1)
+               ,#{B_IDX}
+               ,#{ID}
+               ,#{CONTENT}
+               ,SYSDATE
+        )
+    </insert>
+
+    <update id="update_reply">
+        UPDATE REPLY
+           SET CONTENT = #{CONTENT}
+         WHERE IDX = #{IDX}
+    </update>
+
+    <delete id="delete_reply">
+        DELETE FROM REPLY
+         WHERE IDX = #{IDX}
+    </delete>
+
+    <select id="select_board">
+        SELECT IDX
+              ,ID
+              ,TITLE
+              ,CONTENT
+              ,TO_CHAR(POST_DATE, 'YYYY-MM-DD HH24:MI') AS POST_DATE
+              ,VIEW_COUNT
+              ,POST_LOCK
+              ,V_IDX
+          FROM BOARD
+         WHERE 1 = 1
+        <if test="IDX != null">
+           AND IDX = #{IDX}
+        </if>
+    </select>
+
+    <select id="select_reply">
+        SELECT IDX
+              ,B_IDX
+              ,ID
+              ,CONTENT
+              ,TO_CHAR(REP_DATE, 'YYYY-MM-DD HH24:MI') AS REP_DATE
+          FROM REPLY
+         WHERE B_IDX = #{B_IDX}
+    </select>
 </mapper>

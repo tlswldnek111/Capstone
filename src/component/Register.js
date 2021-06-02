@@ -2,14 +2,13 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
+import { Link } from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
+import { withStyles } from "@material-ui/core/styles";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -23,9 +22,10 @@ function Copyright() {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
+
+const styles = theme => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -41,8 +41,7 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-}));
-
+});
 class Register extends React.Component{
 
   constructor(props) {
@@ -83,7 +82,7 @@ handleChange(e){
                   alert("잘못입력했습니다. 다시 입력해주세요.");
                 } else{
                   alert("회원가입 성공");
-                  window.location.href = "/";//확인 누르면 홈으로 이동
+                  this.props.history.push('/');//확인 누르면 홈으로 이동
                 }
               })
   }
@@ -108,22 +107,20 @@ handleChange(e){
   }
   doAction(){alert("회원가입 완료 되었습니다.");}
   render() {
-
+    const { classes } = this.props;
     return (
       
-      <Container component="main" >
-      <div className={useStyles.paper}>
-      <Grid>
-           ㅤㅤㅤㅤ 
-          
-           </Grid>
-        <Avatar className={useStyles.avatar}>
+      <Container component="main" maxWidth="xs">
+      <div className={classes.paper}>
+           <center>
+        <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h6">
           회원가입
         </Typography>
-        <form className={useStyles.form} noValidate  onSubmit={this.handleSubmit}  >
+        </center>
+        <form className={classes.form} noValidate  onSubmit={this.handleSubmit}  >
           <Grid container spacing={2}>
            
             <Grid item xs={18} sm={6}>
@@ -139,6 +136,7 @@ handleChange(e){
                 disabled={(this.state.check===null)}//중복체크확인되면 아이디 못바꿈
               />
             </Grid>
+           
             <Button 
            //아이디 중복체크 확인되면 disabled로 변환
             type="check"
@@ -146,9 +144,11 @@ handleChange(e){
             color="white"
             onClick={this.handleCheck}
             disabled={(this.state.check===null)}
+            className={classes.submit}
           >
             아이디 중복체크
           </Button>
+         
           <Grid>
            ㅤㅤㅤㅤ 
            </Grid>
@@ -198,22 +198,20 @@ handleChange(e){
             fullWidth
             variant="contained"
             color="primary"
-            className={useStyles.submit}
+            className={classes.submit}
             
           >
-            Sign Up
+            회원가입
           </Button>
           </Grid>
 
-        
-          <p>
-          {this.state.success ? `Hello ${this.state.success}` : `${this.state.success}`}
-          </p>
          
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="Login" variant="body2">
+              <Link to="Login" style={{textDecoration:"none", color:"black"}} variant="body2">
+                <Button >
                로그인하러 가기
+               </Button>
               </Link>
             </Grid>
           </Grid>
@@ -228,4 +226,4 @@ handleChange(e){
   }
 }
 
-export default Register;
+export default  withStyles(styles, { withTheme: true })(Register);

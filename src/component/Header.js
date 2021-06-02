@@ -105,6 +105,7 @@ export default function Header(props) {
             variant="body2"
             to={section.url}
             className={classes.toolbarLink}
+            style={{textDecoration:"none",fontSize:"16px",color:"white"}}
           >
             {section.title}
           </Link>
