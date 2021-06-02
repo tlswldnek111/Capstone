@@ -72,7 +72,7 @@ export default function BoardTable(props) {
 
   useEffect(() => {
     if (count === 0) {
-      fetch('http://localhost:3001/board/select', {
+      fetch('http://121.145.133.119:3001/board/select', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
