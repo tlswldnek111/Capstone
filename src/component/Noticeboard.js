@@ -52,9 +52,9 @@ function Copyright() {
       height: 'auto',
     },
     input: {
-      marginLeft: 10,
-      padding: 5,
+      marginLeft: 0,
       margin: theme.spacing(3),
+      padding: theme.spacing(0, 0, 0, 3),
     },
     iconButton: {
       padding: 5,
@@ -163,7 +163,7 @@ function Copyright() {
                   })}
                 </Select>
               </FormControl>
-
+                <div ></div>
               <InputBase 
               className={classes.input}
               placeholder='검색'
@@ -183,7 +183,8 @@ function Copyright() {
                 >
                 글 작성
                 </Button>
-              </div>
+              </div >
+              
               <Paper className={fixedHeightPaper}>
                 <BoardTable programs={program} v_idx={v_idx[program]} searchs={sch}/>
               </Paper>

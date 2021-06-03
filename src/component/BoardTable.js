@@ -9,7 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import { Link } from "react-router-dom";
-
+import clsx from 'clsx';
 const columns = [
   { number: 'titles', label: '제목', minWnumberth: 150 },
   {
@@ -61,6 +61,16 @@ const useStyles =makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
     minWnumberth: 120,
+  }, 
+  fixedHeight: {//페이지 길이.. 드디어..
+    height: 'auto',
+  },
+  paper: {
+    padding: theme.spacing(2),
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
+    height:"100%",
   },
 }));
 
@@ -69,7 +79,7 @@ export default function BoardTable(props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setRows] = React.useState([]);
-
+  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   useEffect(() => {
     if (count === 0) {
       fetch('http://localhost:3001/board/select', {
