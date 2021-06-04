@@ -80,35 +80,7 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: '100vh',
   },
-  picture:{
-    height: '50vh',
-    position: 'relative',
-    backgroundColor: theme.palette.grey[800],
-    color: theme.palette.common.white,
-    marginBottom: theme.spacing(0),
-    backgroundImage: 'url(https://source.unsplash.com/random)',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-  },
 }));
-
-const appendScript = (scriptToAppend) => {
-  const script = document.createElement("script");
-  script.src = scriptToAppend;
-  script.async = true;
-  document.body.appendChild(script);
-}
-
-const removeScript = (scriptToremove) => {
-  let allsuspects=document.getElementsByTagName("script");
-  for (let i=allsuspects.length; i>=0; i--){
-if (allsuspects[i] && allsuspects[i].getAttribute("src")!==null 
-&& allsuspects[i].getAttribute("src").indexOf(`${scriptToremove}`)                !== -1 ){
-         allsuspects[i].parentNode.removeChild(allsuspects[i])
-      }    
-  }
-}
 
 export default function Dashboard(props) {
   const classes = useStyles();
