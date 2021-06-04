@@ -5,7 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Header2 from './Header2';
 import { withStyles } from "@material-ui/core/styles";
 import clsx from 'clsx';
-import vod_css from '../CSS/Vod.css';
+
 const styles = theme => ({
     root: {
       backgroundColor: "red"
@@ -36,20 +36,20 @@ class Vod extends React.Component {
     show_vod(i) {
         var url = `http://localhost:3001/vod/thumbnail?idx=${this.state.VOD[i].IDX}`
         return(
-        <div>
-            <Card
-            id={"card" + i}
-            style={{width: "185px", height: "280px", marginTop: 25, backgroundColor: "#E8E8E8"}}
-            variant="outlined"
-            onClick={()=>{
-                this.Card_Click(i);
-            }}>
-                <CardContent>
-                    <img src={url} style={{width: "100%", height: "100%"}}></img>
-                    <p>{this.state.VOD[i].TITLE}</p>
-                </CardContent>
-            </Card>
-        </div>);
+            <div style={{float: "left"}}>
+                <Card
+                id={"card" + i}
+                style={{width: "185px", height: "280px", marginTop: 25, backgroundColor: "#E8E8E8"}}
+                variant="outlined"
+                onClick={()=>{
+                    this.Card_Click(i);
+                }}>
+                    <CardContent>
+                        <img src={url} style={{width: "100%", height: "100%"}}></img>
+                        <p>{this.state.VOD[i].TITLE}</p>
+                    </CardContent>
+                </Card>
+            </div>);
     }
 
     Card_Click(i) {
@@ -121,7 +121,7 @@ class Vod extends React.Component {
                         <button>업로드</button>
                     </Link>
                 </div>
-                <div className="vod_css">
+                <div>
                     {this.state.INFO.map((unit) => {
                         return unit;
                     })}
