@@ -81,36 +81,36 @@ export default function BoardTable(props) {
   const [rows, setRows] = React.useState([]);
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   useEffect(() => {
-    if (count === 0) {
-      if(props.flag === 'M') {
-        fetch('http://localhost:3001/board/select', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            MONTH: true
-          })
+    if(props.flag === 'M') {
+      rows_origin.length = 0;
+      fetch('http://localhost:3001/board/select', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          MONTH: true
         })
-        .then(res=>res.json())
-        .then(res=>{
-          count++;
-          for (let i = 0; i < res.length; i++) {
-            rows_origin.push(createData(
-              res[i].IDX,
-              res[i].TITLE,
-              res[i].ID,
-              res[i].VIEW_COUNT,
-              res[i].POST_DATE,
-              res[i].V_IDX
-            ));
-          }
-        })
-        .then(()=>{
-          setRows(rows_origin);
-        })
-      } else {
-        fetch('http://localhost:3001/board/select', {
+      })
+      .then(res=>res.json())
+      .then(res=>{
+        count++;
+        for (let i = 0; i < res.length; i++) {
+          rows_origin.push(createData(
+            res[i].IDX,
+            res[i].TITLE,
+            res[i].ID,
+            res[i].VIEW_COUNT,
+            res[i].POST_DATE,
+            res[i].V_IDX
+          ));
+        }
+      })
+      .then(()=>{
+        setRows(rows_origin);
+      })
+    } else if (count === 0) {
+      fetch('http://localhost:3001/board/select', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -145,7 +145,6 @@ export default function BoardTable(props) {
             setRows(rows_origin);
           }
         })
-      }
     } else {
         const temp = [];
         if (props.programs === '전체' && props.searchs === '') {
