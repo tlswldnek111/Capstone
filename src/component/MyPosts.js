@@ -51,7 +51,7 @@ function Copyright() {
     },
     input: {
       marginLeft: 10,
-      padding: 5,
+      padding: theme.spacing(0, 0, 0, 3),
       margin: theme.spacing(3),
     },
     iconButton: {
@@ -156,7 +156,7 @@ export default function MyPosts(){
               })}
             </Select>
           </FormControl>
-
+          <div></div>
           <InputBase 
             className={classes.input}
             placeholder='검색'

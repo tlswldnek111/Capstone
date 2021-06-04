@@ -69,6 +69,13 @@
         <if test="IDX != null">
            AND IDX = #{IDX}
         </if>
+        <if test="MONTH != null">
+            <![CDATA[
+            AND TRUNC(SYSDATE, 'MM') <= POST_DATE
+            ]]>
+            ORDER BY VIEW_COUNT DESC
+        </if>
+    
     </select>
 
     <select id="select_reply">
