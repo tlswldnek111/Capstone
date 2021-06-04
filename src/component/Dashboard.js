@@ -8,6 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import Header2 from './Header2';
 import Carousel from './Carousel';
+import BoardTable from './BoardTable';
 
 function Copyright() {
   return (
@@ -112,40 +113,21 @@ export default function Dashboard(props) {
         <div className={classes.root}>
           <Container  className={classes.container2}>
             <Typography className={classes.title} component="h1" variant="h6" color="textSecondary">
-              Logistics에서 추천하는 프로그램
+              이번달 인기 프로그램
             </Typography>
             <Carousel history={props.history}/>
           </Container>
         </div>
+
+        <div className={classes.root}>
+          <Container  className={classes.container2}>
+            <Typography className={classes.title} component="h1" variant="h6" color="textSecondary">
+              이번달 인기 게시글
+            </Typography>
+            <BoardTable flag="M"></BoardTable>
+          </Container>
+        </div>
       </Container>
     </div>
-
   );
 }
-/*
-
- <div className={classes.appBarSpacer} />
-        <Container  className={classes.container}>
-          <Grid container spacing={5}> 
-          <Paper className={fixedHeightPaper}>
-
-         
-            <Grid className={classes.picture}  />
-            </Paper>   
-           
-            <Grid item xs={12} md={4} lg={9}>
-             <button>안녕</button>
-            </Grid>
-
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-            
-              </Paper>
-            </Grid>
-          </Grid>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
-        </Container>
-    </div>
-*/

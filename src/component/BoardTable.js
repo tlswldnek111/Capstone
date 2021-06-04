@@ -72,41 +72,70 @@ export default function BoardTable(props) {
 
   useEffect(() => {
     if (count === 0) {
-      fetch('http://localhost:3001/board/select', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      if(props.flag === 'M') {
+        fetch('http://localhost:3001/board/select', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            MONTH: true
+          })
         })
-      })
-      .then(res=>res.json())
-      .then(res=>{
-        count++;
-        for (let i = 0; i < res.length; i++) {
-          rows_origin.push(createData(
-            res[i].IDX,
-            res[i].TITLE,
-            res[i].ID,
-            res[i].VIEW_COUNT,
-            res[i].POST_DATE,
-            res[i].V_IDX
-          ));
-        }
-      })
-      .then(()=>{
-        if(props.sel==='my_posts') {
-          const temp = [];
-          for (let i = 0; i < rows_origin.length; i++) {
-            if (rows_origin[i].editor.includes(localStorage.getItem('id'))) {
-              temp.push(rows_origin[i]);
-            }
+        .then(res=>res.json())
+        .then(res=>{
+          count++;
+          for (let i = 0; i < res.length; i++) {
+            rows_origin.push(createData(
+              res[i].IDX,
+              res[i].TITLE,
+              res[i].ID,
+              res[i].VIEW_COUNT,
+              res[i].POST_DATE,
+              res[i].V_IDX
+            ));
           }
-          setRows(temp);
-        } else {
+        })
+        .then(()=>{
           setRows(rows_origin);
-        }
-      })
+        })
+      } else {
+        fetch('http://localhost:3001/board/select', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+          })
+        })
+        .then(res=>res.json())
+        .then(res=>{
+          count++;
+          for (let i = 0; i < res.length; i++) {
+            rows_origin.push(createData(
+              res[i].IDX,
+              res[i].TITLE,
+              res[i].ID,
+              res[i].VIEW_COUNT,
+              res[i].POST_DATE,
+              res[i].V_IDX
+            ));
+          }
+        })
+        .then(()=>{
+          const temp = [];
+          if(props.sel==='my_posts') {
+            for (let i = 0; i < rows_origin.length; i++) {
+              if (rows_origin[i].editor.includes(localStorage.getItem('id'))) {
+                temp.push(rows_origin[i]);
+              }
+            }
+            setRows(temp);
+          } else {
+            setRows(rows_origin);
+          }
+        })
+      }
     } else {
         const temp = [];
         if (props.programs === '전체' && props.searchs === '') {
@@ -126,7 +155,7 @@ export default function BoardTable(props) {
           setRows(temp);
         }
     }
-  }, [props.programs, props.searchs])
+  }, [props.programs, props.searchs, props.flag])
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

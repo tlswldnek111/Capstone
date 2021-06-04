@@ -30,7 +30,6 @@ function Copyright() {
     );
   }
 
-
   const useStyles = makeStyles((theme) => ({
     root: {
       display: 'flex',

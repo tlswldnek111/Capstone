@@ -221,6 +221,12 @@ router.post('/select', function(req, res, next) {
     var param = {
     };
 
+    if (req.body.MONTH !== undefined) {
+      param = {
+        MONTH: req.body.MONTH,
+      };
+    }
+
     let format = {language: 'sql', indent: ' '};
     let query = mybatisMapper.getStatement('vod', 'select_vod', param, format);
     console.log(query);
@@ -230,6 +236,38 @@ router.post('/select', function(req, res, next) {
         console.error(err.message);
       } else {
         res.json(common.Update_data(result));
+      }
+      connection.close();
+    });
+  })
+});
+
+router.post('/update_views', function(req, res, next) {
+  oracledb.getConnection({
+    user : dbConfig.user,
+    password : dbConfig.password,
+    connectString : dbConfig.connectString
+  },
+  function(err, connection) {
+    if (err) {
+      console.error(err.message);
+      return;
+    }
+    
+    var param = {
+      IDX: req.body.IDX
+    };
+
+    let format = {language: 'sql', indent: ' '};
+    let query = mybatisMapper.getStatement('vod', 'update_views', param, format);
+    console.log(query);
+
+    connection.execute(query, [], function(err, result) {
+      if (err) {
+        console.error(err.message);
+        res.json({success: 0});
+      } else {
+        res.json({success: 1});
       }
       connection.close();
     });

@@ -288,10 +288,16 @@ router.post('/select', function(req, res, next) {
 
     var param = {
     };
-    
-    if (req.body.IDX != null) {
+
+    if (req.body.IDX !== undefined) {
       param = {
         IDX: req.body.IDX,
+      };
+    }
+
+    if (req.body.MONTH !== undefined) {
+      param = {
+        MONTH: req.body.MONTH,
       };
     }
 
