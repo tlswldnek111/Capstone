@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+import Hls from 'hls.js'
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import Header2 from './Header2';
 import Carousel from './Carousel';
 import BoardTable from './BoardTable';
+import no from '../CSS/no.png';
 
 function Copyright() {
   return (
@@ -60,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     },
   appBarSpacer: theme.mixins.toolbar,//앱바 밑으로
   content: {
-    height: '50vh',
+    height: '465px',
   },
   container: {
     paddingTop: theme.spacing(12),
@@ -79,17 +80,6 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: '100vh',
   },
-  picture:{
-    height: '50vh',
-    position: 'relative',
-    backgroundColor: theme.palette.grey[800],
-    color: theme.palette.common.white,
-    marginBottom: theme.spacing(0),
-    backgroundImage: 'url(https://source.unsplash.com/random)',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-  },
 }));
 
 export default function Dashboard(props) {
@@ -97,15 +87,30 @@ export default function Dashboard(props) {
   
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const fixedHeightPaper2 = clsx(classes.paper, classes.content);
+  const [isLive, setIsLive] = useState(false);
+
+  useEffect(()=>{
+    const video = document.getElementById('video')
+    var hls = new Hls();
+    hls.loadSource('http://121.145.133.119:8000/live/live/index.m3u8');
+    hls.attachMedia(video);
+    video.addEventListener('loadeddata', ()=>{
+      setIsLive(true);
+    })
+  }, [])
+
   return (
     <div className={fixedHeightPaper} >
       <Container maxWidth="lg" style={{width:"900px" }}>
         <Header2/>
         <div className={classes.root} >
-          <Container  className={classes.container}>
+          <Container className={classes.container}>
+            <Typography className={classes.title} component="h1" variant="h6" color="textSecondary">
+              LIVE
+            </Typography>
             <Paper className={fixedHeightPaper2} >
-              <Grid className={classes.picture} >
-              </Grid>
+              <video hidden={!isLive} width="768px" height="auto" id="video" controls></video>
+              <img hidden={isLive} src={no}></img>
             </Paper>
           </Container>
         </div>
