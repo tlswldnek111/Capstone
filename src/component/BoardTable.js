@@ -9,7 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import { Link } from "react-router-dom";
-
+import clsx from 'clsx';
 const columns = [
   { number: 'titles', label: '제목', minWnumberth: 150 },
   {
@@ -61,6 +61,16 @@ const useStyles =makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
     minWnumberth: 120,
+  }, 
+  fixedHeight: {//페이지 길이.. 드디어..
+    height: 'auto',
+  },
+  paper: {
+    padding: theme.spacing(2),
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
+    height:"100%",
   },
 }));
 
@@ -69,15 +79,17 @@ export default function BoardTable(props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setRows] = React.useState([]);
-
+  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   useEffect(() => {
-    if (count === 0) {
+    if(props.flag === 'M') {
+      rows_origin.length = 0;
       fetch('http://localhost:3001/board/select', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          MONTH: true
         })
       })
       .then(res=>res.json())
@@ -95,18 +107,44 @@ export default function BoardTable(props) {
         }
       })
       .then(()=>{
-        if(props.sel==='my_posts') {
-          const temp = [];
-          for (let i = 0; i < rows_origin.length; i++) {
-            if (rows_origin[i].editor.includes(localStorage.getItem('id'))) {
-              temp.push(rows_origin[i]);
-            }
-          }
-          setRows(temp);
-        } else {
-          setRows(rows_origin);
-        }
+        setRows(rows_origin);
       })
+    } else if (count === 0) {
+      fetch('http://localhost:3001/board/select', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+          })
+        })
+        .then(res=>res.json())
+        .then(res=>{
+          count++;
+          for (let i = 0; i < res.length; i++) {
+            rows_origin.push(createData(
+              res[i].IDX,
+              res[i].TITLE,
+              res[i].ID,
+              res[i].VIEW_COUNT,
+              res[i].POST_DATE,
+              res[i].V_IDX
+            ));
+          }
+        })
+        .then(()=>{
+          const temp = [];
+          if(props.sel==='my_posts') {
+            for (let i = 0; i < rows_origin.length; i++) {
+              if (rows_origin[i].editor.includes(localStorage.getItem('id'))) {
+                temp.push(rows_origin[i]);
+              }
+            }
+            setRows(temp);
+          } else {
+            setRows(rows_origin);
+          }
+        })
     } else {
         const temp = [];
         if (props.programs === '전체' && props.searchs === '') {
@@ -126,7 +164,7 @@ export default function BoardTable(props) {
           setRows(temp);
         }
     }
-  }, [props.programs, props.searchs])
+  }, [props.programs, props.searchs, props.flag])
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

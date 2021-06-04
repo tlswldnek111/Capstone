@@ -72,8 +72,24 @@ class Carousel extends Component {
   }
 
   Card_Click(i) {
-    this.props.history.push('vod_detail?idx=' +
-    this.state.VOD[i].IDX);
+    fetch('http://localhost:3001/vod/update_views', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        IDX: this.state.VOD[i].IDX
+      })
+    })
+    .then(res=>res.json())
+    .then(res=>{
+        if (res.success === 1) {
+            this.props.history.push('vod_detail?idx=' +
+            this.state.VOD[i].IDX);
+        } else {
+            alert('문제가 발생했습니다.');
+        }
+    })
   }
 
   componentDidMount() {
@@ -84,6 +100,7 @@ class Carousel extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        MONTH: true
       })
     })
     .then(res=>res.json())
