@@ -64,7 +64,7 @@ handleChange(e){
 }
   handleSubmit(event) {
     event.preventDefault();
-    fetch('http://localhost:3001/user/register', {
+    fetch('http://121.145.133.119:3001/user/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -88,7 +88,7 @@ handleChange(e){
   }
   handleCheck(event) {
     event.preventDefault();
-    fetch('http://localhost:3001/user/check_id', {
+    fetch('http://121.145.133.119:3001/user/check_id', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

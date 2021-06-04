@@ -33,7 +33,7 @@ class Vod extends React.Component {
     }
 
     show_vod(i) {
-        var url = `http://localhost:3001/vod/thumbnail?idx=${this.state.VOD[i].IDX}`
+        var url = `http://121.145.133.119:3001/vod/thumbnail?idx=${this.state.VOD[i].IDX}`
         return(
         <div style={{float:"left"}}>
             <Card
@@ -74,7 +74,7 @@ class Vod extends React.Component {
 
     componentDidMount() {
         const VOD = [];
-        fetch('http://localhost:3001/vod/select', {
+        fetch('http://121.145.133.119:3001/vod/select', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -40,6 +40,7 @@ function createData(number, titles, editor, count, date, v_idx) {
 }
 
 const rows_origin = [];
+var my = [];
 var count = 0;
 
 const useStyles =makeStyles((theme) => ({
@@ -83,7 +84,7 @@ export default function BoardTable(props) {
   useEffect(() => {
     if(props.flag === 'M') {
       rows_origin.length = 0;
-      fetch('http://localhost:3001/board/select', {
+      fetch('http://121.145.133.119:3001/board/select', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -136,10 +137,11 @@ export default function BoardTable(props) {
           const temp = [];
           if(props.sel==='my_posts') {
             for (let i = 0; i < rows_origin.length; i++) {
-              if (rows_origin[i].editor.includes(localStorage.getItem('id'))) {
+              if (rows_origin[i].editor === (localStorage.getItem('id'))) {
                 temp.push(rows_origin[i]);
               }
             }
+            my = temp;
             setRows(temp);
           } else {
             setRows(rows_origin);
@@ -147,21 +149,40 @@ export default function BoardTable(props) {
         })
     } else {
         const temp = [];
-        if (props.programs === '전체' && props.searchs === '') {
-          setRows(rows_origin);
-        } else if (props.programs !== '전체'|| props.searchs !== '') {
-          for (let i = 0; i < rows_origin.length; i++) {
-            if (props.programs === '전체' &&
-            (rows_origin[i].titles.includes(props.searchs) ||
-            rows_origin[i].editor.includes(props.searchs)) ) {
-              temp.push(rows_origin[i]);
-            } else if (rows_origin[i].v_idx === props.v_idx &&
+        if (props.sel==='my_posts') {
+          if (props.programs === '전체' && props.searchs === '') {
+            setRows(my);
+          } else if (props.programs !== '전체'|| props.searchs !== '') {
+            for (let i = 0; i < my.length; i++) {
+              if (props.programs === '전체' &&
+              (my[i].titles.includes(props.searchs) ||
+              my[i].editor.includes(props.searchs)) ) {
+                temp.push(my[i]);
+              } else if (my[i].v_idx === props.v_idx &&
+                (my[i].titles.includes(props.searchs) ||
+                my[i].editor.includes(props.searchs)) ) {
+                temp.push(my[i]);
+              }
+            }
+            setRows(temp);
+          }
+        } else {
+          if (props.programs === '전체' && props.searchs === '') {
+            setRows(rows_origin);
+          } else if (props.programs !== '전체'|| props.searchs !== '') {
+            for (let i = 0; i < rows_origin.length; i++) {
+              if (props.programs === '전체' &&
               (rows_origin[i].titles.includes(props.searchs) ||
               rows_origin[i].editor.includes(props.searchs)) ) {
-              temp.push(rows_origin[i]);
+                temp.push(rows_origin[i]);
+              } else if (rows_origin[i].v_idx === props.v_idx &&
+                (rows_origin[i].titles.includes(props.searchs) ||
+                rows_origin[i].editor.includes(props.searchs)) ) {
+                temp.push(rows_origin[i]);
+              }
             }
+            setRows(temp);
           }
-          setRows(temp);
         }
     }
   }, [props.programs, props.searchs, props.flag])

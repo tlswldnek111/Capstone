@@ -8,12 +8,11 @@ function Login(){
   
   if(localStorage.getItem('username')==null) //로그인 해야하는상황일때
    {return(
-   <Link to='/Login' style={{textDecoration:"none", color:"black"}}>
-    <ListItem button component="a">
-    <ListItemText primary="로그인" />
-    
-  </ListItem>
-  </Link>
+      <Link to='/Login' style={{textDecoration:"none", color:"black"}}>
+        <ListItem button component="a">
+          <ListItemText primary="로그인" />
+        </ListItem>
+      </Link>
         );
 }
   else{//localStorage.clear() 
@@ -36,25 +35,22 @@ function Mypage(){
     <Link to='/mypage' style={{textDecoration:"none", color:"black"}}>
      <ListItem button component="a">
      <ListItemText primary="회원정보수정" />
-   </ListItem>
+     </ListItem>
      </Link>
    );
  }
  else{
    return(<p></p>);//로그아웃상태에선 마이페이지를 볼수없음.
  }
-
 }
 
 function Manage(){
   if(localStorage.getItem('username')!=null) //로그인 되있는 상태일때
-  {//localStorage.clear() 
+  {
    return(
-    <Link to='/my_posts' style={{textDecoration:"none", color:"black"}}>
-      <ListItemText primary="작성한 글 관리" />
-      </Link>
-
-     
+      <ListItem button component="a" href="/my_posts">
+        <ListItemText primary="작성한 글 관리" />
+      </ListItem>
    );
  }
  else{
@@ -85,18 +81,11 @@ export const mainListItems = (
 );
 
 export const secondaryListItems = (
-  
   <div>
-    
-      <Login/>
-
+    <Login/>
     <ListItemText >
       <Mypage/>
     </ListItemText>
-
-    <ListItem button>
-      <Manage/>
-    </ListItem>
- 
+    <Manage/>
   </div>
 );

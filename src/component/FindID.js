@@ -60,7 +60,7 @@ class FindID extends React.Component{
 
 handleSubmit(event) {
     event.preventDefault();
-    fetch('http://localhost:3001/user/find_id', {
+    fetch('http://121.145.133.119:3001/user/find_id', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

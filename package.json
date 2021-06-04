@@ -21,6 +21,7 @@
     "ffmpeg": "0.0.4",
     "fluent-ffmpeg": "^2.1.2",
     "helmet": "^4.6.0",
+    "hls.js": "^1.0.5",
     "http-errors": "^1.8.0",
     "http-proxy-middleware": "^0.19.2",
     "jade": "^1.11.0",
@@ -56,7 +57,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:3001",
+  "proxy": "http://121.145.133.119:3001",
   "eslintConfig": {
     "extends": [
       "react-app",
