@@ -91,7 +91,7 @@ function Copyright() {
     const [v_idx, setV_idx]=React.useState({});
 
     useEffect(()=>{
-      fetch('http://121.145.133.119:3001/vod/select', {
+      fetch('http://localhost:3001/vod/select', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

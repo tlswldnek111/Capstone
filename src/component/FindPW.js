@@ -61,7 +61,7 @@ class FindPW extends React.Component{
 
 handleSubmit(event) {
     event.preventDefault();
-    fetch('http://121.145.133.119:3001/user/find_pw', {
+    fetch('http://localhost:3001/user/find_pw', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

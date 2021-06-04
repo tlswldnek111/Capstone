@@ -64,7 +64,7 @@ class Mypage extends React.Component{
 handleSubmit(event) {
     event.preventDefault();
     if(this.state.text==='로그인'){
-    fetch('http://121.145.133.119:3001/user/login', {
+    fetch('http://localhost:3001/user/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -86,7 +86,7 @@ handleSubmit(event) {
               })
   }
   else if (this.state.text==='수정') {
-    fetch('http://121.145.133.119:3001/user/update', {
+    fetch('http://localhost:3001/user/update', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

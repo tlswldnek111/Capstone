@@ -38,7 +38,7 @@ class Vod_detail extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://121.145.133.119:3001/vod/select_one', {
+        fetch('http://localhost:3001/vod/select_one', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ class Vod_detail extends React.Component {
             const TF_CONTENT = document.getElementById('CONTENT')
             TF_CONTENT.value = this.state.CONTENT;
             TF_CONTENT.setAttribute('style', 'color: black;');
-            fetch('http://121.145.133.119:3001/vod/select_episode', {
+            fetch('http://localhost:3001/vod/select_episode', {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ class Vod_detail extends React.Component {
             .then(res=>res.json())
             .then(res=>{
                 const temp = [];
-                var url = 'http://121.145.133.119:3001/vod/video';
+                var url = 'http://localhost:3001/vod/video';
                 const event=(ep)=>{
                     this.setState({
                         URL: url + '?idx=' + this.state.IDX + '&ep=' + ep
@@ -119,7 +119,7 @@ class Vod_detail extends React.Component {
             TF_CONTENT.disabled = true;
             TF_CONTENT.setAttribute('style', 'color: black;');
             e.target.textContent = '수정';
-            fetch('http://121.145.133.119:3001/vod/update', {
+            fetch('http://localhost:3001/vod/update', {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json',
@@ -142,7 +142,7 @@ class Vod_detail extends React.Component {
 
     handleDelete(e) {
         if (window.confirm('삭제하시겠습니까?')) {
-            fetch('http://121.145.133.119:3001/vod/delete', {
+            fetch('http://localhost:3001/vod/delete', {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json',
@@ -165,7 +165,7 @@ class Vod_detail extends React.Component {
     }
 
     render() {
-        var url = `http://121.145.133.119:3001/vod/thumbnail?idx=${this.state.IDX}`
+        var url = `http://localhost:3001/vod/thumbnail?idx=${this.state.IDX}`
         const { classes } = this.props;
         const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
         return (

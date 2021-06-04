@@ -43,7 +43,7 @@ class Write extends React.Component {
    
     handleSubmit(e) {
         e.preventDefault();
-        fetch('http://121.145.133.119:3001/board/write', {
+        fetch('http://localhost:3001/board/write', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ class Write extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://121.145.133.119:3001/vod/select', {
+        fetch('http://localhost:3001/vod/select', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

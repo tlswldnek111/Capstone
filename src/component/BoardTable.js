@@ -84,7 +84,7 @@ export default function BoardTable(props) {
   useEffect(() => {
     if(props.flag === 'M') {
       rows_origin.length = 0;
-      fetch('http://121.145.133.119:3001/board/select', {
+      fetch('http://localhost:3001/board/select', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
