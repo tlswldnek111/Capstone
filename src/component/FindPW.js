@@ -61,104 +61,123 @@ class FindPW extends React.Component{
 
 handleSubmit(event) {
     event.preventDefault();
-    fetch('http://localhost:3001/user/find_pw', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        ID: event.target.ID.value,
-        PHONE: event.target.PHONE.value 
+    if (this.state.success === 0) {
+      fetch('http://localhost:3001/user/find_pw', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ID: event.target.ID.value,
+          PHONE: event.target.PHONE.value 
+        })
       })
-    })
-    .then(res=>res.json()) 
-    .then(res=>{  if(res.PASSWORD.length<=0){ //없을때..
+      .then(res=>res.json()) 
+      .then(res=>{  if(res.success === 0){ //없을때..
                       alert("일치하지 않는 정보입니다."); 
-                 }else//값이 있을때....
-                {
-                  alert("현재 비밀번호 : "+res.PASSWORD); //아이디 검색에 성공한경우
-                  this.props.history.push('/');//확인 누르면 홈으로 이동
-                }
-
-})
+                    }else {
+                      this.setState({success: 1});
+                      event.target.ID.disabled = true;
+                      event.target.PHONE.disabled = true;
+                      event.target.FIND.textContent = "비밀번호 변경";
+                    }
+      })
+    } else {
+      fetch('http://localhost:3001/user/update_pw', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ID: event.target.ID.value,
+          PASSWORD: event.target.PASSWORD.value 
+        })
+      })
+      .then(res=>res.json())
+      .then(res=>{
+        if (res.success === 1) {
+          alert('비밀번호가 변경되었습니다.');
+          this.props.history.push('login');
+        } else {
+          alert('비밀번호 변경에 실패했습니다.');
+        }
+      })
+    }
 }
   render() {
-
     return (
-      
       <Container component="main" maxWidth="xs">
-      <div className={useStyles.paper}>
-      <Grid>
-           ㅤㅤㅤㅤ 
-          
-           </Grid>
-           <center>
-        <Avatar className={useStyles.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h6">
-          비밀번호 찾기
-        </Typography>
-        </center>
-        <form className={useStyles.form} noValidate  onSubmit={this.handleSubmit}  >
-          <Grid container spacing={2}>
-            <Grid item xs={12} >
-            <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="ID"
-            label="ID"
-            name="ID"
-            autoComplete="ID"
-            autoFocus
-          />
-            </Grid>
-           <Grid item xs={12}>
-              <TextField
+        <div className={useStyles.paper}>
+          <center>
+            <Avatar className={useStyles.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h6">
+              비밀번호 찾기
+            </Typography>
+          </center>
+          <form className={useStyles.form} noValidate  onSubmit={this.handleSubmit}  >
+            <Grid container spacing={2}>
+              <Grid item xs={12} >
+                <TextField
                 variant="outlined"
+                margin="normal"
                 required
                 fullWidth
-                id="PHONE"
-                label="PHONE"
-                name="PHONE"
-                autoComplete="PHONE"
-               
-              />
+                id="ID"
+                label="ID"
+                name="ID"
+                autoComplete="ID"
+                autoFocus
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="PHONE"
+                  label="PHONE"
+                  name="PHONE"
+                  autoComplete="PHONE"
+                />
+              </Grid>
+
+              <Grid hidden={(this.state.success === 0)} item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="PASSWORD"
+                  label="PASSWORD"
+                  name="PASSWORD"
+                  autoComplete="PASSWORD"
+                />
+              </Grid>
             </Grid>
 
+            <br></br>
 
-          <Grid>
-           </Grid>
-           
-           <Grid>
-           ㅤㅤㅤㅤ 
-          
-           </Grid>
-          </Grid>
-
-          <Button
+            <Button
+            id="FIND"
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
-            className={useStyles.submit}
-            
-          >
-            비밀번호 검색
-          </Button>
-        
-          <Grid container justify="flex-end">
-            <Grid item>
-            <Link to="/Login" style={{textDecoration:"none", color:"black"}} >
-                <Button>
-               로그인하러 가기 
-               </Button>
-              </Link>
+            className={useStyles.submit}>
+              검색
+            </Button>
+          
+            <Grid container justify="flex-end">
+              <Grid item>
+                <Link to="/Login" style={{textDecoration:"none", color:"black"}} >
+                  <Button>
+                    로그인하러 가기 
+                  </Button>
+                </Link>
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
+          </form>
 
       </div>
       <Box mt={5}>

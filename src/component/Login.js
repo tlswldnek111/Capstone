@@ -74,21 +74,19 @@ class Login extends React.Component {
         })
       })
       .then(res=>res.json())
-      .then(res=>{if (res.length === 0) {
+      .then(res=>{if (res.success === 0) {
                     this.setState({username: null})
                     alert("아이디 혹은 비밀번호를 잘못입력하셨습니다.");
                   } else{
-                    this.setState({username: res[0].NAME})
-                    this.setState({id: res[0].ID})
-                    this.setState({password: res[0].PASSWROD})
-                    this.setState({phone: res[0].PHONE})
+                    this.setState({username: res.NAME})
+                    this.setState({id: res.ID})
+                    this.setState({phone: res.PHONE})
                    
                     localStorage.setItem('username',`${this.state.username}`);
                     localStorage.setItem('id',`${this.state.id}`);
-                    localStorage.setItem('password',`${this.state.password}`);
                     localStorage.setItem('phone',`${this.state.phone}`);
                     alert( `환영합니다 ${this.state.username} 님`);
-                    this.props.history.goBack();
+                    this.props.history.push('/');
                   }
                 })
     }

@@ -6,7 +6,6 @@
         SELECT *
         FROM USERS
         WHERE ID = #{ID}
-        AND PASSWORD = #{PASSWORD}
     </select>
 
     <insert id="insertUserInfo">
@@ -28,11 +27,17 @@
     </select>
 
     <select id="findPW">
-        SELECT PASSWORD
+        SELECT ID
           FROM USERS
          WHERE ID = #{ID}
            AND PHONE = #{PHONE}
     </select>
+
+    <update id="updatePW">
+        UPDATE USERS
+           SET PASSWORD = #{PASSWORD}
+         WHERE ID = #{ID}
+    </update>
 
     <update id="updateUser">
         UPDATE USERS

@@ -5,6 +5,7 @@ var dbConfig = require('../config/dbConfig');
 mybatisMapper.createMapper([ './server/SQL/user.xml' ]);
 oracledb.autoCommit = true;
 var common = require('../common');
+const bcrypt = require('bcrypt');
 
 var router = express.Router();
 
@@ -27,7 +28,6 @@ router.post('/login', function(req, res, next) {
     
     var param = {
       ID: req.body.ID,
-      PASSWORD: req.body.PASSWORD
     };
 
     let format = {language: 'sql', indent: ' '};
@@ -38,7 +38,15 @@ router.post('/login', function(req, res, next) {
       if (err) {
         console.error(err.message);
       } else {
-        res.json(common.Update_data(result));
+        const Result = common.Update_data(result)[0]
+        if (Result === undefined) {
+          res.json({success: 0});
+        } else if(bcrypt.compareSync(req.body.PASSWORD, Result.PASSWORD)) {
+          Result.success = 1;
+          res.json(Result);
+        } else {
+          res.json({success: 0});
+        }
       }
       connection.close();
     });
@@ -56,11 +64,13 @@ router.post('/register', function(req, res, next) {
       console.error(err.message);
       return;
     }
+
+    const PASSWORD = bcrypt.hashSync(req.body.PASSWORD, 10);
     
     var param = {
       ID: req.body.ID,
       NAME: req.body.NAME,
-      PASSWORD: req.body.PASSWORD,
+      PASSWORD: PASSWORD,
       PHONE: req.body.PHONE
     };
 
@@ -173,7 +183,46 @@ router.post('/find_pw', function(req, res, next) {
       if (err) {
         console.error(err.message);
       } else {
-        res.json(common.Update_data(result)[0]);
+        if (common.Update_data(result).length !== 0) {
+          res.json({success: 1});
+        } else {
+          res.json({success: 0});
+        }
+      }
+      connection.close();
+    });
+  })
+})
+
+router.post('/update_pw', function(req, res, next) {
+  oracledb.getConnection({
+    user : dbConfig.user,
+    password : dbConfig.password,
+    connectString : dbConfig.connectString
+  },
+  function(err, connection) {
+    if (err) {
+      console.error(err.message);
+      return;
+    }
+    
+    const PASSWORD = bcrypt.hashSync(req.body.PASSWORD, 10);
+
+    var param = {
+      ID: req.body.ID,
+      PASSWORD: PASSWORD
+    };
+
+    let format = {language: 'sql', indent: ' '};
+    let query = mybatisMapper.getStatement('user', 'updatePW', param, format);
+    console.log(query);
+
+    connection.execute(query, [], function(err, result) {
+      if (err) {
+        console.error(err.message);
+        res.json({success: 0});
+      } else {
+        res.json({success: 1});
       }
       connection.close();
     });
