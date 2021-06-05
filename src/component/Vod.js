@@ -36,7 +36,7 @@ class Vod extends React.Component {
     show_vod(i) {
         var url = `http://localhost:3001/vod/thumbnail?idx=${this.state.VOD[i].IDX}`
         return(
-            <div style={{float: "left"}}>
+            <div style={{marginRight: "15px", display:"inline-block"}}>
                 <Card
                 id={"card" + i}
                 style={{width: "185px", height: "280px", marginTop: 25, backgroundColor: "#E8E8E8"}}
@@ -121,11 +121,13 @@ class Vod extends React.Component {
                         <button>업로드</button>
                     </Link>
                 </div>
-                <div>
-                    {this.state.INFO.map((unit) => {
-                        return unit;
-                    })}
-                </div>
+                <center>
+                    <div style={{display:"inline-block"}}>
+                        {this.state.INFO.map((unit) => {
+                            return unit;
+                        })}
+                    </div>
+                </center>
             </div>
         );
     }

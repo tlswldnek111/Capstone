@@ -10,9 +10,9 @@
                             AND IDX < (#{CODE} + 10000)), #{CODE} + 1)
                   ,#{TITLE}
                   ,#{CATEGORY}
-                  ,#{CONTENT})
+                  ,#{CONTENT}
                   ,0
-                  ,SYSDATE
+                  ,SYSDATE)
     ]]>
     </insert>
 
