@@ -18,7 +18,7 @@ class Live extends React.Component {
                                 <div>
                                     <ReactHlsPlayer
                                     id="video_grid"
-                                    src="http://121.145.133.119:8000/live/live/index.m3u8"
+                                    src="http://localhost:8000/live/live/index.m3u8"
                                     autoPlay={false}
                                     controls={true}
                                     width="100%"

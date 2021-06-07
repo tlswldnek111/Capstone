@@ -16,7 +16,7 @@ class Chat extends React.Component {
     }
     this.send = this.send.bind(this);
     this.scrollToBottom = this.scrollToBottom.bind(this);
-    socket = io("http://121.145.133.119:3003");
+    socket = io("http://localhost:3003");
     socket.on("connect", () => { console.log("connection server"); });
     socket.on('chat-msg', (obj) => {
       const logs2 = this.state.logs;

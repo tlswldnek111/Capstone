@@ -12,7 +12,7 @@ function Comment(props) {
       if(localStorage.getItem('id') === null) {
         props.history.push('login');
       } else {
-        fetch('http://121.145.133.119:3001/board/write_reply', {
+        fetch('http://localhost:3001/board/write_reply', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

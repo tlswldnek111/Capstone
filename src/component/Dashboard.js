@@ -92,7 +92,7 @@ export default function Dashboard(props) {
   useEffect(()=>{
     const video = document.getElementById('video')
     var hls = new Hls();
-    hls.loadSource('http://121.145.133.119:8000/live/live/index.m3u8');
+    hls.loadSource('http://localhost:8000/live/live/index.m3u8');
     hls.attachMedia(video);
     video.addEventListener('loadeddata', ()=>{
       setIsLive(true);
