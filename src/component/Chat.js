@@ -39,6 +39,16 @@ class Chat extends React.Component {
     message.value = '';
   }
 
+  componentDidMount() {
+    if (localStorage.getItem('id') === null) {
+      const Tf = document.getElementById('message');
+      const Bt = document.getElementById('send');
+      Tf.disabled = true;
+      Bt.disabled = true;
+      Tf.Value = '로그인이 필요합니다.';
+    }
+  }
+
   componentDidUpdate = (prevProps, prevState) => {
     this.scrollToBottom();
   };
@@ -69,15 +79,16 @@ class Chat extends React.Component {
           <td>
             <form onSubmit={this.send}>
               <TextField
-                  fullWidth="true"
-                  id="message"
-                  variant="outlined">
+              id="message"
+              fullWidth="true"
+              variant="outlined">
               </TextField>
               <Button
-                fullWidth="true"
-                type="submit"
-                color="primary"
-                variant="contained"> 
+              id="send"
+              fullWidth="true"
+              type="submit"
+              color="primary"
+              variant="contained"> 
                 보내기 
               </Button>
             </form>
