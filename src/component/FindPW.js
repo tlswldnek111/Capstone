@@ -62,7 +62,7 @@ class FindPW extends React.Component{
 handleSubmit(event) {
     event.preventDefault();
     if (this.state.success === 0) {
-      fetch('http://localhost:3001/user/find_pw', {
+      fetch('http://121.145.133.119:3001/user/find_pw', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ handleSubmit(event) {
                     }
       })
     } else {
-      fetch('http://localhost:3001/user/update_pw', {
+      fetch('http://121.145.133.119:3001/user/update_pw', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

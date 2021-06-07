@@ -4,12 +4,12 @@ const Server = require('http').createServer(app)
 const Port = 3003
 
 Server.listen(Port, () => {
-    console.log('채팅서버 실행 완료', 'http://localhost:' + Port)
+    console.log('채팅서버 실행 완료', 'http://121.145.133.119:' + Port)
 })
  
 const io = require('socket.io')(Server, {
     cors: {
-      origin: "http://localhost:3000",
+      origin: "http://121.145.133.119:3000",
       methods: ["GET", "POST"]
     }
   });

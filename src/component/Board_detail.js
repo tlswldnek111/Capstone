@@ -26,7 +26,7 @@ class Board_detail extends React.Component {
     componentDidMount() {
         document.getElementById('CONTENT').setAttribute('style', 'color: black;');
         this.setState({IDX: String(this.props.location.search).replace('?idx=', '')});
-        fetch('http://localhost:3001/board/update_views', {
+        fetch('http://121.145.133.119:3001/board/update_views', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ class Board_detail extends React.Component {
                 IDX: String(this.props.location.search).replace('?idx=', '')
             })
         })
-        fetch('http://localhost:3001/board/select', {
+        fetch('http://121.145.133.119:3001/board/select', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ class Board_detail extends React.Component {
             this.setState({Writer: res[0].ID});
         })
         .then(()=>{
-            fetch('http://localhost:3001/board/select_reply', {
+            fetch('http://121.145.133.119:3001/board/select_reply', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -92,7 +92,7 @@ class Board_detail extends React.Component {
                                         input.disabled = true;
                                         input.setAttribute('style', 'color: black;')
                                         e.target.textContent = '수정';
-                                        fetch('http://localhost:3001/board/update_reply', {
+                                        fetch('http://121.145.133.119:3001/board/update_reply', {
                                             method: 'POST',
                                             headers: {
                                             'Content-Type': 'application/json',
@@ -119,7 +119,7 @@ class Board_detail extends React.Component {
                                 (localStorage.getItem('id') === 'admin'))}
                                 onClick={(e)=>{
                                     if(window.confirm('삭제하시겠습니까?')) {
-                                        fetch('http://localhost:3001/board/delete_reply', {
+                                        fetch('http://121.145.133.119:3001/board/delete_reply', {
                                             method: 'POST',
                                             headers: {
                                             'Content-Type': 'application/json',
@@ -166,7 +166,7 @@ class Board_detail extends React.Component {
         } else {
             const TITLE = input_TITLE.value;
             const CONTENT = input_CONTENT.value;
-            fetch('http://localhost:3001/board/update', {
+            fetch('http://121.145.133.119:3001/board/update', {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json',
@@ -196,7 +196,7 @@ class Board_detail extends React.Component {
 
     handleDelete(e) {
         if (window.confirm('삭제하시겠습니까?')) {
-            fetch('http://localhost:3001/board/delete', {
+            fetch('http://121.145.133.119:3001/board/delete', {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json',
