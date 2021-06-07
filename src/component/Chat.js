@@ -10,7 +10,7 @@ class Chat extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      id: '',
+      login: false,
       message: '',
       logs: [],
     }
@@ -40,12 +40,8 @@ class Chat extends React.Component {
   }
 
   componentDidMount() {
-    if (localStorage.getItem('id') === null) {
-      const Tf = document.getElementById('message');
-      const Bt = document.getElementById('send');
-      Tf.disabled = true;
-      Bt.disabled = true;
-      Tf.Value = '로그인이 필요합니다.';
+    if (localStorage.getItem('id') !== null) {
+      this.setState({login: true});
     }
   }
 
@@ -81,14 +77,18 @@ class Chat extends React.Component {
               <TextField
               id="message"
               fullWidth="true"
-              variant="outlined">
+              variant="outlined"
+              disabled={!this.state.login}
+              value={!this.state.login ? '로그인이 필요합니다' : ''}
+              >
               </TextField>
               <Button
               id="send"
               fullWidth="true"
               type="submit"
               color="primary"
-              variant="contained"> 
+              variant="contained"
+              disabled={!(this.state.login)}> 
                 보내기 
               </Button>
             </form>
