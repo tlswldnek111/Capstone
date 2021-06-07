@@ -16,17 +16,6 @@
     ]]>
     </insert>
 
-    <update id="update_vod">
-        UPDATE VOD
-           SET CONTENT = #{CONTENT}
-         WHERE IDX = #{IDX}
-    </update>
-
-    <delete id="delete_vod">
-        DELETE FROM VOD
-         WHERE IDX = #{IDX}
-    </delete>
-    
     <select id="select_vod">
         SELECT *
           FROM VOD
@@ -44,6 +33,17 @@
             ORDER BY VIEW_COUNT DESC
         </if>
     </select>
+
+    <update id="update_vod">
+        UPDATE VOD
+           SET CONTENT = #{CONTENT}
+         WHERE IDX = #{IDX}
+    </update>
+
+    <delete id="delete_vod">
+        DELETE FROM VOD
+         WHERE IDX = #{IDX}
+    </delete>
 
     <update id="update_views">
         UPDATE VOD
