@@ -1,7 +1,7 @@
 기본으로 Localhost 세팅이 되어있음.   
 외부접속을 하려면 src 폴더안의 ipConfig.js를 수정하고 server폴더의 chat.js의 cors 설정을 확인해야하며 1935포트, 3000포트 3001포트 3002포트, 8000포트가 풀려있어야함.   
 RTMP: 1935, React: 3000, Express: 3001, Chat: 3002, HLS: 8000 포트 사용.   
-git clone -> npm install -> npm start시 실행.
+git clone -> npm install -> npm start시 실행.   
 npm start 시 모듈을 찾을 수 없다고 에러가 나면 해당 모듈을 npm install -g 를 통해 글로벌 설치했던 모듈이므로 설치해야함 어떤 모듈인지 너무 많아서 기억이 나지 않음.   
 
 쿼리
