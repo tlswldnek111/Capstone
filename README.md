@@ -10,9 +10,8 @@ git clone -> npm install -> npm start시 실행.
 --------------------------------------------------------
 --  DDL for Table BOARD
 --------------------------------------------------------
-CREATE USER CAPSTONE2 IDENTIFIED BY 1234;
-GRANT DBA, RESOURCE, CONNECT TO CAPSTONE2;
-
+CREATE USER CAPSTONE2 IDENTIFIED BY 1234;   
+GRANT DBA, RESOURCE, CONNECT TO CAPSTONE2;   
   CREATE TABLE "CAPSTONE"."BOARD" 
    (	"IDX" NUMBER, 
 	"ID" VARCHAR2(10 BYTE), 
