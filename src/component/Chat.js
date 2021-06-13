@@ -3,6 +3,7 @@ import io from "socket.io-client";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import '../CSS/Chat.css';
+import ipconfig from '../config/ipConfig';
 
 var socket = null;
 
@@ -16,7 +17,7 @@ class Chat extends React.Component {
     }
     this.send = this.send.bind(this);
     this.scrollToBottom = this.scrollToBottom.bind(this);
-    socket = io("http://localhost:3003");
+    socket = io(`http://${ipconfig.ExternalIp}:3002`);
     socket.on("connect", () => { console.log("connection server"); });
     socket.on('chat-msg', (obj) => {
       const logs2 = this.state.logs;
@@ -42,6 +43,9 @@ class Chat extends React.Component {
   componentDidMount() {
     if (localStorage.getItem('id') !== null) {
       this.setState({login: true});
+    } else {
+      let message = document.getElementById('message');
+      message.value = '로그인이 필요합니다.';
     }
   }
 
@@ -78,9 +82,7 @@ class Chat extends React.Component {
               id="message"
               fullWidth="true"
               variant="outlined"
-              disabled={!this.state.login}
-              value={!this.state.login ? '로그인이 필요합니다' : ''}
-              >
+              disabled={!this.state.login}>
               </TextField>
               <Button
               id="send"

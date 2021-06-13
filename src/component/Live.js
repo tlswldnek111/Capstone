@@ -4,6 +4,7 @@ import Chat from './Chat';
 import Header2 from './Header2';
 import Grid from '@material-ui/core/Grid';
 import '../CSS/Live.css';
+import ipconfig from '../config/ipConfig';
 
 class Live extends React.Component {
 
@@ -18,7 +19,7 @@ class Live extends React.Component {
                                 <div>
                                     <ReactHlsPlayer
                                     id="video_grid"
-                                    src="http://localhost:8000/live/live/index.m3u8"
+                                    src={`http://${ipconfig.ExternalIp}:8000/live/live/index.m3u8`}
                                     autoPlay={false}
                                     controls={true}
                                     width="100%"

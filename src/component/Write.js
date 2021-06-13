@@ -11,6 +11,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Header2 from './Header2';
 import { withStyles } from "@material-ui/core/styles";
 import clsx from 'clsx';
+import ipconfig from '../config/ipConfig';
+
 const styles = theme => ({
     root: {
       backgroundColor: "red"
@@ -43,7 +45,7 @@ class Write extends React.Component {
    
     handleSubmit(e) {
         e.preventDefault();
-        fetch('http://localhost:3001/board/write', {
+        fetch(`http://${ipconfig.ExternalIp}:3001/board/write`, {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',
@@ -68,7 +70,7 @@ class Write extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:3001/vod/select', {
+        fetch(`http://${ipconfig.ExternalIp}:3001/vod/select`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

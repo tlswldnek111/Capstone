@@ -9,6 +9,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { withStyles } from "@material-ui/core/styles";
+import ipconfig from '../config/ipConfig';
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -64,7 +66,7 @@ handleChange(e){
 }
   handleSubmit(event) {
     event.preventDefault();
-    fetch('http://localhost:3001/user/register', {
+    fetch(`http://${ipconfig.ExternalIp}:3001/user/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -88,7 +90,7 @@ handleChange(e){
   }
   handleCheck(event) {
     event.preventDefault();
-    fetch('http://localhost:3001/user/check_id', {
+    fetch(`http://${ipconfig.ExternalIp}:3001/user/check_id`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link } from "react-router-dom";
+import ipconfig from '../config/ipConfig';
 
 function Copyright() {
   return (
@@ -62,7 +63,7 @@ class FindPW extends React.Component{
 handleSubmit(event) {
     event.preventDefault();
     if (this.state.success === 0) {
-      fetch('http://localhost:3001/user/find_pw', {
+      fetch(`http://${ipconfig.ExternalIp}:3001/user/find_pw`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -83,7 +84,7 @@ handleSubmit(event) {
                     }
       })
     } else {
-      fetch('http://localhost:3001/user/update_pw', {
+      fetch(`http://${ipconfig.ExternalIp}:3001/user/update_pw`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

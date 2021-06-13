@@ -9,6 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link } from "react-router-dom";
+import ipconfig from '../config/ipConfig';
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -60,7 +62,7 @@ class FindID extends React.Component{
 
 handleSubmit(event) {
     event.preventDefault();
-    fetch('http://localhost:3001/user/find_id', {
+    fetch(`http://${ipconfig.ExternalIp}:3001/user/find_id`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

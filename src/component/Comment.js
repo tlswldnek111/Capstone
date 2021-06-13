@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import ipconfig from '../config/ipConfig';
 
 function Comment(props) {
     const [commentValue, setcommentValue] = useState('');
@@ -12,7 +13,7 @@ function Comment(props) {
       if(localStorage.getItem('id') === null) {
         props.history.push('login');
       } else {
-        fetch('http://localhost:3001/board/write_reply', {
+        fetch(`http://${ipconfig.ExternalIp}:3001/board/write_reply`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

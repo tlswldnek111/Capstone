@@ -4,15 +4,15 @@
     <insert id="insert_vod">
     <![CDATA[
         INSERT INTO VOD
-            VALUES(NVL((SELECT MAX(IDX) + 1
-                          FROM VOD
-                          WHERE #{CODE} < IDX
-                            AND IDX < (#{CODE} + 10000)), #{CODE} + 1)
-                  ,#{TITLE}
-                  ,#{CATEGORY}
-                  ,#{CONTENT}
-                  ,0
-                  ,SYSDATE)
+        VALUES(NVL((SELECT MAX(IDX) + 1
+                      FROM VOD
+                      WHERE #{CODE} < IDX
+                        AND IDX < (#{CODE} + 10000)), #{CODE} + 1)
+              ,#{TITLE}
+              ,#{CATEGORY}
+              ,#{CONTENT}
+              ,0
+              ,SYSDATE)
     ]]>
     </insert>
 
@@ -31,7 +31,7 @@
             AND TRUNC(SYSDATE, 'MM') <= U_DATE
             ]]>
             ORDER BY VIEW_COUNT DESC
-        </if>
+          </if>
     </select>
 
     <update id="update_vod">

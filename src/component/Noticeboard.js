@@ -15,8 +15,9 @@ import Select from '@material-ui/core/Select';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
-
 import Container from '@material-ui/core/Container';
+import ipconfig from '../config/ipConfig';
+
 function Copyright() {
     return (
       <Typography variant="body2" color="textSecondary" align="center">
@@ -91,7 +92,7 @@ function Copyright() {
     const [v_idx, setV_idx]=React.useState({});
 
     useEffect(()=>{
-      fetch('http://localhost:3001/vod/select', {
+      fetch(`http://${ipconfig.ExternalIp}:3001/vod/select`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -10,7 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { withStyles } from "@material-ui/core/styles";
 import clsx from 'clsx';
-//alignItems="center" "static"
+import ipconfig from '../config/ipConfig';
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center" >
@@ -63,7 +64,7 @@ class Login extends React.Component {
   
     handleSubmit(event) {
       event.preventDefault();
-      fetch('http://localhost:3001/user/login', {
+      fetch(`http://${ipconfig.ExternalIp}:3001/user/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
