@@ -7,10 +7,10 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
+import ipconfig from '../config/ipConfig';
 import { withStyles } from "@material-ui/core/styles";
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -64,7 +64,7 @@ class Mypage extends React.Component{
 handleSubmit(event) {
     event.preventDefault();
     if(this.state.text==='로그인'){
-    fetch('http://121.145.133.119:3001/user/login', {
+    fetch(`http://${ipconfig.ExternalIp}:3001/user/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -86,7 +86,7 @@ handleSubmit(event) {
               })
   }
   else if (this.state.text==='수정') {
-    fetch('http://121.145.133.119:3001/user/update', {
+    fetch(`http://${ipconfig.ExternalIp}:3001/user/update`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -208,88 +208,3 @@ handleSubmit(event) {
 }
 
 export default withStyles(styles, { withTheme: true })(Mypage);
-
-/*
-
-<Grid container spacing={2}>
-          <Grid item xs={12} >
-           <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="ID"
-                label="ID"
-                name="ID"
-                autoComplete="ID"
-                disabled//아이디는 고정되어있음.
-                value={localStorage.getItem('id')}
-              />
-            </Grid>
-           <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="PASSWORD"
-                label="PASSWORD"
-                name="PASSWORD"
-                autoComplete="PASSWORD"
-               
-              />
-            </Grid>
-            
-           { this.state.text==='수정' ?  
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <TextField
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="NAME"
-                      label="NAME"
-                      name="NAME"
-                      autoComplete="NAME"
-                    />
-                  </Grid>
-                     <Grid>
-
-                    </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="PHONE"
-                      label="PHONE"
-                      name="PHONE"
-                      autoComplete="PHONE"
-                    />
-                  </Grid>
-                  
-                  </Grid>
-                  
-                  : <div></div>}
-
-                  
-            <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-           {this.state.text}
-          </Button>
-          </Grid>
-
-          <p> </p>
-         
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link to="/" style={{textDecoration:"none", color:"black"}} variant="body2">
-               뒤로가기
-              </Link>
-            </Grid>
-          </Grid>
-
-*/

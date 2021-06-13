@@ -3,6 +3,7 @@ import io from "socket.io-client";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import '../CSS/Chat.css';
+import ipconfig from '../config/ipConfig';
 
 var socket = null;
 
@@ -16,7 +17,7 @@ class Chat extends React.Component {
     }
     this.send = this.send.bind(this);
     this.scrollToBottom = this.scrollToBottom.bind(this);
-    socket = io("http://121.145.133.119:3003");
+    socket = io(`http://${ipconfig.ExternalIp}:3002`);
     socket.on("connect", () => { console.log("connection server"); });
     socket.on('chat-msg', (obj) => {
       const logs2 = this.state.logs;

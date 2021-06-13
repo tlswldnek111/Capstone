@@ -6,6 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 import clsx from 'clsx';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import ipconfig from '../config/ipConfig';
 
 const styles = theme => ({
     paper: {
@@ -57,7 +58,7 @@ class Vod_upload extends React.Component {
         if(FILE === undefined) {
             alert('이미지를 선택해주세요.');
         } else {
-            fetch('http://121.145.133.119:3001/vod/upload', {
+            fetch(`http://${ipconfig.ExternalIp}:3001/vod/upload`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -78,7 +79,7 @@ class Vod_upload extends React.Component {
                 }
             })
             .then(()=>{
-                fetch('http://121.145.133.119:3001/vod/select_one', {
+                fetch(`http://${ipconfig.ExternalIp}:3001/vod/select_one`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -94,7 +95,7 @@ class Vod_upload extends React.Component {
                         , res.IDX + '.' + String(FILE.name).split('.')[1]
                         , {type: FILE.type});
                     formData.append('file', NewFile);
-                    fetch('http://121.145.133.119:3001/vod/upload_image', {
+                    fetch(`http://${ipconfig.ExternalIp}:3001/vod/upload_image`, {
                     method: 'POST',
                     body: formData,
                     })

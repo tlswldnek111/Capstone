@@ -1,7 +1,6 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import { Route, Switch, withRouter} from 'react-router-dom';
-import Carousel from './Carousel';
 import Register from './Register';
 import FindID from './FindID';
 import FindPW from './FindPW';

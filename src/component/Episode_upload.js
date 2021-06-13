@@ -1,6 +1,7 @@
 import React from 'react'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import ipconfig from '../config/ipConfig';
 
 class Episode_upload extends React.Component {
     constructor(props) {
@@ -23,7 +24,7 @@ class Episode_upload extends React.Component {
             console.log('파일 테스트: ' + NewFile.name);
             formData.append('file', NewFile);
             let request = new XMLHttpRequest();
-            request.open('POST', 'http://121.145.133.119:3001/vod/upload_video'); 
+            request.open('POST', `http://${ipconfig.ExternalIp}:3001/vod/upload_video`); 
 
             request.upload.addEventListener('progress', function(e) {
                 let percent_completed = (e.loaded / e.total)*100;

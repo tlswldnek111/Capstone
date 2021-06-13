@@ -10,6 +10,7 @@ import Header2 from './Header2';
 import Carousel from './Carousel';
 import BoardTable from './BoardTable';
 import no from '../CSS/no.png';
+import ipconfig from '../config/ipConfig';
 
 function Copyright() {
   return (
@@ -92,7 +93,7 @@ export default function Dashboard(props) {
   useEffect(()=>{
     const video = document.getElementById('video')
     var hls = new Hls();
-    hls.loadSource('http://121.145.133.119:8000/live/live/index.m3u8');
+    hls.loadSource(`http://${ipconfig.ExternalIp}:8000/live/live/index.m3u8`);
     hls.attachMedia(video);
     video.addEventListener('loadeddata', ()=>{
       setIsLive(true);

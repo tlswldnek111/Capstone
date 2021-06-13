@@ -5,6 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Header2 from './Header2';
 import { withStyles } from "@material-ui/core/styles";
 import clsx from 'clsx';
+import ipconfig from '../config/ipConfig';
 
 const styles = theme => ({
     root: {
@@ -34,7 +35,7 @@ class Vod extends React.Component {
     }
 
     show_vod(i) {
-        var url = `http://121.145.133.119:3001/vod/thumbnail?idx=${this.state.VOD[i].IDX}`
+        var url = `http://${ipconfig.ExternalIp}:3001/vod/thumbnail?idx=${this.state.VOD[i].IDX}`
         return(
             <div style={{marginRight: "15px", display:"inline-block"}}>
                 <Card
@@ -53,7 +54,7 @@ class Vod extends React.Component {
     }
 
     Card_Click(i) {
-        fetch('http://121.145.133.119:3001/vod/update_views', {
+        fetch(`http://${ipconfig.ExternalIp}:3001/vod/update_views`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -75,7 +76,7 @@ class Vod extends React.Component {
 
     componentDidMount() {
         const VOD = [];
-        fetch('http://121.145.133.119:3001/vod/select', {
+        fetch(`http://${ipconfig.ExternalIp}:3001/vod/select`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

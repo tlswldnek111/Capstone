@@ -10,6 +10,8 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import { Link } from "react-router-dom";
 import clsx from 'clsx';
+import ipconfig from '../config/ipConfig';
+
 const columns = [
   { number: 'titles', label: '제목', minWnumberth: 150 },
   {
@@ -84,7 +86,7 @@ export default function BoardTable(props) {
   useEffect(() => {
     if(props.flag === 'M') {
       rows_origin.length = 0;
-      fetch('http://121.145.133.119:3001/board/select', {
+      fetch(`http://${ipconfig.ExternalIp}:3001/board/select`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -111,7 +113,7 @@ export default function BoardTable(props) {
         setRows(rows_origin);
       })
     } else if (count === 0) {
-      fetch('http://121.145.133.119:3001/board/select', {
+      fetch(`http://${ipconfig.ExternalIp}:3001/board/select`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

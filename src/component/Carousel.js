@@ -5,6 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import '../../node_modules/slick-carousel/slick/slick.css'
 import '../../node_modules/slick-carousel/slick/slick-theme.css'
 import { withStyles } from "@material-ui/core/styles";
+import ipconfig from '../config/ipConfig';
 
 const styles = theme => ({
   paper: {
@@ -53,7 +54,7 @@ class Carousel extends Component {
     this.Card_Click = this.Card_Click.bind(this);
   }
   show_vod(i) {
-    var url = `http://121.145.133.119:3001/vod/thumbnail?idx=${this.state.VOD[i].IDX}`
+    var url = `http://${ipconfig.ExternalIp}:3001/vod/thumbnail?idx=${this.state.VOD[i].IDX}`
     return(
     <div style={{float:"left"}}>
         <Card
@@ -72,7 +73,7 @@ class Carousel extends Component {
   }
 
   Card_Click(i) {
-    fetch('http://121.145.133.119:3001/vod/update_views', {
+    fetch(`http://${ipconfig.ExternalIp}:3001/vod/update_views`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -94,7 +95,7 @@ class Carousel extends Component {
 
   componentDidMount() {
     const VOD = [];
-    fetch('http://121.145.133.119:3001/vod/select', {
+    fetch(`http://${ipconfig.ExternalIp}:3001/vod/select`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
