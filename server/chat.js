@@ -9,7 +9,7 @@ Server.listen(Port, () => {
  
 const io = require('socket.io')(Server, {
     cors: {
-      origin: "http://121.145.133.119:3000",
+      origin: "http://gamjaserver.ddns.net:3000",
       methods: ["GET", "POST"]
     }
   });

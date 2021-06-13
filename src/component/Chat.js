@@ -42,6 +42,9 @@ class Chat extends React.Component {
   componentDidMount() {
     if (localStorage.getItem('id') !== null) {
       this.setState({login: true});
+    } else {
+      let message = document.getElementById('message');
+      message.value = '로그인이 필요합니다.';
     }
   }
 
@@ -78,9 +81,7 @@ class Chat extends React.Component {
               id="message"
               fullWidth="true"
               variant="outlined"
-              disabled={!this.state.login}
-              value={!this.state.login ? '로그인이 필요합니다' : ''}
-              >
+              disabled={!this.state.login}>
               </TextField>
               <Button
               id="send"
