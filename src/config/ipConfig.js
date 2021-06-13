@@ -1,6 +1,5 @@
 module.exports = 
 {
- localhost: 'localhost',
- ExternalIp: '121.145.133.119',
+ ExternalIp: 'localhost',
  domain: 'gamjaserver.ddns.net'
 }

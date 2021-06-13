@@ -10,9 +10,10 @@ Server.listen(Port, () => {
  
 const io = require('socket.io')(Server, {
     cors: {
-      origin: "http://" + ipconfig.domain + ":3000",
-              //"http://" + ipconfig.ExternalIp + ":3000",
+      origin: //"http://" + ipconfig.domain + ":3000",
+              "http://" + ipconfig.ExternalIp + ":3000",
               //도메인을 사용 안할때 외부 아이피로 설정
+              //cors 설정이 되어있지 않으면 채팅이 불가능
       methods: ["GET", "POST"]
     }
   });
